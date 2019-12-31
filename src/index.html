@@ -16,15 +16,18 @@
     -->
   <div class="container" ng-controller="BlackjackGameController as BJG">
 
+    <div class="nav">
+    </div><!-- .nav -->
+
     <div id="dealerBox" class="dealerBox">
-      <div class="player">
+      <div class="dealer">
         <div class="dealer-data">
           <p>Dealer's Hand</p>
         </div>
-        <div class="hand">
+        <div class="dealer-hand">
 
-          <div class="PlayingCard Card-Club card-1">
-            <div class="CardFace">
+          <div class="PlayingCard">
+            <div class="CardFace Card-Club">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">10</div>
                 <div class="CardTopLeftSuit">♣</div>
@@ -37,7 +40,7 @@
             </div><!-- .CardFace -->
           </div><!-- .PlayingCard -->
 
-          <div class="PlayingCard Card-FaceDown card-2">
+          <div class="PlayingCard Card-FaceDown">
             <div class="CardFace Card-Heart">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">2</div>
@@ -224,69 +227,82 @@
           <div class="PlayingCard card-1">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
-                <div class="CardTopLeftValue">A</div>
+                <div class="CardTopLeftValue">2</div>
                 <div class="CardTopLeftSuit">♠</div>
               </div>
               <div class="CardMiddleBody">♠ ♠</div>
               <div class="CardBottomRight">
                 <div class="CardBottomRightSuit">♠</div>
-                <div class="CardBottomRightValue">A</div>
+                <div class="CardBottomRightValue">2</div>
               </div>
             </div>
           </div><!-- .PlayingCard -->
           <div class="PlayingCard card-2">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
-                <div class="CardTopLeftValue">A</div>
+                <div class="CardTopLeftValue">2</div>
                 <div class="CardTopLeftSuit">♠</div>
               </div>
               <div class="CardMiddleBody">♠ ♠</div>
               <div class="CardBottomRight">
                 <div class="CardBottomRightSuit">♠</div>
-                <div class="CardBottomRightValue">A</div>
+                <div class="CardBottomRightValue">2</div>
               </div>
             </div>
           </div><!-- .PlayingCard -->
           <div class="PlayingCard card-3">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
-                <div class="CardTopLeftValue">A</div>
+                <div class="CardTopLeftValue">2</div>
                 <div class="CardTopLeftSuit">♠</div>
               </div>
               <div class="CardMiddleBody">♠ ♠</div>
               <div class="CardBottomRight">
                 <div class="CardBottomRightSuit">♠</div>
-                <div class="CardBottomRightValue">A</div>
+                <div class="CardBottomRightValue">2</div>
               </div>
             </div>
           </div><!-- .PlayingCard -->
           <div class="PlayingCard card-4">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
-                <div class="CardTopLeftValue">A</div>
+                <div class="CardTopLeftValue">2</div>
                 <div class="CardTopLeftSuit">♠</div>
               </div>
               <div class="CardMiddleBody">♠ ♠</div>
               <div class="CardBottomRight">
                 <div class="CardBottomRightSuit">♠</div>
-                <div class="CardBottomRightValue">A</div>
+                <div class="CardBottomRightValue">2</div>
               </div>
             </div>
           </div><!-- .PlayingCard -->
           <div class="PlayingCard card-5">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
-                <div class="CardTopLeftValue">A</div>
+                <div class="CardTopLeftValue">2</div>
                 <div class="CardTopLeftSuit">♠</div>
               </div>
               <div class="CardMiddleBody">♠ ♠</div>
               <div class="CardBottomRight">
                 <div class="CardBottomRightSuit">♠</div>
-                <div class="CardBottomRightValue">A</div>
+                <div class="CardBottomRightValue">2</div>
               </div>
             </div>
           </div><!-- .PlayingCard -->
           <div class="PlayingCard card-6">
+            <div class="CardFace Card-Spade">
+              <div class="CardTopLeft">
+                <div class="CardTopLeftValue">2</div>
+                <div class="CardTopLeftSuit">♠</div>
+              </div>
+              <div class="CardMiddleBody">♠ ♠</div>
+              <div class="CardBottomRight">
+                <div class="CardBottomRightSuit">♠</div>
+                <div class="CardBottomRightValue">2</div>
+              </div>
+            </div>
+          </div><!-- .PlayingCard -->
+          <div class="PlayingCard card-7">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">A</div>
@@ -299,7 +315,46 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-7">
+          <div class="PlayingCard card-8">
+            <div class="CardFace Card-Spade">
+              <div class="CardTopLeft">
+                <div class="CardTopLeftValue">A</div>
+                <div class="CardTopLeftSuit">♠</div>
+              </div>
+              <div class="CardMiddleBody">♠ ♠</div>
+              <div class="CardBottomRight">
+                <div class="CardBottomRightSuit">♠</div>
+                <div class="CardBottomRightValue">A</div>
+              </div>
+            </div>
+          </div><!-- .PlayingCard -->
+          <div class="PlayingCard card-9">
+            <div class="CardFace Card-Spade">
+              <div class="CardTopLeft">
+                <div class="CardTopLeftValue">A</div>
+                <div class="CardTopLeftSuit">♠</div>
+              </div>
+              <div class="CardMiddleBody">♠ ♠</div>
+              <div class="CardBottomRight">
+                <div class="CardBottomRightSuit">♠</div>
+                <div class="CardBottomRightValue">A</div>
+              </div>
+            </div>
+          </div><!-- .PlayingCard -->
+          <div class="PlayingCard card-10">
+            <div class="CardFace Card-Spade">
+              <div class="CardTopLeft">
+                <div class="CardTopLeftValue">A</div>
+                <div class="CardTopLeftSuit">♠</div>
+              </div>
+              <div class="CardMiddleBody">♠ ♠</div>
+              <div class="CardBottomRight">
+                <div class="CardBottomRightSuit">♠</div>
+                <div class="CardBottomRightValue">A</div>
+              </div>
+            </div>
+          </div><!-- .PlayingCard -->
+          <div class="PlayingCard card-11">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">A</div>
@@ -318,7 +373,107 @@
         </div><!-- .player-data -->
       </div><!-- .player -->
 
+      <div id="player_6" class="player">
+        <div class="splitHand">
+          <div class="hand" >
+            <div class="PlayingCard card-1">
+              <div class="CardFace Card-Diamond">
+                <div class="CardTopLeft">
+                  <div class="CardTopLeftValue">9</div>
+                  <div class="CardTopLeftSuit">♦</div>
+                </div>
+                <div class="CardMiddleBody">♦ ♦ ♦</div>
+                <div class="CardBottomRight">
+                  <div class="CardBottomRightSuit">♦</div>
+                  <div class="CardBottomRightValue">9</div>
+                </div>
+              </div>
+            </div><!-- .PlayingCard -->
+            <div class="PlayingCard card-2">
+              <div class="CardFace Card-Spade">
+                <div class="CardTopLeft">
+                  <div class="CardTopLeftValue">A</div>
+                  <div class="CardTopLeftSuit">♠</div>
+                </div>
+                <div class="CardMiddleBody">♠ ♠</div>
+                <div class="CardBottomRight">
+                  <div class="CardBottomRightSuit">♠</div>
+                  <div class="CardBottomRightValue">A</div>
+                </div>
+              </div>
+            </div><!-- .PlayingCard -->
+          </div><!-- .hand -->
+          <div class="hand" >
+            <div class="PlayingCard card-1">
+              <div class="CardFace Card-Diamond">
+                <div class="CardTopLeft">
+                  <div class="CardTopLeftValue">9</div>
+                  <div class="CardTopLeftSuit">♦</div>
+                </div>
+                <div class="CardMiddleBody">♦ ♦ ♦</div>
+                <div class="CardBottomRight">
+                  <div class="CardBottomRightSuit">♦</div>
+                  <div class="CardBottomRightValue">9</div>
+                </div>
+              </div>
+            </div><!-- .PlayingCard -->
+            <div class="PlayingCard card-2">
+              <div class="CardFace Card-Spade">
+                <div class="CardTopLeft">
+                  <div class="CardTopLeftValue">A</div>
+                  <div class="CardTopLeftSuit">♠</div>
+                </div>
+                <div class="CardMiddleBody">♠ ♠</div>
+                <div class="CardBottomRight">
+                  <div class="CardBottomRightSuit">♠</div>
+                  <div class="CardBottomRightValue">A</div>
+                </div>
+              </div>
+            </div><!-- .PlayingCard -->
+          </div><!-- .hand -->
+          <div class="hand" >
+            <div class="PlayingCard card-1">
+              <div class="CardFace Card-Diamond">
+                <div class="CardTopLeft">
+                  <div class="CardTopLeftValue">9</div>
+                  <div class="CardTopLeftSuit">♦</div>
+                </div>
+                <div class="CardMiddleBody">♦ ♦ ♦</div>
+                <div class="CardBottomRight">
+                  <div class="CardBottomRightSuit">♦</div>
+                  <div class="CardBottomRightValue">9</div>
+                </div>
+              </div>
+            </div><!-- .PlayingCard -->
+            <div class="PlayingCard card-2">
+              <div class="CardFace Card-Spade">
+                <div class="CardTopLeft">
+                  <div class="CardTopLeftValue">A</div>
+                  <div class="CardTopLeftSuit">♠</div>
+                </div>
+                <div class="CardMiddleBody">♠ ♠</div>
+                <div class="CardBottomRight">
+                  <div class="CardBottomRightSuit">♠</div>
+                  <div class="CardBottomRightValue">A</div>
+                </div>
+              </div>
+            </div><!-- .PlayingCard -->
+          </div><!-- .hand -->
+        </div><!-- .splitHand -->
+        <div class="player-data">
+          <p>Player 6</p>
+        </div><!-- .player-data -->
+      </div><!-- .player -->
+
     </div> <!-- #playersBox -->
+
+    <div id="actionInput">
+      Actions
+    </div><!-- #ActionInput -->
+
+    <div id="betControls">
+      Bets
+    </div><!-- #betControls -->
 
   </div>
   <!--
