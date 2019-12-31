@@ -1,0 +1,28 @@
+{
+  "name": "blackjack-ai-js",
+  "version": "0.0.0",
+  "description": "Blackjack AI with optional human interaction.",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server ./src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RileyR387/blackjack-ai-js.git"
+  },
+  "keywords": [
+    "blackjack",
+    "webworker",
+    "web-worker",
+    "ai"
+  ],
+  "author": "Riley Raschke",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RileyR387/blackjack-ai-js/issues"
+  },
+  "homepage": "https://github.com/RileyR387/blackjack-ai-js#readme",
+  "devDependencies": {
+    "live-server": "^1.2.0"
+  }
+}
