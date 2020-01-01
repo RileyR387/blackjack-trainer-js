@@ -19,8 +19,17 @@
  */
 body {
   background-color: var(--tableBgColor);
+  margin-bottom: 10px;
+}
+.container-footer {
+  width: auto;
+  padding-left: 1em;
+  font-size: 10pt;
 }
 
+/**
+ * Game Controls
+ */
 #gameContainer {
 }
 #actionInput{
@@ -249,62 +258,17 @@ body {
   left: calc(var(--cardHorizonalSpace)*6);
 }
 
-.handcardV-1 {
-  position: absolute;
-  top: 0em;
-  left: 0em;
+/**
+ * Dark Modals
+ */
+.modal-content, .modal-title, .modal-header, .modal-body, .modal-footer {
+  background: var(--dark);
+  color: var(--white);
 }
-.handcardV-2 {
-  position: absolute;
-  top: 1.4em;
-  left: 1.2em;
-}
-.handcardV-3 {
-  position: absolute;
-  top: calc(1.4em*2);
-  left: calc(1.2em*2);
-}
-.handcardV-4 {
-  position: absolute;
-  top: calc(1.4em*3);
-  left: calc(1.2em*3);
-}
-.handcardV-5 {
-  position: absolute;
-  top: calc(1.4em*4);
-  left: calc(1.2em*4);
-}
-.handcardV-6 {
-  position: absolute;
-  top: calc(1.4em*5);
-  left: calc(1.2em*0);
-}
-.handcardV-7 {
-  position: absolute;
-  top: calc(1.4em*6);
-  left: calc(1.2em*1);
-}
-.handcardV-8 {
-  position: absolute;
-  top: calc(1.4em*7);
-  left: calc(1.2em*2);
-}
-.handcardV-9 {
-  position: absolute;
-  top: calc(1.4em*8);
-  left: calc(1.2em*3);
-}
-.handcardV-10 {
-  position: absolute;
-  top: calc(1.4em*9);
-  left: calc(1.2em*4);
-}
-.handcardV-11 {
-  position: absolute;
-  top: 2.8em;
-  left: 2.4em;
-  top: calc(1.4em*10);
-  left: calc(1.2em*5);
+.modal-body > .list-group > .list-group-item {
+  background: var(--dark);
+  color: var(--white);
+  border: none;
 }
 
 /**

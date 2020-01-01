@@ -3,6 +3,7 @@
  * © 2020 rrappsdev.com
  * OSL-3.0
  */
+
 var BlackjackAI = angular.module('BlackjackAI', []);
 
 BlackjackAI.controller( 'BlackjackGameController', ['$scope', 'BlackjackGameService', function( $scope, BlackjackGameService ) {
