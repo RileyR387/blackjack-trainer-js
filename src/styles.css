@@ -8,6 +8,15 @@ body {
 #gameContainer {
   margin-top: 20px;
 }
+#actionInput{
+  margin: 1em;
+}
+#betActions{
+  margin: 1em;
+}
+#actionInput > .btn-group > button {
+  width: 5em;
+}
 
 /**
  * Game Table
