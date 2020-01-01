@@ -537,34 +537,24 @@
       </div>
     </div><!-- #actionInput -->
 
-    <div id="betControls">
+    <div id="betActions" class="d-flex justify-content-center">
+      <div class="btn-group  btn-group-justified" role="group" aria-label="Bet Actions">
+        <button type="button" class="btn btn-secondary" aria-label="Clear Current Bet">Clear</button>
+        <button type="button" class="btn btn-light" aria-label="Half Last Bet">Half</button>
+        <button type="button" class="btn btn-dark" aria-label="Double Last Bet">Double</button>
+        <button type="button" class="btn btn-success" aria-label="Deal Hand">Deal</button>
+      </div><!-- .btn-group -->
+    </div><!-- #betActions -->
 
-      <div id="betActions" class="d-flex justify-content-center">
-        <div class="btn-group mr-2 justify-content-center " role="group" aria-label="Bet Actions">
-          <button type="button" class="btn btn-light" aria-label="Half Last Bet">Half</button>
-          <button type="button" class="btn btn-dark" aria-label="Double Last Bet">Double</button>
-          <button type="button" class="btn btn-success" aria-label="Deal Hand">Deal</button>
-        </div><!-- .btn-group -->
-      </div><!-- #betActions -->
-
-      <div class="nav w-100 justify-content-center" >
-        <div class="btn-toolbar" role="toolbar" aria-label="Bet Controls">
-          <div class="btn-group mr-2 justify-content-left" role="group" aria-label="Bet Amounts">
-            <button type="button" class="btn btn-danger" aria-label="Bet Five">5</button>
-            <button type="button" class="btn btn-dark" aria-label="Bet Ten">10</button>
-            <button type="button" class="btn btn-success" aria-label="Bet Twenty-Five">25</button>
-            <button type="button" class="btn btn-primary" aria-label="Bet One Hundred">100</button>
-            <button type="button" class="btn btn-info disabled" aria-label="Bet Five Hundred">500</button>
-            <button type="button" class="btn btn-danger disabled" aria-label="Bet One Thousand">1000</button>
-          </div><!-- .btn-group -->
-          <!--
-          <div class="input-group justify-content-end">
-            <span class="input-group-text" >Bank&nbsp;<span id="balanceDisplay"> $225.00</span></span>
-          </div>
-          -->
-        </div><!-- .btn-toolbar -->
-      </div><!-- .nav -->
-
+    <div id="betControls" class="d-flex justify-content-center">
+      <div class="btn-group  btn-group-justified" role="group" aria-label="Bet Inputs">
+        <button type="button" class="btn btn-danger" aria-label="Bet Five">5</button>
+        <button type="button" class="btn btn-dark" aria-label="Bet Ten">10</button>
+        <button type="button" class="btn btn-success" aria-label="Bet Twenty-Five">25</button>
+        <button type="button" class="btn btn-primary" aria-label="Bet One Hundred">100</button>
+        <button type="button" class="btn btn-info disabled" aria-label="Bet Five Hundred">500</button>
+        <button type="button" class="btn btn-danger disabled" aria-label="Bet One Thousand">1000</button>
+      </div><!-- .btn-group -->
     </div><!-- #betControls -->
 
   </div><!-- #gameContainer -->

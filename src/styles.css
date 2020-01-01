@@ -41,6 +41,12 @@ body {
 #actionInput > .btn-group > button {
   width: 5em;
 }
+#betActions > .btn-group > button {
+  width: 5em;
+}
+#betControls > .btn-group > button {
+  width: 5em;
+}
 
 /**
  * Game Table
