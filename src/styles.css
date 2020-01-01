@@ -3,7 +3,10 @@
  */
 body {
   background-color: #056933;
-  margin-top: 50px;
+}
+
+#gameContainer {
+  margin-top: 20px;
 }
 
 /**
@@ -111,8 +114,7 @@ body {
   text-align: center;
 }
 .Card-FaceDown {
-  color: blue;
-  background: blue;
+  background: #17a2b8;
   box-sizing: border-box;
   border: 0.1em solid white;
 }
@@ -127,60 +129,77 @@ body {
  * Card positioning
  * TODO: Automate this with JS
  */
-.card-1 {
+.handcard-1 {
   position: absolute;
   top: 0em;
   left: 0em;
 }
-.card-2 {
+.handcard-2 {
   position: absolute;
   top: 1.4em;
   left: 1.2em;
 }
-.card-3 {
+.handcard-3 {
   position: absolute;
   top: calc(1.4em*2);
   left: calc(1.2em*2);
 }
-.card-4 {
+.handcard-4 {
   position: absolute;
   top: calc(1.4em*3);
   left: calc(1.2em*3);
 }
-.card-5 {
+.handcard-5 {
   position: absolute;
   top: calc(1.4em*4);
   left: calc(1.2em*4);
 }
-.card-6 {
+.handcard-6 {
   position: absolute;
   top: calc(1.4em*5);
   left: calc(1.2em*0);
 }
-.card-7 {
+.handcard-7 {
   position: absolute;
   top: calc(1.4em*6);
   left: calc(1.2em*1);
 }
-.card-8 {
+.handcard-8 {
   position: absolute;
   top: calc(1.4em*7);
   left: calc(1.2em*2);
 }
-.card-9 {
+.handcard-9 {
   position: absolute;
   top: calc(1.4em*8);
   left: calc(1.2em*3);
 }
-.card-10 {
+.handcard-10 {
   position: absolute;
   top: calc(1.4em*9);
   left: calc(1.2em*4);
 }
-.card-11 {
+.handcard-11 {
   position: absolute;
   top: 2.8em;
   left: 2.4em;
   top: calc(1.4em*10);
   left: calc(1.2em*5);
 }
+
+/**
+ * Material Icons Sizing
+ */
+/* .material-icons { font-size: inherit; } */
+.material-icons.md-12 { font-size: 12px; }
+.material-icons.md-14 { font-size: 14px; }
+.material-icons.md-16 { font-size: 16px; }
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+/**
+ * Material Icons Config
+ */
+

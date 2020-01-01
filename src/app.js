@@ -7,8 +7,8 @@ BlackjackAI.controller( 'BlackjackGameController', ['$scope', 'BlackjackGameServ
   self.game = {
     opts: null,
     players: null,
-    gameState = null,
-    shoe = null
+    gameState: null,
+    shoe: null
   };
 
 }]);

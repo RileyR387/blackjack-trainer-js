@@ -3,21 +3,56 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
   <link rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="styles.css" >
   <title>Blackjack</title>
 </head>
 <body ng-app="BlackjackAI" >
   <!--
+      Nav
+    -->
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-between">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarlinks" aria-controls="navbarlinks" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#" >Blackjack</a>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarlinks">
+      <ul class="navbar-nav justify-content-end">
+        <li class="nav-item active">
+          <a class="nav-link d-flex align-items-center" href="#">
+            <i class="material-icons">settings_applications</i>
+            &nbsp;Settings
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link d-flex align-items-center" href="#">
+            <i class="material-icons">help_outline</i>
+            &nbsp;Help
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link d-flex align-items-center" href="#">
+            <i class="material-icons">info</i>
+            &nbsp;About
+          </a>
+        </li>
+      </ul>
+      <!--
+      &nbsp;
+      <button class="btn btn-sm btn-outline-info my-2 my-sm-0 d-flex align-items-center" >
+        <i class="material-icons">settings_applications</i>
+        &nbsp;Settings
+      </button>
+      -->
+    </div>
+  </nav>
+  <!--
       Main Container
     -->
-  <div class="container" ng-controller="BlackjackGameController as BJG">
-
-    <div class="nav">
-    </div><!-- .nav -->
+  <div id="gameContainer" class="container" ng-controller="BlackjackGameController as BJG">
 
     <div id="dealerBox" class="dealerBox">
       <div class="dealer">
@@ -62,7 +97,7 @@
 
       <div id="player_1" class="player">
         <div class="hand">
-          <div class="PlayingCard card-1">
+          <div class="PlayingCard handcard-1">
             <div class="CardFace Card-Heart">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">K</div>
@@ -75,7 +110,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-2">
+          <div class="PlayingCard handcard-2">
             <div class="CardFace Card-Diamond">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">3</div>
@@ -88,7 +123,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-3">
+          <div class="PlayingCard handcard-3">
             <div class="CardFace Card-Heart">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">2</div>
@@ -109,7 +144,7 @@
 
       <div id="player_1" class="player">
         <div class="hand">
-          <div class="PlayingCard card-1">
+          <div class="PlayingCard handcard-1">
             <div class="CardFace Card-Heart">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">9</div>
@@ -122,7 +157,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-2">
+          <div class="PlayingCard handcard-2">
             <div class="CardFace Card-Diamond">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">2</div>
@@ -135,7 +170,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-3 doubledDownCard">
+          <div class="PlayingCard handcard-3 doubledDownCard">
             <div class="CardFace Card-Heart">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">10</div>
@@ -156,7 +191,7 @@
 
       <div id="player_2" class="player">
         <div class="hand" >
-          <div class="PlayingCard card-1">
+          <div class="PlayingCard handcard-1">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">A</div>
@@ -169,7 +204,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-2">
+          <div class="PlayingCard handcard-2">
             <div class="CardFace Card-Diamond">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">J</div>
@@ -190,7 +225,7 @@
 
       <div id="player_4" class="player">
         <div class="hand" >
-          <div class="PlayingCard card-1">
+          <div class="PlayingCard handcard-1">
             <div class="CardFace Card-Diamond">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">Q</div>
@@ -203,7 +238,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-2">
+          <div class="PlayingCard handcard-2">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">A</div>
@@ -224,7 +259,7 @@
 
       <div id="player_5" class="player">
         <div class="hand" >
-          <div class="PlayingCard card-1">
+          <div class="PlayingCard handcard-1">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">2</div>
@@ -237,7 +272,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-2">
+          <div class="PlayingCard handcard-2">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">2</div>
@@ -250,7 +285,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-3">
+          <div class="PlayingCard handcard-3">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">2</div>
@@ -263,7 +298,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-4">
+          <div class="PlayingCard handcard-4">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">2</div>
@@ -276,7 +311,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-5">
+          <div class="PlayingCard handcard-5">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">2</div>
@@ -289,7 +324,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-6">
+          <div class="PlayingCard handcard-6">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">2</div>
@@ -302,7 +337,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-7">
+          <div class="PlayingCard handcard-7">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">A</div>
@@ -315,7 +350,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-8">
+          <div class="PlayingCard handcard-8">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">A</div>
@@ -328,7 +363,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-9">
+          <div class="PlayingCard handcard-9">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">A</div>
@@ -341,7 +376,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-10">
+          <div class="PlayingCard handcard-10">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">A</div>
@@ -354,7 +389,7 @@
               </div>
             </div>
           </div><!-- .PlayingCard -->
-          <div class="PlayingCard card-11">
+          <div class="PlayingCard handcard-11">
             <div class="CardFace Card-Spade">
               <div class="CardTopLeft">
                 <div class="CardTopLeftValue">A</div>
@@ -376,7 +411,7 @@
       <div id="player_6" class="player">
         <div class="splitHand">
           <div class="hand" >
-            <div class="PlayingCard card-1">
+            <div class="PlayingCard handcard-1">
               <div class="CardFace Card-Diamond">
                 <div class="CardTopLeft">
                   <div class="CardTopLeftValue">9</div>
@@ -389,7 +424,7 @@
                 </div>
               </div>
             </div><!-- .PlayingCard -->
-            <div class="PlayingCard card-2">
+            <div class="PlayingCard handcard-2">
               <div class="CardFace Card-Spade">
                 <div class="CardTopLeft">
                   <div class="CardTopLeftValue">A</div>
@@ -404,7 +439,7 @@
             </div><!-- .PlayingCard -->
           </div><!-- .hand -->
           <div class="hand" >
-            <div class="PlayingCard card-1">
+            <div class="PlayingCard handcard-1">
               <div class="CardFace Card-Diamond">
                 <div class="CardTopLeft">
                   <div class="CardTopLeftValue">9</div>
@@ -417,7 +452,7 @@
                 </div>
               </div>
             </div><!-- .PlayingCard -->
-            <div class="PlayingCard card-2">
+            <div class="PlayingCard handcard-2">
               <div class="CardFace Card-Spade">
                 <div class="CardTopLeft">
                   <div class="CardTopLeftValue">A</div>
@@ -432,7 +467,7 @@
             </div><!-- .PlayingCard -->
           </div><!-- .hand -->
           <div class="hand" >
-            <div class="PlayingCard card-1">
+            <div class="PlayingCard handcard-1">
               <div class="CardFace Card-Diamond">
                 <div class="CardTopLeft">
                   <div class="CardTopLeftValue">9</div>
@@ -445,7 +480,7 @@
                 </div>
               </div>
             </div><!-- .PlayingCard -->
-            <div class="PlayingCard card-2">
+            <div class="PlayingCard handcard-2">
               <div class="CardFace Card-Spade">
                 <div class="CardTopLeft">
                   <div class="CardTopLeftValue">A</div>
