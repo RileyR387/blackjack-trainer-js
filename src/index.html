@@ -52,7 +52,7 @@
   <!--
       Main Container
     -->
-  <div id="gameContainer" class="container" ng-controller="BlackjackGameController as BJG">
+  <div id="gameContainer" ng-controller="BlackjackGameController as BJG">
 
     <div id="dealerBox" class="dealerBox">
       <div class="dealer">
@@ -93,9 +93,9 @@
       </div><!-- .player -->
     </div><!-- #dealerBox -->
 
-    <div id="playersBox">
+    <div id="playersBox" class="row no-gutters">
 
-      <div id="player_1" class="player">
+      <div id="player_1" class="player col-xs-2">
         <div class="hand">
           <div class="PlayingCard handcard-1">
             <div class="CardFace Card-Heart">
@@ -137,12 +137,14 @@
             </div>
           </div><!-- .PlayingCard -->
         </div><!-- .hand -->
-        <div class="player-data">
-          <p>Player 1</p>
-        </div><!-- .player-data -->
+        <ul class="list-group player-data">
+          <li class="list-group-item">Player 1</li>
+          <li class="list-group-item">Bet: $10</li>
+          <li class="list-group-item">Bank: $200.00</li>
+        </ul>
       </div><!-- .player -->
 
-      <div id="player_1" class="player">
+      <div id="player_2" class="player col-xs-2">
         <div class="hand">
           <div class="PlayingCard handcard-1">
             <div class="CardFace Card-Heart">
@@ -184,12 +186,14 @@
             </div>
           </div><!-- .PlayingCard -->
         </div><!-- .hand -->
-        <div class="player-data">
-          <p>Player 2</p>
-        </div><!-- .player-data -->
+        <ul class="list-group player-data">
+          <li class="list-group-item">Player 2</li>
+          <li class="list-group-item">Bet: $10</li>
+          <li class="list-group-item">Bank: $200.00</li>
+        </ul>
       </div><!-- .player -->
 
-      <div id="player_2" class="player">
+      <div id="player_3" class="player col-xs-2">
         <div class="hand" >
           <div class="PlayingCard handcard-1">
             <div class="CardFace Card-Spade">
@@ -218,12 +222,14 @@
             </div>
           </div><!-- .PlayingCard -->
         </div><!-- .hand -->
-        <div class="player-data">
-          <p>Player 3</p>
-        </div><!-- .player-data -->
+        <ul class="list-group player-data">
+          <li class="list-group-item">Player 3</li>
+          <li class="list-group-item">Bet: $10</li>
+          <li class="list-group-item">Bank: $200.00</li>
+        </ul>
       </div><!-- .player -->
 
-      <div id="player_4" class="player">
+      <div id="player_4" class="player col-xs-2">
         <div class="hand" >
           <div class="PlayingCard handcard-1">
             <div class="CardFace Card-Diamond">
@@ -252,12 +258,14 @@
             </div>
           </div><!-- .PlayingCard -->
         </div><!-- .hand -->
-        <div class="player-data">
-          <p>Player 4</p>
-        </div><!-- .player-data -->
+        <ul class="list-group player-data">
+          <li class="list-group-item">Player 4</li>
+          <li class="list-group-item">Bet: $10</li>
+          <li class="list-group-item">Bank: $200.00</li>
+        </ul>
       </div><!-- .player -->
 
-      <div id="player_5" class="player">
+      <div id="player_5" class="player col-xs-2">
         <div class="hand" >
           <div class="PlayingCard handcard-1">
             <div class="CardFace Card-Spade">
@@ -403,12 +411,14 @@
             </div>
           </div><!-- .PlayingCard -->
         </div><!-- .hand -->
-        <div class="player-data">
-          <p>Player 5</p>
-        </div><!-- .player-data -->
+        <ul class="list-group player-data">
+          <li class="list-group-item">Player 5</li>
+          <li class="list-group-item">Bet: $10</li>
+          <li class="list-group-item">Bank: $200.00</li>
+        </ul>
       </div><!-- .player -->
 
-      <div id="player_6" class="player">
+      <div id="player_6" class="player col-xs-2">
         <div class="splitHand">
           <div class="hand" >
             <div class="PlayingCard handcard-1">
@@ -495,9 +505,11 @@
             </div><!-- .PlayingCard -->
           </div><!-- .hand -->
         </div><!-- .splitHand -->
-        <div class="player-data">
-          <p>Player 6</p>
-        </div><!-- .player-data -->
+        <ul class="list-group player-data">
+          <li class="list-group-item">Player 6</li>
+          <li class="list-group-item">Bet: $10</li>
+          <li class="list-group-item">Bank: $200.00</li>
+        </ul>
       </div><!-- .player -->
 
     </div> <!-- #playersBox -->
@@ -534,7 +546,7 @@
           </div><!-- .btn-group -->
           <!--
           <div class="input-group justify-content-end">
-            <span class="input-group-text" >Balance&nbsp;<span id="balanceDisplay"> $225.00</span></span>
+            <span class="input-group-text" >Bank&nbsp;<span id="balanceDisplay"> $225.00</span></span>
           </div>
           -->
         </div><!-- .btn-toolbar -->

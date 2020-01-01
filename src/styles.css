@@ -1,8 +1,18 @@
+
+/**
+ * Globals
+ */
+:root{
+  --cardHorizonalSpace: 1.2em;
+  --cardVerticalSpace: 2.1em;
+  --tableBgColor: #056933;
+}
+
 /**
  * Page
  */
 body {
-  background-color: #056933;
+  background-color: var(--tableBgColor);
 }
 
 #gameContainer {
@@ -36,18 +46,27 @@ body {
   display: block;
   text-align: center;
   width: 100%;
-  margin-top: 3em;
 }
 .player {
   display: inline-block;
   position: relative;
-  padding-left: 1em;
-  padding-right: 1em;
+  margin-top: 1em;
   min-width: 8em;
+  border-radius: .3em;
+  box-sizing: border-box;
+  border: 0.1em solid lightgreen;
+}
+.player > ul > .list-group-item {
+  background: lightgreen;
+  font-size: 10pt;
+  padding: 0;
+  margin: 0;
 }
 .hand {
   position: sticky;
-  min-height: 15em;
+  display: block;
+  margin: 0.5em;
+  height: 4.2em;
 }
 .splitHand {
   display: block;
@@ -129,6 +148,8 @@ body {
 }
 .doubledDownCard {
   transform: rotate(-90deg);
+  margin-top: calc(var(--cardHorizonalSpace)*.2);
+  margin-left: calc(var(--cardHorizonalSpace));
 }
 .Card-FaceDown > .CardFace {
   visibility: hidden;
@@ -140,55 +161,126 @@ body {
  */
 .handcard-1 {
   position: absolute;
-  top: 0em;
   left: 0em;
 }
 .handcard-2 {
   position: absolute;
+  left: var(--cardHorizonalSpace);
+}
+.handcard-3 {
+  position: absolute;
+  left: calc(var(--cardHorizonalSpace)*2);
+}
+.handcard-4 {
+  position: absolute;
+  left: calc(var(--cardHorizonalSpace)*3);
+}
+.handcard-5 {
+  position: absolute;
+  left: calc(var(--cardHorizonalSpace)*4);
+}
+.handcard-6 {
+  position: absolute;
+  top: var(--cardVerticalSpace);
+  left: calc(var(--cardHorizonalSpace)*1);
+}
+.handcard-7 {
+  position: absolute;
+  top: var(--cardVerticalSpace);
+  left: calc(var(--cardHorizonalSpace)*2);
+}
+.handcard-8 {
+  position: absolute;
+  top: var(--cardVerticalSpace);
+  left: calc(var(--cardHorizonalSpace)*3);
+}
+.handcard-9 {
+  position: absolute;
+  top: var(--cardVerticalSpace);
+  left: calc(var(--cardHorizonalSpace)*4);
+}
+.handcard-10 {
+  position: absolute;
+  top: var(--cardVerticalSpace);
+  left: calc(var(--cardHorizonalSpace)*5);
+}
+.handcard-11 {
+  position: absolute;
+  top: calc(var(--cardVerticalSpace)*2);
+  left: calc(var(--cardHorizonalSpace)*2);
+}
+.handcard-12 {
+  position: absolute;
+  top: calc(var(--cardVerticalSpace)*2);
+  left: calc(var(--cardHorizonalSpace)*3);
+}
+.handcard-13 {
+  position: absolute;
+  top: calc(var(--cardVerticalSpace)*2);
+  left: calc(var(--cardHorizonalSpace)*4);
+}
+.handcard-14 {
+  position: absolute;
+  top: calc(var(--cardVerticalSpace)*2);
+  left: calc(var(--cardHorizonalSpace)*5);
+}
+.handcard-15 {
+  position: absolute;
+  top: calc(var(--cardVerticalSpace)*2);
+  left: calc(var(--cardHorizonalSpace)*6);
+}
+
+.handcardV-1 {
+  position: absolute;
+  top: 0em;
+  left: 0em;
+}
+.handcardV-2 {
+  position: absolute;
   top: 1.4em;
   left: 1.2em;
 }
-.handcard-3 {
+.handcardV-3 {
   position: absolute;
   top: calc(1.4em*2);
   left: calc(1.2em*2);
 }
-.handcard-4 {
+.handcardV-4 {
   position: absolute;
   top: calc(1.4em*3);
   left: calc(1.2em*3);
 }
-.handcard-5 {
+.handcardV-5 {
   position: absolute;
   top: calc(1.4em*4);
   left: calc(1.2em*4);
 }
-.handcard-6 {
+.handcardV-6 {
   position: absolute;
   top: calc(1.4em*5);
   left: calc(1.2em*0);
 }
-.handcard-7 {
+.handcardV-7 {
   position: absolute;
   top: calc(1.4em*6);
   left: calc(1.2em*1);
 }
-.handcard-8 {
+.handcardV-8 {
   position: absolute;
   top: calc(1.4em*7);
   left: calc(1.2em*2);
 }
-.handcard-9 {
+.handcardV-9 {
   position: absolute;
   top: calc(1.4em*8);
   left: calc(1.2em*3);
 }
-.handcard-10 {
+.handcardV-10 {
   position: absolute;
   top: calc(1.4em*9);
   left: calc(1.2em*4);
 }
-.handcard-11 {
+.handcardV-11 {
   position: absolute;
   top: 2.8em;
   left: 2.4em;
