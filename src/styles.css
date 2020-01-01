@@ -16,7 +16,6 @@ body {
 }
 
 #gameContainer {
-  margin-top: 20px;
 }
 #actionInput{
   margin: 1em;
@@ -33,14 +32,28 @@ body {
  */
 #dealerBox {
   display: block;
+  margin-top: 0.5em;
   text-align: center;
 }
 .dealer {
   display: inline-block;
   position: relative;
-  padding-left: 1em;
-  padding-right: 1em;
-  min-width: 8em;
+  min-width: 25%;
+  border-radius: .3em;
+  box-sizing: border-box;
+  border: 0.1em solid lightgreen;
+}
+.dealer-hand {
+  position: sticky;
+  display: block;
+  margin: 0.5em;
+  height: 4.2em;
+}
+.dealer > ul > .list-group-item {
+  background: lightgreen;
+  font-size: 10pt;
+  padding: 0;
+  margin: 0;
 }
 #playersBox {
   display: block;
@@ -80,7 +93,7 @@ body {
 }
 .player-data {
   position: relative;
-  bottom: 0px;
+  bottom: 0;
   text-align: center;
 }
 
@@ -201,28 +214,28 @@ body {
 }
 .handcard-10 {
   position: absolute;
-  top: var(--cardVerticalSpace);
-  left: calc(var(--cardHorizonalSpace)*5);
+  top: calc(var(--cardVerticalSpace)*2);
+  left: calc(var(--cardHorizonalSpace)*2);
 }
 .handcard-11 {
   position: absolute;
   top: calc(var(--cardVerticalSpace)*2);
-  left: calc(var(--cardHorizonalSpace)*2);
+  left: calc(var(--cardHorizonalSpace)*3);
 }
 .handcard-12 {
   position: absolute;
   top: calc(var(--cardVerticalSpace)*2);
-  left: calc(var(--cardHorizonalSpace)*3);
+  left: calc(var(--cardHorizonalSpace)*4);
 }
 .handcard-13 {
   position: absolute;
   top: calc(var(--cardVerticalSpace)*2);
-  left: calc(var(--cardHorizonalSpace)*4);
+  left: calc(var(--cardHorizonalSpace)*5);
 }
 .handcard-14 {
   position: absolute;
   top: calc(var(--cardVerticalSpace)*2);
-  left: calc(var(--cardHorizonalSpace)*5);
+  left: calc(var(--cardHorizonalSpace)*6);
 }
 .handcard-15 {
   position: absolute;
