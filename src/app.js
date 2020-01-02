@@ -4,6 +4,8 @@
  * OSL-3.0
  */
 
+$('#gSettingsModal').modal({show: true});
+
 var BlackjackAI = angular.module('BlackjackAI', []);
 
 BlackjackAI.controller( 'BlackjackGameController', ['$scope', 'BlackjackGameService', function( $scope, BlackjackGameService ) {
