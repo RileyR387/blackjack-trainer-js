@@ -278,6 +278,9 @@ body {
   background: var(--dark);
   color: var(--white);
 }
+.modal-body .form-group {
+  margin-bottom: 0.2em;
+}
 .modal-body  .list-group-item {
   background: var(--dark);
   color: var(--white);
