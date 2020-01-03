@@ -11,7 +11,9 @@
 :root{
   --cardHorizonalSpace: 1.2em;
   --cardVerticalSpace: 2.1em;
-  --tableBgColor: #056933;
+  --tableBgColor: #185333;
+  --playerOutlineColor: #37c837;
+  --playerBgColor: #156215;
 }
 
 /**
@@ -45,7 +47,7 @@ body {
   width: 5em;
 }
 #betControls > .btn-group > button {
-  width: 4em;
+  width: 3.6em;
 }
 
 /**
@@ -62,7 +64,7 @@ body {
   min-width: 25%;
   border-radius: .3em;
   box-sizing: border-box;
-  border: 0.1em solid lightgreen;
+  border: 0.1em solid var(--playerOutlineColor);
 }
 .dealer-hand {
   position: sticky;
@@ -71,7 +73,7 @@ body {
   height: 4.2em;
 }
 .dealer > ul > .list-group-item {
-  background: lightgreen;
+  background: var(--playerOutlineColor);
   font-size: 10pt;
   padding: 0;
   margin: 0;
@@ -84,15 +86,16 @@ body {
 .player {
   display: inline-block;
   position: relative;
-  margin-top: 1em;
+  margin-top: 0.2em;
   min-width: 8em;
   border-radius: .3em;
   box-sizing: border-box;
-  border: 0.1em solid lightgreen;
+  border: 0.1em solid var(--playerOutlineColor);
 }
 .player > ul > .list-group-item {
-  background: lightgreen;
+  background: var(--playerBgColor);
   font-size: 10pt;
+  color: white;
   padding: 0;
   margin: 0;
 }
@@ -271,7 +274,11 @@ body {
   background: var(--dark);
   color: var(--white);
 }
-.modal-body > .list-group > .list-group-item {
+.modal-body input {
+  background: var(--dark);
+  color: var(--white);
+}
+.modal-body  .list-group-item {
   background: var(--dark);
   color: var(--white);
   border: none;
