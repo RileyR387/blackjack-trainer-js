@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="BlackjackAI">
 <head>
 <!--
 /**
@@ -15,27 +15,32 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="styles.css" >
+
   <title>Blackjack</title>
+
 </head>
-<body ng-app="BlackjackAI" >
+<body ng-controller="BlackjackGameController as bjg">
   <!--
       Nav
     -->
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-between">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarlinks" aria-controls="navbarlinks" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarlinks"
+            aria-controls="navbarlinks" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="#" >Blackjack</a>
     <div class="collapse navbar-collapse justify-content-end" id="navbarlinks">
       <ul class="navbar-nav justify-content-end">
         <li class="nav-item active">
-          <a class="nav-link d-flex align-items-center" data-toggle="modal" data-target="#pSettingsModal" href="#">
+          <a class="nav-link d-flex align-items-center" ng-click="playerSettingsDialog.open(bjg.game.players)"
+             data-toggle="modal" data-target="#pSettingsModal" href="#">
             <i class="material-icons">account_circle</i>
             &nbsp;Player Settings
           </a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link d-flex align-items-center" data-toggle="modal" data-target="#gSettingsModal" href="#">
+          <a class="nav-link d-flex align-items-center" ng-click="gameSettingsDialog.open(bjg.game.opts)"
+             data-toggle="modal" data-target="#gSettingsModal" href="#">
             <i class="material-icons">settings_applications</i>
             &nbsp;Game Settings
           </a>
@@ -53,24 +58,17 @@
           </a>
         </li>
       </ul>
-      <!--
-      &nbsp;
-      <button class="btn btn-sm btn-outline-info my-2 my-sm-0 d-flex align-items-center" >
-        <i class="material-icons">settings_applications</i>
-        &nbsp;Settings
-      </button>
-      -->
     </div>
   </nav>
   <!--
       Main Container
     -->
-  <div id="gameContainer" ng-controller="BlackjackGameController as BJG">
+  <div id="gameContainer">
 
     <div id="dealerBox" class="dealerBox">
       <div class="dealer">
         <ul class="list-group dealer-data">
-          <li class="list-group-item">Dealer</li>
+          <li class="list-group-item">Dealer (<span ng-bind="bjg.game.opts.deckCount"></span> Decks)</li>
         </ul>
         <div class="dealer-hand">
 
@@ -420,161 +418,64 @@
         <button type="button" class="btn btn-danger disabled" aria-label="Bet One Thousand">1000</button>
       </div><!-- .btn-group -->
     </div><!-- #betControls -->
-
   </div><!-- #gameContainer -->
-
 <!--
       Modals
   -->
-<div class="modal fade" id="pSettingsModal" tabindex="-1" role="dialog" aria-labelledby="pSettingsModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="pSettingsModalLabel">Player Settings</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Shuffle</button>
+  <game-settings-dialog model="gameSettingsDialog"></game-settings-dialog>
+  <player-settings-dialog model="playerSettingsDialog"></player-settings-dialog>
+
+  <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="helpModalLabel">Blackjack Help</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          To be determined... Wikipedia Link? :P
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="modal fade" id="gSettingsModal" tabindex="-1" role="dialog" aria-labelledby="gSettingsModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="gSettingsModalLabel">Game Settings</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-
-          <div class="form-group row">
-            <label class="col-sm-6 col-form-label" for="deckCountControls">Decks</label>
-            <div class="input-group col-sm-6">
-              <input type="text" class="form-control-plaintext" readonly name="deck_count" value="8" aria-label="Deck Count" aria-describedby="deckCountControls">
-              <div class="input-group-append" id="deckCountControls">
-                <button class="btn btn-outline-danger d-flex align-items-center" type="button"><i class="material-icons" >remove</i></button>
-                <button class="btn btn-outline-success d-flex align-items-center" type="button"><i class="material-icons" >add</i></button>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label class="col-sm-6 col-form-label" for="dealSpeedControls">Deal Rate (seconds)</label>
-            <div class="input-group col-sm-6">
-              <input type="text" class="form-control-plaintext" readonly name="deck_count" value="0.8" aria-label="Deck Count" aria-describedby="dealSpeedControls">
-              <div class="input-group-append" id="deckCountControls">
-                <button class="btn btn-outline-danger d-flex align-items-center" type="button"><i class="material-icons" >remove</i></button>
-                <button class="btn btn-outline-success d-flex align-items-center" type="button"><i class="material-icons" >add</i></button>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label class="col-sm-6 col-form-label col-auto pt-0">Show Deck Stats</label>
-            <div class="input-group col-sm-6">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck1">
-                <label class="form-check-label" for="gridCheck1"></label>
-              </div>
-            </div>
-          </div>
-
-          <fieldset class="form-group">
-            <div class="row">
-              <legend class="col-sm-6 col-form-label">Blackjack Payout</legend>
-              <div class="col-sm-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" >
-                  <label class="form-check-label" for="gridRadios1">
-                    2 to 1
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2" checked>
-                  <label class="form-check-label" for="gridRadios2">
-                    3 to 2
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" >
-                  <label class="form-check-label" for="gridRadios3">
-                    6 to 5
-                  </label>
-                </div>
-              </div>
-            </div>
-          </fieldset>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Shuffle</button>
+  <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="aboutModalLabel">About Blackjack</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group">
+            <li class="list-group-item" >Author: Riley Raschke</li>
+            <li class="list-group-item" >© 2020 rrappsdev.com</li>
+            <li class="list-group-item" >Contact: <a href="https://rileyraschke.com">https://rileyraschke.com</a></li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="helpModalLabel">Blackjack Help</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        To be determined... Wikipedia Link? :P
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="aboutModalLabel">About Blackjack</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <ul class="list-group">
-          <li class="list-group-item" >Author: Riley Raschke</li>
-          <li class="list-group-item" >© 2020 rrappsdev.com</li>
-          <li class="list-group-item" >Contact: <a href="https://rileyraschke.com">https://rileyraschke.com</a></li>
-        </ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-  <!--
-      Resources
-    -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+<!--
+    Resources
+  -->
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
           integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
           integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
           integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
