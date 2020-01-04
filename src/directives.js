@@ -42,7 +42,6 @@ app.directive('gameSettingsDialog', [function() {
     templateUrl: 'game-settings-dialog.html',
   };
 }]);
-
 app.directive('playerSettingsDialog', [function() {
   return {
     restrict: 'E',
@@ -68,4 +67,13 @@ app.directive('playerSettingsDialog', [function() {
     templateUrl: 'player-settings-dialog.html',
   };
 }]);
-
+app.directive('aboutDialog', [function() {
+  return {
+    templateUrl: 'about-dialog.html',
+  };
+}]);
+app.directive('helpDialog', [function() {
+  return {
+    templateUrl: 'help-dialog.html',
+  };
+}]);
