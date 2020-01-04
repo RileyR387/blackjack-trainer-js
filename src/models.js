@@ -16,13 +16,14 @@ var GameSettingsDialogModel = function() {
 };
 
 var PlayerSettingsDialogModel = function() {
+  this.players = [];
   this.visible = false;
-};
-PlayerSettingsDialogModel.prototype.open = function(opts) {
-  this.opts = opts;
-  this.visible = true;
-};
-PlayerSettingsDialogModel.prototype.close = function() {
-  this.visible = false;
+  this.open = function(players) {
+    this.players = players;
+    this.visible = true;
+  };
+  this.close = function() {
+    this.visible = false;
+  };
 };
 
