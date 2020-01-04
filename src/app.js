@@ -17,40 +17,8 @@ app.controller( 'BlackjackGameController', ['$scope', 'BlackjackGameService', fu
       payout: '1.5'
     },
     players: [
-      {
-        'name': 'Player1',
-        'hands': [],
-        'agent': null,
-        'roundsPlayed': 0,
-        'handsPlayed': 0,
-        'bankRoll': 200,
-        'stats': {
-          'bjs': 0,
-           'wins': 0,
-           'splits': 0,
-           'doubles': 0,
-           'pushes': 0,
-           'loses': 0,
-           'busts': 0,
-        }
-      },
-      {
-        'name': 'Player2',
-        'hands': [],
-        'agent': null,
-        'roundsPlayed': 0,
-        'handsPlayed': 0,
-        'bankRoll': 200,
-        'stats': {
-          'bjs': 0,
-           'wins': 0,
-           'splits': 0,
-           'doubles': 0,
-           'pushes': 0,
-           'loses': 0,
-           'busts': 0,
-        }
-      }
+      new PlayerModel('Player 1', null, 200),
+      new PlayerModel('Player 2', null, 200)
     ],
     dealer: {
       'name': 'Dealer',
