@@ -3,11 +3,14 @@ app.directive('playingCard', [function() {
   return {
     restrict: 'E',
     scope: {
-      card: '=cardvalue'
+      card: '=cardvalue',
+      displayDepth: '=displaydepth',
+      doubleDown: '=doubledown',
+      faceDown: '=facedown'
     },
     link: function( scope, element, attr ) {
-      if( scope.card.doubleDown ){ element.addClass('doubledDownCard'); }
-      if( scope.card.faceDown ){ element.addClass('Card-FaceDown'); }
+      if( scope.doubleDown ){ element.addClass('doubledDownCard'); }
+      if( scope.faceDown ){ element.addClass('Card-FaceDown'); }
       if( scope.card.suit == '♥' ) { element.addClass('Card-Red'); }
       if( scope.card.suit == '♦' ) { element.addClass('Card-Red'); }
       //if( scope.card.suit == '♠' ) { element.addClass('Card-Spade'); }

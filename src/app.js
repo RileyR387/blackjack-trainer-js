@@ -20,26 +20,19 @@ app.controller( 'BlackjackGameController', ['$scope', 'BlackjackGameService', fu
       new PlayerModel('Player 1', null, 200),
       new PlayerModel('Player 2', null, 200)
     ],
-    dealer: {
-      'name': 'Dealer',
-      'hands': [],
-      'agent': null,
-      'roundsPlayed': 0,
-      'handsPlayed': 0,
-      'bankRoll': 200,
-      'stats': {
-        'bjs': 0,
-         'wins': 0,
-         'splits': 0,
-         'doubles': 0,
-         'pushes': 0,
-         'loses': 0,
-         'busts': 0,
-      }
-    },
+    dealer: new PlayerModel('Dealer', null, 100000),
     gameState: null,
     shoe: null
   };
+
+  this.game.players[0].hands = [new HandModel()];
+  this.game.players[1].hands = [new HandModel(), new HandModel()];
+/*
+  this.game.players.forEach(function(player, index){
+    player.addHand( [] );
+  });
+  */
+
 }]);
 
 app.factory('BlackjackGameService', [ '$q', function( $q ){

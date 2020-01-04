@@ -9,7 +9,7 @@
  */
 -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, shrink-to-fit=yes, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <link rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -71,92 +71,32 @@
           <li class="list-group-item">Dealer (<span ng-bind="bjg.game.opts.deckCount"></span> Decks)</li>
         </ul>
         <div class="dealer-hand">
-          <playing-card data-cardvalue="{value:  10, suit: '♣', displayDepth: 0, faceDown: false }"></playing-card>
-          <playing-card data-cardvalue="{value:   2, suit: '♥', displayDepth: 0, faceDown: true  }"></playing-card>
+          <playing-card data-cardvalue="{rank: '10', suit: '♣'}" data-displayDepth="0" data-faceDown="false"></playing-card>
+          <playing-card data-cardvalue="{rank:  '2', suit: '♥'}" data-displayDepth="0" data-faceDown="true"></playing-card>
         </div><!-- .hand -->
       </div><!-- .player -->
     </div><!-- #dealerBox -->
 
     <div id="playersBox" class="row no-gutters">
-
-      <div id="player_1" class="player col-xs-2">
-        <div class="hand">
-          <playing-card data-cardvalue="{value:  'A', suit: '♥', displayDepth: 1 }"></playing-card>
-          <playing-card data-cardvalue="{value:    3, suit: '♦', displayDepth: 2 }"></playing-card>
-          <playing-card data-cardvalue="{value:    2, suit: '♣', displayDepth: 3 }"></playing-card>
-        </div><!-- .hand -->
-        <ul class="list-group player-data">
-          <li class="list-group-item">Player 1</li>
-          <li class="list-group-item">Bet: $10</li>
-          <li class="list-group-item">Bank: $200.00</li>
-        </ul>
-      </div><!-- .player -->
-
-      <div id="player_2" class="player col-xs-2">
-        <div class="hand" >
-          <playing-card data-cardvalue="{value:  'A', suit: '♦', displayDepth: 1 }"></playing-card>
-          <playing-card data-cardvalue="{value:  'A', suit: '♠', displayDepth: 2 }"></playing-card>
-        </div><!-- .hand -->
-        <ul class="list-group player-data">
-          <li class="list-group-item">Player 2</li>
-          <li class="list-group-item">Bet: $10</li>
-          <li class="list-group-item">Bank: $200.00</li>
-        </ul>
-      </div><!-- .player -->
-
-      <div id="player_3" class="player col-xs-2">
-        <div class="hand" >
-          <playing-card data-cardvalue="{value:  'A', suit: '♠', displayDepth: 1 }"></playing-card>
-          <playing-card data-cardvalue="{value:  'J', suit: '♦', displayDepth: 2 }"></playing-card>
-        </div><!-- .hand -->
-        <ul class="list-group player-data">
-          <li class="list-group-item">Player 3</li>
-          <li class="list-group-item">Bet: $10</li>
-          <li class="list-group-item">Bank: $200.00</li>
-        </ul>
-      </div><!-- .player -->
-
-      <div id="player_4" class="player col-xs-2">
-        <div class="hand">
-          <playing-card data-cardvalue="{value:   9, suit: '♥', displayDepth: 1 }"></playing-card>
-          <playing-card data-cardvalue="{value:   2, suit: '♦', displayDepth: 2 }"></playing-card>
-          <playing-card data-cardvalue="{value:  10, suit: '♠', displayDepth: 3, doubleDown: true }"></playing-card>
-        </div><!-- .hand -->
-
-        <ul class="list-group player-data">
-          <li class="list-group-item">Player 4</li>
-          <li class="list-group-item">Bet: $10</li>
-          <li class="list-group-item">Bank: $200.00</li>
-        </ul>
-      </div><!-- .player -->
-
-      <div id="player_5" class="player col-xs-2">
-        <div class="hand" >
-          <playing-card data-cardvalue="{value:   2, suit: '♠', displayDepth: 1 }"></playing-card>
-          <playing-card data-cardvalue="{value:   2, suit: '♦', displayDepth: 2 }"></playing-card>
-          <playing-card data-cardvalue="{value:   2, suit: '♣', displayDepth: 3 }"></playing-card>
-          <playing-card data-cardvalue="{value:   2, suit: '♥', displayDepth: 4 }"></playing-card>
-          <playing-card data-cardvalue="{value:   2, suit: '♠', displayDepth: 5 }"></playing-card>
-        </div><!-- .hand -->
-        <ul class="list-group player-data">
-          <li class="list-group-item">Player 5</li>
-          <li class="list-group-item">Bet: $10</li>
-          <li class="list-group-item">Bank: $200.00</li>
-        </ul>
-      </div><!-- .player -->
-
-      <div id="player_6" class="player col-xs-2">
-          <div class="hand" >
-            <playing-card data-cardvalue="{value:   9, suit: '♦', displayDepth: 1}"></playing-card>
-            <playing-card data-cardvalue="{value: 'K', suit: '♥', displayDepth: 2}"></playing-card>
-          </div><!-- .hand -->
-        <ul class="list-group player-data">
-          <li class="list-group-item">Player 6</li>
-          <li class="list-group-item">Bet: $10</li>
-          <li class="list-group-item">Bank: $200.00</li>
-        </ul>
-      </div><!-- .player -->
-
+      <div ng-repeat="player in bjg.game.players" class="player col-xs-2">
+          <div ng-if="player.hands.length > 1" class="splitHand">
+            <div ng-repeat="hand in player.hands" class="hand">
+              <playing-card data-cardvalue="{rank:  'A', suit: '♥'}" data-displayDepth="1" data-faceDown="false"></playing-card>
+              <playing-card data-cardvalue="{rank:  '3', suit: '♦'}" data-displayDepth="2" data-faceDown="false"></playing-card>
+              <playing-card data-cardvalue="{rank:  '2', suit: '♣'}" data-displayDepth="3" data-faceDown="false" ></playing-card>
+            </div><!-- ng-repeat .hand -->
+          </div>
+          <div ng-if="player.hands.length == 1" ng-repeat="hand in player.hands" class="hand">
+            <playing-card data-cardvalue="{rank:  'A', suit: '♥'}" data-displayDepth="$index+1" data-faceDown="false"></playing-card>
+            <playing-card data-cardvalue="{rank:  '3', suit: '♦'}" data-displayDepth="2" data-faceDown="false"></playing-card>
+            <playing-card data-cardvalue="{rank:  '2', suit: '♣'}" data-displayDepth="3" data-faceDown="false" data-doubleDown="true"></playing-card>
+          </div><!-- ng-repeat .hand -->
+          <ul class="list-group player-data">
+            <li class="list-group-item">{{player.name}}</li>
+            <li class="list-group-item">Bet: $10</li>
+            <li class="list-group-item">Bank: ${{player.bankRoll}}</li>
+          </ul>
+      </div><!-- ng-repeat .player -->
     </div> <!-- #playersBox -->
 
     <div id="actionInput" class="d-flex justify-content-center">
