@@ -167,10 +167,10 @@ body {
   text-align: center;
   transform: rotate(-180deg);
 }
-.Card-Diamond, .Card-Heart {
+.Card-Red, .Card-Diamond, .Card-Heart {
   color: red;
 }
-.Card-Spade, .Card-Club {
+.Card-Black, .Card-Spade, .Card-Club {
   color: black;
 }
 .CardMiddleBody {
@@ -178,17 +178,24 @@ body {
   margin: 20px;
   text-align: center;
 }
+/*
 .Card-FaceDown {
   background: #17a2b8;
   box-sizing: border-box;
   border: 0.1em solid white;
 }
-.doubledDownCard {
+*/
+.Card-FaceDown .PlayingCard {
+  background: #17a2b8;
+  box-sizing: border-box;
+  border: 0.1em solid white;
+}
+.doubledDownCard .PlayingCard {
   transform: rotate(-90deg);
   margin-top: calc(var(--cardHorizonalSpace)*.2);
   margin-left: calc(var(--cardHorizonalSpace));
 }
-.Card-FaceDown > .CardFace {
+.Card-FaceDown .CardFace {
   visibility: hidden;
 }
 
@@ -196,6 +203,8 @@ body {
  * Card positioning
  * TODO: Automate this with JS
  */
+.handcard-0 {
+}
 .handcard-1 {
   position: absolute;
   left: 0em;

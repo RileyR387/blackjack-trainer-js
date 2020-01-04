@@ -9,7 +9,7 @@
  */
 -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, shrink-to-fit=yes, user-scalable=no">
   <link rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -71,35 +71,8 @@
           <li class="list-group-item">Dealer (<span ng-bind="bjg.game.opts.deckCount"></span> Decks)</li>
         </ul>
         <div class="dealer-hand">
-
-          <div class="PlayingCard">
-            <div class="CardFace Card-Club">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">10</div>
-                <div class="CardTopLeftSuit">♣</div>
-              </div>
-              <div class="CardMiddleBody">♣ ♣ ♣ ♣</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♣</div>
-                <div class="CardBottomRightValue">10</div>
-              </div>
-            </div><!-- .CardFace -->
-          </div><!-- .PlayingCard -->
-
-          <div class="PlayingCard Card-FaceDown">
-            <div class="CardFace Card-Heart">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">2</div>
-                <div class="CardTopLeftSuit">♥</div>
-              </div>
-              <div class="CardMiddleBody">♥ ♥</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♥</div>
-                <div class="CardBottomRightValue">2</div>
-              </div>
-            </div><!-- .CardFace -->
-          </div><!-- .PlayingCard -->
-
+          <playing-card data-cardvalue="{value:  10, suit: '♣', displayDepth: 0, faceDown: false }"></playing-card>
+          <playing-card data-cardvalue="{value:   2, suit: '♥', displayDepth: 0, faceDown: true  }"></playing-card>
         </div><!-- .hand -->
       </div><!-- .player -->
     </div><!-- #dealerBox -->
@@ -108,45 +81,9 @@
 
       <div id="player_1" class="player col-xs-2">
         <div class="hand">
-          <div class="PlayingCard handcard-1">
-            <div class="CardFace Card-Heart">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">K</div>
-                <div class="CardTopLeftSuit">♥</div>
-              </div>
-              <div class="CardMiddleBody">♥</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♥</div>
-                <div class="CardBottomRightValue">K</div>
-              </div>
-            </div>
-          </div><!-- .PlayingCard -->
-          <div class="PlayingCard handcard-2">
-            <div class="CardFace Card-Diamond">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">3</div>
-                <div class="CardTopLeftSuit">♦</div>
-              </div>
-              <div class="CardMiddleBody">♦ ♦ ♦</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♦</div>
-                <div class="CardBottomRightValue">3</div>
-              </div>
-            </div>
-          </div><!-- .PlayingCard -->
-          <div class="PlayingCard handcard-3">
-            <div class="CardFace Card-Heart">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">2</div>
-                <div class="CardTopLeftSuit">♥</div>
-              </div>
-              <div class="CardMiddleBody">♥ ♥</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♥</div>
-                <div class="CardBottomRightValue">2</div>
-              </div>
-            </div>
-          </div><!-- .PlayingCard -->
+          <playing-card data-cardvalue="{value:  'A', suit: '♥', displayDepth: 1 }"></playing-card>
+          <playing-card data-cardvalue="{value:    3, suit: '♦', displayDepth: 2 }"></playing-card>
+          <playing-card data-cardvalue="{value:    2, suit: '♣', displayDepth: 3 }"></playing-card>
         </div><!-- .hand -->
         <ul class="list-group player-data">
           <li class="list-group-item">Player 1</li>
@@ -157,32 +94,8 @@
 
       <div id="player_2" class="player col-xs-2">
         <div class="hand" >
-          <div class="PlayingCard handcard-1">
-            <div class="CardFace Card-Diamond">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">Q</div>
-                <div class="CardTopLeftSuit">♦</div>
-              </div>
-              <div class="CardMiddleBody">♦ ♦ ♦</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♦</div>
-                <div class="CardBottomRightValue">Q</div>
-              </div>
-            </div>
-          </div><!-- .PlayingCard -->
-          <div class="PlayingCard handcard-2">
-            <div class="CardFace Card-Spade">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">A</div>
-                <div class="CardTopLeftSuit">♠</div>
-              </div>
-              <div class="CardMiddleBody">♠ ♠</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♠</div>
-                <div class="CardBottomRightValue">A</div>
-              </div>
-            </div>
-          </div><!-- .PlayingCard -->
+          <playing-card data-cardvalue="{value:  'A', suit: '♦', displayDepth: 1 }"></playing-card>
+          <playing-card data-cardvalue="{value:  'A', suit: '♠', displayDepth: 2 }"></playing-card>
         </div><!-- .hand -->
         <ul class="list-group player-data">
           <li class="list-group-item">Player 2</li>
@@ -193,32 +106,8 @@
 
       <div id="player_3" class="player col-xs-2">
         <div class="hand" >
-          <div class="PlayingCard handcard-1">
-            <div class="CardFace Card-Spade">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">A</div>
-                <div class="CardTopLeftSuit">♠</div>
-              </div>
-              <div class="CardMiddleBody">♠ ♠</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♠</div>
-                <div class="CardBottomRightValue">A</div>
-              </div>
-            </div>
-          </div><!-- .PlayingCard -->
-          <div class="PlayingCard handcard-2">
-            <div class="CardFace Card-Diamond">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">J</div>
-                <div class="CardTopLeftSuit">♦</div>
-              </div>
-              <div class="CardMiddleBody">♦ ♦ ♦</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♦</div>
-                <div class="CardBottomRightValue">J</div>
-              </div>
-            </div>
-          </div><!-- .PlayingCard -->
+          <playing-card data-cardvalue="{value:  'A', suit: '♠', displayDepth: 1 }"></playing-card>
+          <playing-card data-cardvalue="{value:  'J', suit: '♦', displayDepth: 2 }"></playing-card>
         </div><!-- .hand -->
         <ul class="list-group player-data">
           <li class="list-group-item">Player 3</li>
@@ -229,45 +118,9 @@
 
       <div id="player_4" class="player col-xs-2">
         <div class="hand">
-          <div class="PlayingCard handcard-1">
-            <div class="CardFace Card-Heart">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">9</div>
-                <div class="CardTopLeftSuit">♥</div>
-              </div>
-              <div class="CardMiddleBody">♥</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♥</div>
-                <div class="CardBottomRightValue">9</div>
-              </div>
-            </div>
-          </div><!-- .PlayingCard -->
-          <div class="PlayingCard handcard-2">
-            <div class="CardFace Card-Diamond">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">2</div>
-                <div class="CardTopLeftSuit">♦</div>
-              </div>
-              <div class="CardMiddleBody">♦ ♦ ♦</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♦</div>
-                <div class="CardBottomRightValue">2</div>
-              </div>
-            </div>
-          </div><!-- .PlayingCard -->
-          <div class="PlayingCard handcard-3 doubledDownCard">
-            <div class="CardFace Card-Heart">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">10</div>
-                <div class="CardTopLeftSuit">♥</div>
-              </div>
-              <div class="CardMiddleBody">♥ ♥</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♥</div>
-                <div class="CardBottomRightValue">10</div>
-              </div>
-            </div>
-          </div><!-- .PlayingCard -->
+          <playing-card data-cardvalue="{value:   9, suit: '♥', displayDepth: 1 }"></playing-card>
+          <playing-card data-cardvalue="{value:   2, suit: '♦', displayDepth: 2 }"></playing-card>
+          <playing-card data-cardvalue="{value:  10, suit: '♠', displayDepth: 3, doubleDown: true }"></playing-card>
         </div><!-- .hand -->
 
         <ul class="list-group player-data">
@@ -279,71 +132,11 @@
 
       <div id="player_5" class="player col-xs-2">
         <div class="hand" >
-          <div class="PlayingCard handcard-1">
-            <div class="CardFace Card-Spade">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">2</div>
-                <div class="CardTopLeftSuit">♠</div>
-              </div>
-              <div class="CardMiddleBody">♠ ♠</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♠</div>
-                <div class="CardBottomRightValue">2</div>
-              </div>
-            </div>
-          </div><!-- .PlayingCard -->
-          <div class="PlayingCard handcard-2">
-            <div class="CardFace Card-Spade">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">2</div>
-                <div class="CardTopLeftSuit">♠</div>
-              </div>
-              <div class="CardMiddleBody">♠ ♠</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♠</div>
-                <div class="CardBottomRightValue">2</div>
-              </div>
-            </div>
-          </div><!-- .PlayingCard -->
-          <div class="PlayingCard handcard-3">
-            <div class="CardFace Card-Spade">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">2</div>
-                <div class="CardTopLeftSuit">♠</div>
-              </div>
-              <div class="CardMiddleBody">♠ ♠</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♠</div>
-                <div class="CardBottomRightValue">2</div>
-              </div>
-            </div>
-          </div><!-- .PlayingCard -->
-          <div class="PlayingCard handcard-4">
-            <div class="CardFace Card-Spade">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">2</div>
-                <div class="CardTopLeftSuit">♠</div>
-              </div>
-              <div class="CardMiddleBody">♠ ♠</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♠</div>
-                <div class="CardBottomRightValue">2</div>
-              </div>
-            </div>
-          </div><!-- .PlayingCard -->
-          <div class="PlayingCard handcard-5">
-            <div class="CardFace Card-Spade">
-              <div class="CardTopLeft">
-                <div class="CardTopLeftValue">2</div>
-                <div class="CardTopLeftSuit">♠</div>
-              </div>
-              <div class="CardMiddleBody">♠ ♠</div>
-              <div class="CardBottomRight">
-                <div class="CardBottomRightSuit">♠</div>
-                <div class="CardBottomRightValue">2</div>
-              </div>
-            </div>
-          </div><!-- .PlayingCard -->
+          <playing-card data-cardvalue="{value:   2, suit: '♠', displayDepth: 1 }"></playing-card>
+          <playing-card data-cardvalue="{value:   2, suit: '♦', displayDepth: 2 }"></playing-card>
+          <playing-card data-cardvalue="{value:   2, suit: '♣', displayDepth: 3 }"></playing-card>
+          <playing-card data-cardvalue="{value:   2, suit: '♥', displayDepth: 4 }"></playing-card>
+          <playing-card data-cardvalue="{value:   2, suit: '♠', displayDepth: 5 }"></playing-card>
         </div><!-- .hand -->
         <ul class="list-group player-data">
           <li class="list-group-item">Player 5</li>
@@ -354,32 +147,8 @@
 
       <div id="player_6" class="player col-xs-2">
           <div class="hand" >
-            <div class="PlayingCard handcard-1">
-              <div class="CardFace Card-Diamond">
-                <div class="CardTopLeft">
-                  <div class="CardTopLeftValue">9</div>
-                  <div class="CardTopLeftSuit">♦</div>
-                </div>
-                <div class="CardMiddleBody">♦ ♦ ♦</div>
-                <div class="CardBottomRight">
-                  <div class="CardBottomRightSuit">♦</div>
-                  <div class="CardBottomRightValue">9</div>
-                </div>
-              </div>
-            </div><!-- .PlayingCard -->
-            <div class="PlayingCard handcard-2">
-              <div class="CardFace Card-Spade">
-                <div class="CardTopLeft">
-                  <div class="CardTopLeftValue">A</div>
-                  <div class="CardTopLeftSuit">♠</div>
-                </div>
-                <div class="CardMiddleBody">♠ ♠</div>
-                <div class="CardBottomRight">
-                  <div class="CardBottomRightSuit">♠</div>
-                  <div class="CardBottomRightValue">A</div>
-                </div>
-              </div>
-            </div><!-- .PlayingCard -->
+            <playing-card data-cardvalue="{value:   9, suit: '♦', displayDepth: 1}"></playing-card>
+            <playing-card data-cardvalue="{value: 'K', suit: '♥', displayDepth: 2}"></playing-card>
           </div><!-- .hand -->
         <ul class="list-group player-data">
           <li class="list-group-item">Player 6</li>
