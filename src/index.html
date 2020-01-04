@@ -79,6 +79,8 @@
 
     <div id="playersBox" class="row no-gutters">
       <div ng-repeat="player in bjg.game.players" class="player col-xs-2">
+          <div ng-if="player.hands.length == 0" class="hand">
+          </div>
           <div ng-if="player.hands.length > 1" class="splitHand">
             <div ng-repeat="hand in player.hands" class="hand">
               <playing-card data-cardvalue="{rank:  'A', suit: '♥'}" data-displayDepth="1" data-faceDown="false"></playing-card>
@@ -113,7 +115,7 @@
         <button type="button" class="btn btn-secondary" aria-label="Clear Current Bet">Clear</button>
         <button type="button" class="btn btn-light" aria-label="Half Last Bet">Half</button>
         <button type="button" class="btn btn-dark" aria-label="Double Last Bet">Double</button>
-        <button type="button" class="btn btn-success" aria-label="Deal Hand">Deal</button>
+        <button type="button" class="btn btn-success" ng-click="bjg.dealHand()" aria-label="Deal Hand">Deal</button>
       </div><!-- .btn-group -->
     </div><!-- #betActions -->
 
@@ -146,6 +148,7 @@
           integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
   <script src="models.js"></script>
+  <script src="gamestate.js"></script>
   <script src="app.js"></script>
   <script src="directives.js"></script>
 </body>

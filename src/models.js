@@ -3,7 +3,7 @@ var CardModel = function(rank, suit){
   this.rank = rank;
   this.suit = suit;
   this.value = function(){
-    if( IsNumeric(this.rank) ){
+    if( jQuery.isNumeric(this.rank) ){
       return parseInt(this.rank);
     } else if( this.rank == 'A' ){
       return 11;
@@ -165,7 +165,6 @@ var HandModel = function(){
     }
     return x;
   }
-
 }
 
 var PlayerModel = function(name, agent, bankRoll) {
@@ -184,6 +183,14 @@ var PlayerModel = function(name, agent, bankRoll) {
      'loses': 0,
      'busts': 0,
   };
+}
+
+var ScoreModel = function(){
+  this.blackjack = '*!BlackJack!*';
+  this.win = 'Winner!';
+  this.push = 'Pushed';
+  this.bust = 'Busted';
+  this.lose = 'LOSER';
 }
 
 var GameSettingsDialogModel = function() {
