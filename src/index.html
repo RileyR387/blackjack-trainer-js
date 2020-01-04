@@ -32,7 +32,7 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarlinks">
       <ul class="navbar-nav justify-content-end">
         <li class="nav-item active">
-          <a class="nav-link d-flex align-items-center" ng-click="playerSettingsDialog.open(bjg.game.players)"
+          <a id="pSettingsLink" class="nav-link d-flex align-items-center" ng-click="playerSettingsDialog.open(bjg.game.players)"
              data-toggle="modal" data-target="#pSettingsModal" href="#">
             <i class="material-icons">account_circle</i>
             &nbsp;Player Settings
@@ -189,52 +189,12 @@
     </div><!-- #betControls -->
   </div><!-- #gameContainer -->
 <!--
-      Modals
+      Modal dialogs
   -->
   <game-settings-dialog model="gameSettingsDialog"></game-settings-dialog>
   <player-settings-dialog model="playerSettingsDialog"></player-settings-dialog>
-
-  <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="helpModalLabel">Blackjack Help</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          To be determined... Wikipedia Link? :P
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="aboutModalLabel">About Blackjack</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <ul class="list-group">
-            <li class="list-group-item" >Author: Riley Raschke</li>
-            <li class="list-group-item" >© 2020 rrappsdev.com</li>
-            <li class="list-group-item" >Contact: <a href="https://rileyraschke.com">https://rileyraschke.com</a></li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <about-dialog></about-dialog>
+  <help-dialog></help-dialog>
 <!--
     Resources
   -->
