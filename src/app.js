@@ -25,6 +25,10 @@ app.controller( 'BlackjackGameController', ['$scope', 'BlackjackGameService', fu
     shoe: null
   };
 
+  this.game.shoe = new ShoeModel( this.game.opts.deckCount );
+  //this.game.shoe.shuffle();
+  console.log( this.game.shoe._shoe );
+
   this.game.players[0].hands = [new HandModel()];
   this.game.players[1].hands = [new HandModel(), new HandModel()];
 /*
