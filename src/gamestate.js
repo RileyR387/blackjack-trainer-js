@@ -116,9 +116,10 @@ const GameState = function(game){
 
   this.playersRemain = function(){
     for( var i = 0; i < this.seats.length; ++i){
-      if( seats[i].name != 'Dealer' ){
-        for( var j = 0; j < seats[i].hands.length; ++j){
-          if( ! seats[i].hands[j].hasBusted() ){
+      var seat = this.seats[i];
+      if( seat.name != 'Dealer' ){
+        for( var j = 0; j < seat.hands.length; ++j){
+          if( ! seat.hands[j].hasBusted() ){
             return true;
           }
         }
@@ -221,17 +222,18 @@ const GameState = function(game){
 
   this._takeBets = function(){
     for( var i = 0; i < this.seats.length; ++i){
-      if( this.seats[i].name != 'Dealer' ){
-        for( var j = 0; j < this.seats[i].hands.length; ++j){
-          if( this.seats[i].name != 'Dealer' ){
+      var seat = this.seats[i];
+      if( seat.name != 'Dealer' ){
+        for( var j = 0; j < seat.hands.length; ++j){
+          if( seat.name != 'Dealer' ){
             try {
-              var pBet = seats[i].agent.placeBet( this.priorGameState );
-              this.seats[i].hands[j].bet = pBet;
-              this.seats[i].bankRoll -= pBet;
+              var pBet = seat.agent.placeBet( this.priorGameState );
+              seat.hands[j].bet = pBet;
+              seat.bankRoll -= pBet;
             } catch ( e ){
-              console.log( "Player didn't bet!" );
-              this.seats[i].hands[j].bet = this.opts.minBet;
-              this.seats[i].bankRoll -= this.opts.minBet;
+              console.log( "Player: " + seat.name + " didn't bet!" );
+              seat.hands[j].bet = this.opts.minBet;
+              seat.bankRoll -= this.opts.minBet;
             }
           }
         }
