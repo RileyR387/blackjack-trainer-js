@@ -1,0 +1,37 @@
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-between">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarlinks"
+            aria-controls="navbarlinks" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#" >Blackjack</a>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarlinks">
+      <ul class="navbar-nav justify-content-end">
+        <li class="nav-item active">
+          <a id="pSettingsLink" class="nav-link d-flex align-items-center" ng-click="playerSettingsDialog.open(bjg.game.players)"
+             data-toggle="modal" data-target="#pSettingsModal" href="#">
+            <i class="material-icons">account_circle</i>
+            &nbsp;Player Settings
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link d-flex align-items-center" ng-click="gameSettingsDialog.open(bjg.game.opts)"
+             data-toggle="modal" data-target="#gSettingsModal" href="#">
+            <i class="material-icons">settings_applications</i>
+            &nbsp;Game Settings
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link d-flex align-items-center" data-toggle="modal" data-target="#helpModal" href="#">
+            <i class="material-icons">help_outline</i>
+            &nbsp;Help
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link d-flex align-items-center" data-toggle="modal" data-target="#aboutModal" href="#">
+            <i class="material-icons">info</i>
+            &nbsp;About
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>

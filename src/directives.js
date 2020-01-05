@@ -80,3 +80,8 @@ app.directive('helpDialog', [function() {
     templateUrl: 'help-dialog.html',
   };
 }]);
+app.directive('gameNavbar', [function() {
+  return {
+    templateUrl: 'game-navbar.html',
+  };
+}]);
