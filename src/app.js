@@ -7,9 +7,9 @@
 const app = angular.module('BlackjackAI', []);
 
 app.controller( 'BlackjackGameController', [
-         '$scope', '$timeout', '$interval', 'BlackjackGameService',
-function( $scope,   $timeout,   $interval,   BlackjackGameService ) {
-
+         '$scope', 'BlackjackGameService',
+function( $scope,   BlackjackGameService ) {
+  console.log("Constructing game");
   $scope.gameSettingsDialog   = new GameSettingsDialogModel();
   $scope.playerSettingsDialog = new PlayerSettingsDialogModel();
 
@@ -33,10 +33,19 @@ function( $scope,   $timeout,   $interval,   BlackjackGameService ) {
   this.gameState = new GameState( this.game );
   this.shoe      = new ShoeModel( this.game.opts.deckCount );
 
+  this.shuffleShoe = function() {
+    console.log("Shuffling shoe...");
+    this.shoe = new ShoeModel( this.game.opts.deckCount );
+    if( this.gameState.status == 'GAMEOVER' ){
+      this.gameState = new GameState( this.game );
+    }
+  }
+
   this.dealHands = async function(){
     console.log( "Controller Dealing" );
     //while( this.gameState.status == "DEALING_HANDS"){
     while( this.gameState.status != "GAMEOVER" ){
+      console.log( this.shoe._shoe.length + " cards remain");
       var card;
       try{
         card = this.shoe.nextCard();

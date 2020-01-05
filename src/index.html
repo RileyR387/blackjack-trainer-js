@@ -30,13 +30,13 @@
         </ul>
         <div class="dealer-hand" >
           <div ng-repeat="card in bjg.game.dealer.hands[0].cards" >
-            <div ng-if="bjg.gameState.status == 'SCORE'">
+            <div ng-if="bjg.gameState.status == 'SCORE' || bjg.gameState.status == 'GAMEOVER'">
               <playing-card data-cardvalue="card" data-displayDepth="0" ></playing-card>
             </div>
-            <div ng-if="bjg.gameState.status != 'SCORE' && $index == 0">
+            <div ng-if="bjg.gameState.status != 'SCORE' && bjg.gameState.status != 'GAMEOVER' && $index == 0">
               <playing-card data-cardvalue="card" data-displayDepth="0" ></playing-card>
             </div>
-            <div ng-if="bjg.gameState.status != 'SCORE' && $index == 1">
+            <div ng-if="bjg.gameState.status != 'SCORE' && bjg.gameState.status != 'GAMEOVER' && $index == 1">
               <playing-card data-cardvalue="card" data-displayDepth="0" data-facedown="true" ></playing-card>
             </div>
           </div>

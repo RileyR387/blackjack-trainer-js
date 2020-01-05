@@ -13,7 +13,7 @@
           <div class="form-group row">
             <label class="col-sm-6 col-form-label" for="deckCountControls">Decks</label>
             <div class="input-group col-sm-6">
-              <input type="text" class="form-control-plaintext" readonly ng-value="model.opts.deckCount" name="deck_count" value=""
+              <input type="text" class="form-control-plaintext" readonly ng-value="model.bjg.game.opts.deckCount" name="deck_count" value=""
                      aria-label="Deck Count" aria-describedby="deckCountControls">
               <div class="input-group-append" id="deckCountControls">
                 <button class="btn btn-outline-danger d-flex align-items-center" ng-click="model.decDeckCount()" type="button">
@@ -29,7 +29,7 @@
           <div class="form-group row">
             <label class="col-sm-6 col-form-label" for="dealSpeedControls">Deal Rate (seconds)</label>
             <div class="input-group col-sm-6">
-              <input type="text" class="form-control-plaintext" readonly ng-value="model.opts.dealRate | number : 1" name="deal_speed" value="" aria-label="Deck Count" aria-describedby="dealSpeedControls">
+              <input type="text" class="form-control-plaintext" readonly ng-value="model.bjg.game.opts.dealRate | number : 1" name="deal_speed" value="" aria-label="Deck Count" aria-describedby="dealSpeedControls">
               <div class="input-group-append" id="deckCountControls">
                 <button class="btn btn-outline-danger d-flex align-items-center" ng-click="model.decDealRate()" type="button">
                 <i class="material-icons" >remove</i></button>
@@ -43,7 +43,7 @@
             <label class="col-sm-6 col-form-label col-auto pt-0">Show Deck Stats</label>
             <div class="input-group col-sm-6">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" ng-model="model.opts.showDeckStats" id="showDeckStatsCheck" name="showDeckStats">
+                <input class="form-check-input" type="checkbox" ng-model="model.bjg.game.opts.showDeckStats" id="showDeckStatsCheck" name="showDeckStats">
                 <label class="form-check-label" for="showDeckStatsCheck"></label>
               </div>
             </div>
@@ -54,19 +54,19 @@
               <legend class="col-sm-6 col-form-label">Blackjack Payout</legend>
               <div class="col-sm-6">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" ng-model="model.opts.payout" name="gridRadios" id="gridRadios1" value="2.0" >
+                  <input class="form-check-input" type="radio" ng-model="model.bjg.game.opts.payout" name="gridRadios" id="gridRadios1" value="2.0" >
                   <label class="form-check-label" for="gridRadios1">
                     2 to 1
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" ng-model="model.opts.payout" name="gridRadios" id="gridRadios2" value="1.5" checked>
+                  <input class="form-check-input" type="radio" ng-model="model.bjg.game.opts.payout" name="gridRadios" id="gridRadios2" value="1.5" checked>
                   <label class="form-check-label" for="gridRadios2">
                     3 to 2
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" ng-model="model.opts.payout" name="gridRadios" id="gridRadios3" value="1.2" >
+                  <input class="form-check-input" type="radio" ng-model="model.bjg.game.opts.payout" name="gridRadios" id="gridRadios3" value="1.2" >
                   <label class="form-check-label" for="gridRadios3">
                     6 to 5
                   </label>
@@ -78,7 +78,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Shuffle</button>
+        <button type="button" ng-click="model.bjg.shuffleShoe()" class="btn btn-primary">Shuffle</button>
       </div>
     </div>
   </div>

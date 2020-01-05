@@ -196,14 +196,14 @@ const ScoreModel = function(){
 }
 
 const GameSettingsDialogModel = function() {
-  this.opts = {};
+  this.bjg = {};
   this.visible = false;
-  this.incDeckCount = function() { if( this.opts.deckCount < 12){ this.opts.deckCount++;}};
-  this.decDeckCount = function() { if( this.opts.deckCount > 1 ){ this.opts.deckCount--;}};
-  this.incDealRate  = function() { this.opts.dealRate += 0.1; };
-  this.decDealRate  = function() { if( this.opts.dealRate > 0.01) {this.opts.dealRate -= 0.1; }};
-  this.open = function(opts) {
-    this.opts = opts;
+  this.incDeckCount = function() { if( this.bjg.game.opts.deckCount < 12){ this.bjg.game.opts.deckCount++;}};
+  this.decDeckCount = function() { if( this.bjg.game.opts.deckCount > 1 ){ this.bjg.game.opts.deckCount--;}};
+  this.incDealRate  = function() { this.bjg.game.opts.dealRate += 0.1; };
+  this.decDealRate  = function() { if( this.bjg.game.opts.dealRate > 0.01) {this.bjg.game.opts.dealRate -= 0.1; }};
+  this.open = function(bjg) {
+    this.bjg = bjg;
     this.visible = true;
   };
   this.close = function() {

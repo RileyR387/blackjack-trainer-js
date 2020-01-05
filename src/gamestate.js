@@ -15,10 +15,10 @@ const GameState = function(game){
 
   for( var p = 0; p < this.players.length; ++p){
     this.seats.push(this.players[p]);
-    this.seats[p].hands.push( new HandModel() );
+    this.seats[p].hands = [ new HandModel() ];
   }
 
-  game.dealer.hands.push( new HandModel() );
+  game.dealer.hands = [ new HandModel() ];
   this.seats.push( game.dealer );
 
   this.status = 'DEALING_HANDS';
@@ -185,10 +185,10 @@ const GameState = function(game){
 
   this._clearRound = function(){
     this.priorGameState = this.playerGameStateObject();
-    this.seats.forEach( player => {
-      player.hands = [ new HandModel ];
-    });
     if( ! this.newShoeFlag ){
+      this.seats.forEach( player => {
+        player.hands = [ new HandModel ];
+      });
       this.status = 'DEALING_HANDS';
       this._currPlayerIndex = -1;
       return true;
