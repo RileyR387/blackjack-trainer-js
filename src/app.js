@@ -4,15 +4,23 @@
  * OSL-3.0
  */
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 var app = angular.module('BlackjackAI', []);
 
-app.controller( 'BlackjackGameController', ['$scope', 'BlackjackGameService', function( $scope, BlackjackGameService ) {
+app.controller( 'BlackjackGameController', [
+         '$scope', '$timeout', '$interval', 'BlackjackGameService',
+function( $scope,   $timeout,   $interval,   BlackjackGameService ) {
+
   $scope.gameSettingsDialog   = new GameSettingsDialogModel();
   $scope.playerSettingsDialog = new PlayerSettingsDialogModel();
+
   this.game = {
     opts: {
       deckCount: 8,
-      dealRate: 0.7,
+      dealRate: 0.4,
       showDeckStats: false,
       payout: '1.5'
     },
@@ -23,34 +31,23 @@ app.controller( 'BlackjackGameController', ['$scope', 'BlackjackGameService', fu
       new PlayerModel('You', null, 200),
     ],
     dealer: new PlayerModel('Dealer', null, 100000),
-    gameState: null,
-    shoe: null
   };
 
-  this.game.shoe = new ShoeModel( this.game.opts.deckCount );
+  this.gameState = new GameState( this.game );
+  this.shoe      = new ShoeModel( this.game.opts.deckCount );
 
-  //this.game.players[0].hands = [new HandModel()];
-  //this.game.players[1].hands = [new HandModel(), new HandModel()];
-  /*
-  this.game.players.forEach(function(player, index){
-    player.addHand( [] );
-  });
-  */
-
-  this.game.gameState = new GameState( this.game.opts, this.game.players, this.game.dealer );
-
-  this.dealHand = function(){
+  this.runShoe = async function(){
     console.log( "Controller Dealing" );
-
-    //while( this.game.gameState.status != "GAMEOVER"){
-    while( this.game.gameState.status == "DEALING_HANDS"){
+    while( this.gameState.status == "DEALING_HANDS"){
       var card;
       try{
-        card = this.game.shoe.nextCard();
+        card = this.shoe.nextCard();
       } catch( shuffleShoeException ){
         console.log("Last hand in shoe!");
       }
-      this.game.gameState.consumeCard( card );
+      this.gameState.consumeCard( card );
+      await sleep( Math.round(this.game.opts.dealRate * 1000) );
+      $scope.$apply();
     }
   }
 

@@ -1,15 +1,15 @@
 
-var GameState = function(opts, players, dealer){
+var GameState = function(game){
   this.seats = [];
-  this.opts = opts;
-  this.players = players;
+  this.opts = game.opts;
+  this.players = game.players;
   this._currPlayerIndex = -1;
   this.newShoeFlag = false;
   this.priorGameState = null;
 
   this.agentOpts = {
-    decks: opts.deckCount,
-    insurance: opts.insurance,
+    decks: this.opts.deckCount,
+    insurance: this.opts.insurance,
     actions: ['N','S','H','D'],
   };
 
@@ -18,9 +18,10 @@ var GameState = function(opts, players, dealer){
     this.seats[p].hands.push( new HandModel() );
   }
 
+  game.dealer.hands.push( new HandModel() );
+  this.seats.push( game.dealer );
+
   this.status = 'DEALING_HANDS';
-  dealer.hands.push( new HandModel() );
-  this.seats.push( dealer );
 
   this.consumeCard = function(card){
     player = this.nextPlayer();

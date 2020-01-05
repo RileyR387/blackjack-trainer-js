@@ -78,20 +78,20 @@
     </div><!-- #dealerBox -->
 
     <div id="playersBox" class="row no-gutters">
-      <div ng-repeat="player in bjg.game.players" class="player col-xs-2">
+      <div ng-repeat="player in bjg.gameState.seats" class="player col-xs-2">
           <div ng-if="player.hands.length == 0" class="hand">
           </div>
           <div ng-if="player.hands.length > 1" class="splitHand">
             <div ng-repeat="hand in player.hands" class="hand">
-              <playing-card data-cardvalue="{rank:  'A', suit: '♥'}" data-displayDepth="1" data-faceDown="false"></playing-card>
-              <playing-card data-cardvalue="{rank:  '3', suit: '♦'}" data-displayDepth="2" data-faceDown="false"></playing-card>
-              <playing-card data-cardvalue="{rank:  '2', suit: '♣'}" data-displayDepth="3" data-faceDown="false" ></playing-card>
+              <div ng-repeat="card in hand.cards" >
+                <playing-card data-cardvalue="{ rank: card.rank, suit: card.suit }" data-displayDepth="$index+1" ></playing-card>
+              </div>
             </div><!-- ng-repeat .hand -->
           </div>
           <div ng-if="player.hands.length == 1" ng-repeat="hand in player.hands" class="hand">
-            <playing-card data-cardvalue="{rank:  'A', suit: '♥'}" data-displayDepth="$index+1" data-faceDown="false"></playing-card>
-            <playing-card data-cardvalue="{rank:  '3', suit: '♦'}" data-displayDepth="2" data-faceDown="false"></playing-card>
-            <playing-card data-cardvalue="{rank:  '2', suit: '♣'}" data-displayDepth="3" data-faceDown="false" data-doubleDown="true"></playing-card>
+              <div ng-repeat="card in hand.cards" >
+                <playing-card data-cardvalue="{ rank: card.rank, suit: card.suit }" data-displayDepth="$index+1" ></playing-card>
+              </div>
           </div><!-- ng-repeat .hand -->
           <ul class="list-group player-data">
             <li class="list-group-item">{{player.name}}</li>
@@ -115,7 +115,7 @@
         <button type="button" class="btn btn-secondary" aria-label="Clear Current Bet">Clear</button>
         <button type="button" class="btn btn-light" aria-label="Half Last Bet">Half</button>
         <button type="button" class="btn btn-dark" aria-label="Double Last Bet">Double</button>
-        <button type="button" class="btn btn-success" ng-click="bjg.dealHand()" aria-label="Deal Hand">Deal</button>
+        <button type="button" class="btn btn-success" ng-click="bjg.runShoe()" aria-label="Deal Hand">Deal</button>
       </div><!-- .btn-group -->
     </div><!-- #betActions -->
 
