@@ -14,7 +14,7 @@
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="styles.css" >
+  <link rel="stylesheet" href="styles.css?v=0.01" >
 
   <title>Blackjack</title>
 
@@ -87,7 +87,7 @@
     </div><!-- #dealerBox -->
 
     <div id="playersBox" class="row no-gutters">
-      <div ng-repeat="player in bjg.gameState.seats | filter: { name: '!Dealer' }" class="player col-xs-2">
+      <div ng-repeat="player in bjg.gameState.seats | reverse | filter: { name: '!Dealer' }" class="player col-xs-2">
 
             <div ng-if="player.hands.length < 2" ng-repeat="hand in player.hands" class="hand">
                 <div ng-repeat="card in hand.cards" >

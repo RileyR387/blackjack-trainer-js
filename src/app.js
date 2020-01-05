@@ -25,10 +25,10 @@ function( $scope,   $timeout,   $interval,   BlackjackGameService ) {
       payout: '1.5'
     },
     players: [
-      new PlayerModel('KayOh', null, 200),
+      new PlayerModel('You', null, 200),
       new PlayerModel('HighLow', null, 200),
       new PlayerModel('AverageJoe', null, 200),
-      new PlayerModel('You', null, 200),
+      new PlayerModel('KayOh', null, 200),
     ],
     dealer: new PlayerModel('Dealer', null, 100000),
   };
@@ -61,3 +61,8 @@ app.factory('BlackjackGameService', [ '$q', function( $q ){
   return factory;
 }]);
 
+app.filter('reverse', function() {
+  return function(items){
+    return items.slice().reverse();
+  };
+});
