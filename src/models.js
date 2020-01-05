@@ -1,4 +1,6 @@
 
+const sleep = (ms) => { return new Promise(resolve => setTimeout(resolve, ms)); }
+
 const CardModel = function(rank, suit){
   this.rank = rank;
   this.suit = suit;

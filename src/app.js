@@ -3,7 +3,6 @@
  * © 2020 rrappsdev.com
  * OSL-3.0
  */
-const sleep = (ms) => { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 const app = angular.module('BlackjackAI', []);
 
@@ -19,7 +18,8 @@ function( $scope,   $timeout,   $interval,   BlackjackGameService ) {
       deckCount: 8,
       dealRate: 0.5,
       showDeckStats: false,
-      payout: '1.5'
+      payout: '1.5',
+      minBet: 10,
     },
     players: [
       new PlayerModel('You', null, 200),
@@ -47,9 +47,7 @@ function( $scope,   $timeout,   $interval,   BlackjackGameService ) {
       $scope.$apply();
     }
   }
-
-  this.dealHands();
-
+  //this.dealHands();
 }]);
 
 app.factory('BlackjackGameService', [ '$q', function( $q ){
@@ -62,3 +60,4 @@ app.filter('reverse', function() {
     return items.slice().reverse();
   };
 });
+

@@ -32,26 +32,144 @@ const GameState = function(game){
         return;
       }
     }
-    /*
-        if self.status == "DELT":
-            if self._queryPlayers( player, card) is not None:
-                self.status = 'SCORE'
-                pass
-            else:
-                return
 
-        if self.status == "SCORE":
-            self.printGameTable()
-            #input()
-            if self._clearRound():
-                self.consumeCard( card )
-                return
-            else:
-                print("Game over!")
-                self.status = 'GAMEOVER'
-    */
+    if( this.status == "DELT" ){
+      if( this._queryPlayers(player, card) != null ){
+        // A player didn't consume the card.. update state and continue
+        this.status = 'SCORE';
+      } else {
+        // some player consumed the card
+        return;
+      }
+    }
 
-  };
+    if( this.status == 'SCORE' ){
+      // TODO: _clearRound should somehow wait for input.. maybe clear upon bet placement?
+      if( this._clearRound() ){
+        this.consumeCard( card );
+      } else {
+        this.status = 'GAMEOVER'
+      }
+    }
+  }
+
+  this._queryPlayers = function(player, card){
+    var action = null;
+    if( ! this._roundCanStart(player, card) ){
+      return 'SCORE';
+    }
+
+    if( player.name == 'Dealer' ){
+      var dealerHand = this._getDealerHand();
+      if( this.playersRemain() && ((dealerHand.value() == 17 && dealerHand.isSoft()) || dealerHand.value() < 17 ) ){
+        dealerHand.addCard( card );
+        return;
+      } else {
+        dealerHand.isFinal = true;
+        this.status = 'SCORE';
+        return 'SCORE';
+      }
+    } else {
+      thisHand = this._nextHand(player);
+      if( thisHand == null ){
+        this.consumeCard( card );
+        return;
+      }
+      if( thisHand.cards.length < 2 ){
+        thisHand.addCard( card );
+        return;
+      }
+      action = player.agent.nextAction( this.playerGameStateObject(), thisHand );
+      this._handleAction( player, card, thisHand, action );
+    }
+  }
+
+  this._roundCanStart = function(player, card){
+    if(
+        this._currPlayerIndex == 0 &&
+        player.hands[0].cards.length == 2 &&
+        player.hands.length == 1
+    ){
+      dealerHand = this._getDealerHand();
+      if( dealerHand.offerInsurance() && this.opts.enableInsurance ){
+        console.log("Offering Insurance");
+        for( var i = 0; i < this.seats.length-1; ++i){
+          try{
+            if( this.seats[i].agent.takeInsurance( this.playerGameStateObject(), this.seats[i].hands[0] ) ){
+              // TODO: Account for insurance
+            }
+          } catch( e ){
+            // agent didn't respond correctly or insurance isn't supported for agent...
+            null;
+          }
+        }
+        if( dealerHand.isBlackjack() ){
+          this.status = 'SCORE';
+          return false;
+        } else {
+          // TODO: Consume any failed insurance bets
+        }
+      }
+    }
+    return true;
+  }
+
+  this.playersRemain = function(){
+    for( var i = 0; i < this.seats.length; ++i){
+      if( seats[i].name != 'Dealer' ){
+        for( var j = 0; j < seats[i].hands.length; ++j){
+          if( ! seats[i].hands[j].hasBusted() ){
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  this.playerGameStateObject = function() {
+    var gameView = [];
+    if( this.status == 'SCORE' ){
+      // TODO: Score the game elseware unlike my python terminal version...
+    } else {
+      this.seats.forEach( (seat, idx) => {
+        seat.hands.forEach( hand => {
+          if( hand.cards.length > 0 ){
+            if( seat.name == 'Dealer' ){
+              gameView.push({
+                [seat.name + "-" + idx]: {
+                  name: seat.name,
+                  agent: seat.agent.name,
+                  hand: [ hand.cards[0] ],
+                  handVal: hand.cards[0].value(),
+                  score: '',
+                  amt: 0,
+                  bankRoll: seat.bankRoll
+                }
+              });
+            } else {
+              gameView.push({
+                [seat.name + "-" + idx]: {
+                  name: seat.name,
+                  agent: seat.agent.name,
+                  hand: hand,
+                  handVal: hand.value(),
+                  score: '',
+                  amt: hand._bet,
+                  bankRoll: seat.bankRoll
+                }
+              });
+            }
+          }
+        });
+      });
+    }
+    return gameView;
+  }
+
+  this._getDealerHand = function(){
+    return this.seats[this.seats.length-1].hands[0];
+  }
 
   this.nextPlayer = function(){
     if( this.status == 'DEALING_HANDS' ){
@@ -72,7 +190,7 @@ const GameState = function(game){
       return this.seats[0];
     }
     return this.seats[this._currPlayerIndex];
-  };
+  }
 
   this._nextHand = function(player){
     for( var i = 0; i < player.hands.length; ++i){
@@ -84,13 +202,12 @@ const GameState = function(game){
       }
     }
     return null;
-  };
+  }
 
   this._dealHand = function( player, card ){
     thisHand = player.hands[0];
     if( this._currPlayerIndex == 0 && thisHand.cards.length == 0 ){
-      // TODO: write _takeBets()
-      //this._takeBets();
+      this._takeBets();
       console.log("Dealing...");
     }
 
@@ -100,7 +217,28 @@ const GameState = function(game){
       thisHand.addCard( card );
       return null;
     }
-  };
+  }
+
+  this._takeBets = function(){
+    for( var i = 0; i < this.seats.length; ++i){
+      if( this.seats[i].name != 'Dealer' ){
+        for( var j = 0; j < this.seats[i].hands.length; ++j){
+          if( this.seats[i].name != 'Dealer' ){
+            try {
+              var pBet = seats[i].agent.placeBet( this.priorGameState );
+              this.seats[i].hands[j].bet = pBet;
+              this.seats[i].bankRoll -= pBet;
+            } catch ( e ){
+              console.log( "Player didn't bet!" );
+              this.seats[i].hands[j].bet = this.opts.minBet;
+              this.seats[i].bankRoll -= this.opts.minBet;
+            }
+          }
+        }
+      }
+    }
+
+  }
 
 }
 
