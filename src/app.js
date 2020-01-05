@@ -20,7 +20,7 @@ function( $scope,   $timeout,   $interval,   BlackjackGameService ) {
   this.game = {
     opts: {
       deckCount: 8,
-      dealRate: 0.4,
+      dealRate: 0.5,
       showDeckStats: false,
       payout: '1.5'
     },
@@ -49,7 +49,6 @@ function( $scope,   $timeout,   $interval,   BlackjackGameService ) {
       await sleep( Math.round(this.game.opts.dealRate * 1000) );
       $scope.$apply();
     }
-    console.log( this.game.players );
   }
 
   this.runShoe();

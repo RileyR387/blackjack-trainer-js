@@ -20,13 +20,7 @@
 
 </head>
 <body ng-controller="BlackjackGameController as bjg">
-  <!--
-      Nav
-    -->
   <game-navbar></game-navbar>
-  <!--
-      Main Container
-    -->
   <div id="gameContainer">
 
     <div id="dealerBox" class="dealerBox">
@@ -37,13 +31,13 @@
         <div class="dealer-hand" >
           <div ng-repeat="card in bjg.game.dealer.hands[0].cards" >
             <div ng-if="bjg.gameState.status == 'SCORE'">
-              <playing-card data-cardvalue="{ rank: card.rank, suit: card.suit }" data-displayDepth="0" ></playing-card>
+              <playing-card data-cardvalue="card" data-displayDepth="0" ></playing-card>
             </div>
             <div ng-if="bjg.gameState.status != 'SCORE' && $index == 0">
-              <playing-card data-cardvalue="{ rank: card.rank, suit: card.suit }" data-displayDepth="0" ></playing-card>
+              <playing-card data-cardvalue="card" data-displayDepth="0" ></playing-card>
             </div>
             <div ng-if="bjg.gameState.status != 'SCORE' && $index == 1">
-              <playing-card data-cardvalue="{ rank: card.rank, suit: card.suit }" data-displayDepth="0" data-facedown="true" ></playing-card>
+              <playing-card data-cardvalue="card" data-displayDepth="0" data-facedown="true" ></playing-card>
             </div>
           </div>
         </div><!-- .dealer-hand -->
@@ -53,25 +47,27 @@
     <div id="playersBox" class="row no-gutters">
       <div ng-repeat="player in bjg.gameState.seats | reverse | filter: { name: '!Dealer' }" class="player col-xs-2">
 
-            <div ng-if="player.hands.length < 2" ng-repeat="hand in player.hands" class="hand">
-                <div ng-repeat="card in hand.cards" >
-                  <playing-card data-cardvalue="{ rank: card.rank, suit: card.suit }" data-displayDepth="$index+1" ></playing-card>
-                </div>
-            </div><!-- ng-repeat .hand -->
-
-            <div ng-if="player.hands.length > 1" class="splitHand">
-              <div ng-repeat="hand in player.hands" class="hand">
-                <div ng-repeat="card in hand.cards" >
-                  <playing-card data-cardvalue="{ rank: card.rank, suit: card.suit }" data-displayDepth="$index+1" ></playing-card>
-                </div>
-              </div><!-- ng-repeat .hand -->
+        <div ng-if="player.hands.length < 2" ng-repeat="hand in player.hands" class="hand">
+            <div ng-repeat="card in hand.cards" >
+              <playing-card data-cardvalue="card" data-displayDepth="$index+1" ></playing-card>
             </div>
+        </div><!-- ng-repeat .hand -->
 
-            <ul class="list-group player-data">
-              <li class="list-group-item">{{player.name}}</li>
-              <li class="list-group-item">Bet: $10</li>
-              <li class="list-group-item">Bank: ${{player.bankRoll}}</li>
-            </ul>
+        <div ng-if="player.hands.length > 1" class="splitHand">
+          <div ng-repeat="hand in player.hands" class="hand">
+            <div ng-repeat="card in hand.cards" >
+              <playing-card data-cardvalue="card" data-displayDepth="$index+1" ></playing-card>
+            </div>
+          </div><!-- ng-repeat .hand -->
+        </div>
+
+        <ul class="list-group player-data">
+          <li class="list-group-item">
+            Bet: ${{player.hands[0].bet || 0}} <span ng-if="player.hands.length > 1">X {{player.hands.length}}</span>
+          </li>
+          <li class="list-group-item">{{player.name}}</li>
+          <li class="list-group-item">Bank: ${{player.bankRoll}}</li>
+        </ul>
       </div><!-- ng-repeat .player -->
     </div> <!-- #playersBox -->
 

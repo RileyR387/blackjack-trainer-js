@@ -25,7 +25,6 @@ var GameState = function(game){
 
   this.consumeCard = function(card){
     player = this.nextPlayer();
-    console.log(card);
     if( this.status == 'DEALING_HANDS'){
       if( this._dealHand( player, card) != null ){
         this.status = 'DELT';
