@@ -72,6 +72,9 @@ body {
   margin: 0.5em;
   height: 4.2em;
 }
+.dealer-hand .ng-scope {
+  display: inline;
+}
 .dealer > ul > .list-group-item {
   background: var(--playerOutlineColor);
   font-size: 10pt;
@@ -204,6 +207,8 @@ body {
  * TODO: Automate this with JS
  */
 .handcard-0 {
+  position: relative;
+  display: inline-block;
 }
 .handcard-1 {
   position: absolute;

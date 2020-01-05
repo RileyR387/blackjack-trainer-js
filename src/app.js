@@ -49,7 +49,10 @@ function( $scope,   $timeout,   $interval,   BlackjackGameService ) {
       await sleep( Math.round(this.game.opts.dealRate * 1000) );
       $scope.$apply();
     }
+    console.log( this.game.players );
   }
+
+  this.runShoe();
 
 }]);
 
