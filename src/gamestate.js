@@ -46,9 +46,10 @@ const GameState = function(game){
     if( this.status == 'SCORE' ){
       // TODO: _clearRound should somehow wait for input.. maybe clear upon bet placement?
       if( this._clearRound() ){
+        console.log("consumeCard recursion after _clearRound()");
         this.consumeCard( card );
       } else {
-        this.status = 'GAMEOVER'
+        this.status = 'GAMEOVER';
       }
     }
   }
@@ -61,7 +62,7 @@ const GameState = function(game){
 
     if( player.name == 'Dealer' ){
       var dealerHand = this._getDealerHand();
-      if( this.playersRemain() && ((dealerHand.value() == 17 && dealerHand.isSoft()) || dealerHand.value() < 17 ) ){
+      if( this.playersRemain() && ((dealerHand.value() == 17 && dealerHand.isSoft) || dealerHand.value() < 17 ) ){
         dealerHand.addCard( card );
         return;
       } else {
@@ -72,6 +73,7 @@ const GameState = function(game){
     } else {
       thisHand = this._nextHand(player);
       if( thisHand == null ){
+        console.log("consumeCard recursion in _queryPlayers()");
         this.consumeCard( card );
         return;
       }
@@ -79,8 +81,61 @@ const GameState = function(game){
         thisHand.addCard( card );
         return;
       }
-      action = player.agent.nextAction( this.playerGameStateObject(), thisHand );
+      try {
+        action = player.agent.nextAction( this.playerGameStateObject(), thisHand );
+      } catch(e){
+        console.log(player.name + " didn't return an action!");
+      }
       this._handleAction( player, card, thisHand, action );
+    }
+  }
+
+  this._handleAction = function( player, card, hand, action ){
+    switch( action ) {
+      case 'STAND':
+        hand.isFinal = true;
+        console.log("consumeCard recursion in STAND");
+        this.consumeCard(card);
+        return;
+        break;
+      case 'DOUBLE':
+        if( hand.canDouble() ){
+          hand.addCard( card );
+          player.stats.doubles++;
+          player.bankRoll -= hand.bet;
+          hand.bet *= 2;
+          hand.isFinal = true;
+        } else {
+          hand.addCard( card );
+        }
+      case 'HIT':
+        hand.addCard(card);
+        break;
+      case 'SPLIT':
+        if( ! this.newShoeFlag && hand.canSplit() ){
+          player.stats.splits++;
+          player.bankRoll -= hand.bet;
+          var nextHand = hand.splitHand();
+          nextHand.bet = hand.bet;
+          player.hands.push( nextHand );
+        } else {
+          console.log("_handleAction recursion");
+          this._handleAction( player, card, hand, null );
+        }
+        break;
+      default:
+        if( hand.value() >= 17 ){
+          hand.isFinal = true;
+          console.log("consumeCard recursion in default");
+          this.consumeCard( card );
+          return;
+        } else {
+          hand.addCard( card );
+        }
+        break;
+    }
+    if( hand.hasBusted() || hand.value() == 21 ){
+      hand.isFinal = true;
     }
   }
 
@@ -126,6 +181,20 @@ const GameState = function(game){
       }
     }
     return false;
+  }
+
+  this._clearRound = function(){
+    this.priorGameState = this.playerGameStateObject();
+    this.seats.forEach( player => {
+      player.hands = [ new HandModel ];
+    });
+    if( ! this.newShoeFlag ){
+      this.status = 'DEALING_HANDS';
+      this._currPlayerIndex = -1;
+      return true;
+    } else {
+      return false;
+    }
   }
 
   this.playerGameStateObject = function() {

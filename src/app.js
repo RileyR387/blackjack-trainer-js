@@ -15,8 +15,8 @@ function( $scope,   $timeout,   $interval,   BlackjackGameService ) {
 
   this.game = {
     opts: {
-      deckCount: 8,
-      dealRate: 0.5,
+      deckCount: 2,
+      dealRate: 0.2,
       showDeckStats: false,
       payout: '1.5',
       minBet: 10,
@@ -35,12 +35,14 @@ function( $scope,   $timeout,   $interval,   BlackjackGameService ) {
 
   this.dealHands = async function(){
     console.log( "Controller Dealing" );
-    while( this.gameState.status == "DEALING_HANDS"){
+    //while( this.gameState.status == "DEALING_HANDS"){
+    while( this.gameState.status != "GAMEOVER" ){
       var card;
       try{
         card = this.shoe.nextCard();
       } catch( shuffleShoeException ){
         console.log("Last hand in shoe!");
+        this.gameState.newShoeFlag = true;;
       }
       this.gameState.consumeCard( card );
       await sleep( Math.round(this.game.opts.dealRate * 1000) );

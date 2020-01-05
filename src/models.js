@@ -51,8 +51,8 @@ const ShoeModel = function(decks){
 
   this.nextCard = function(){
     if( this.sentShuffleNotice ||
-        (this.decks == 1 && this._shoe.length > this.decks*52*0.2) ||
-        (this.decks != 1 && this._shoe.length > 52 * this._shuffleAtDecks )
+        (this.decks < 4 && this._shoe.length > this.decks*52*0.2) ||
+        (this.decks > 3 && this._shoe.length > 52 * this._shuffleAtDecks )
       ){
       return this._shoe.pop();
     } else {
@@ -124,7 +124,7 @@ const HandModel = function(){
   }
 
   this.offerInsurance = function(){
-    if( cards[0].value() == 1 && cards.length == 2 ){
+    if( this.cards[0].value() == 1 && this.cards.length == 2 ){
       return true;
     }
     return false;
