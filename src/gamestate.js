@@ -1,5 +1,5 @@
 
-var GameState = function(game){
+const GameState = function(game){
   this.seats = [];
   this.opts = game.opts;
   this.players = game.players;

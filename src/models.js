@@ -1,5 +1,5 @@
 
-var CardModel = function(rank, suit){
+const CardModel = function(rank, suit){
   this.rank = rank;
   this.suit = suit;
   this.value = function(){
@@ -12,7 +12,7 @@ var CardModel = function(rank, suit){
   }
 }
 
-var DeckModel = function(){
+const DeckModel = function(){
   ranks = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
   suits = ["♣","♠","♦","♥"];
   deck = [];
@@ -24,7 +24,7 @@ var DeckModel = function(){
   return deck;
 }
 
-var ShoeModel = function(decks){
+const ShoeModel = function(decks){
   this._shoe = [];
   this.decks = decks;
   this.sentShuffleNotice = false;
@@ -60,7 +60,7 @@ var ShoeModel = function(decks){
   }
 }
 
-var HandModel = function(){
+const HandModel = function(){
   this.cards = [];
   this.isSoft = false;
   this.nextHand = null;
@@ -167,7 +167,7 @@ var HandModel = function(){
   }
 }
 
-var PlayerModel = function(name, agent, bankRoll) {
+const PlayerModel = function(name, agent, bankRoll) {
   this.name  = name;
   this.hands = [];
   this.agent = agent;
@@ -185,7 +185,7 @@ var PlayerModel = function(name, agent, bankRoll) {
   };
 }
 
-var ScoreModel = function(){
+const ScoreModel = function(){
   this.blackjack = '*!BlackJack!*';
   this.win = 'Winner!';
   this.push = 'Pushed';
@@ -193,7 +193,7 @@ var ScoreModel = function(){
   this.lose = 'LOSER';
 }
 
-var GameSettingsDialogModel = function() {
+const GameSettingsDialogModel = function() {
   this.opts = {};
   this.visible = false;
   this.incDeckCount = function() { if( this.opts.deckCount < 12){ this.opts.deckCount++;}};
@@ -209,7 +209,7 @@ var GameSettingsDialogModel = function() {
   };
 };
 
-var PlayerSettingsDialogModel = function() {
+const PlayerSettingsDialogModel = function() {
   this.players = [];
   this.visible = false;
   this.open = function(players) {

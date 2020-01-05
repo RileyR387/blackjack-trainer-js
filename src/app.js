@@ -3,12 +3,9 @@
  * © 2020 rrappsdev.com
  * OSL-3.0
  */
+const sleep = (ms) => { return new Promise(resolve => setTimeout(resolve, ms)); }
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-var app = angular.module('BlackjackAI', []);
+const app = angular.module('BlackjackAI', []);
 
 app.controller( 'BlackjackGameController', [
          '$scope', '$timeout', '$interval', 'BlackjackGameService',
@@ -36,7 +33,7 @@ function( $scope,   $timeout,   $interval,   BlackjackGameService ) {
   this.gameState = new GameState( this.game );
   this.shoe      = new ShoeModel( this.game.opts.deckCount );
 
-  this.runShoe = async function(){
+  this.dealHands = async function(){
     console.log( "Controller Dealing" );
     while( this.gameState.status == "DEALING_HANDS"){
       var card;
@@ -51,7 +48,7 @@ function( $scope,   $timeout,   $interval,   BlackjackGameService ) {
     }
   }
 
-  this.runShoe();
+  this.dealHands();
 
 }]);
 
