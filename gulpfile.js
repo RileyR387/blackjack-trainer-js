@@ -50,6 +50,7 @@ gulp.task('build', function(){
 gulp.task('build-prod', function(){
   return gulp.src(paths.htdocs.src)
     .pipe(useref())
+    .pipe(gulpif('*.js', embedTemplates()))
     .pipe(gulpif('*.js', terser()))
     .pipe(gulpif('*.css', minifyCss()))
     .pipe(gulp.dest('dist'));
