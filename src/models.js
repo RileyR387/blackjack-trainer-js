@@ -1,6 +1,4 @@
 
-const VERSION = "0.01"; // utilized in directive templateUrls to clear caches
-
 const sleep = (ms) => { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 const CardModel = function(rank, suit){

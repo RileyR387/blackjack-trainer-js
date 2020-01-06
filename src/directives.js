@@ -16,7 +16,7 @@ app.directive('playingCard', [function() {
       //if( scope.card.suit == '♠' ) { element.addClass('Card-Spade'); }
       //if( scope.card.suit == '♣' ) { element.addClass('Card-Club'); }
     },
-    templateUrl: 'views/playing-card.html?v=' + VERSION,
+    templateUrl: 'views/playing-card.html',
   };
 }]);
 
@@ -42,7 +42,7 @@ app.directive('gameSettingsDialog', [function() {
         });
       });
     },
-    templateUrl: 'views/game-settings-dialog.html?v=' + VERSION,
+    templateUrl: 'views/game-settings-dialog.html',
   };
 }]);
 
@@ -68,25 +68,25 @@ app.directive('playerSettingsDialog', [function() {
         });
       });
     },
-    templateUrl: 'views/player-settings-dialog.html?v=' + VERSION,
+    templateUrl: 'views/player-settings-dialog.html',
   };
 }]);
 
 app.directive('aboutDialog', [function() {
   return {
-    templateUrl: 'views/about-dialog.html?v=' + VERSION,
+    templateUrl: 'views/about-dialog.html',
   };
 }]);
 
 app.directive('helpDialog', [function() {
   return {
-    templateUrl: 'views/help-dialog.html?v=' + VERSION,
+    templateUrl: 'views/help-dialog.html',
   };
 }]);
 
 app.directive('gameNavbar', [function() {
   return {
-    templateUrl: 'views/game-navbar.html?v=' + VERSION,
+    templateUrl: 'views/game-navbar.html',
   };
 }]);
 

@@ -27,6 +27,7 @@
   "homepage": "https://github.com/RileyR387/blackjack-trainer-js#readme",
   "devDependencies": {
     "gulp": "^4.0.2",
+    "gulp-angular-embed-templates": "^2.3.0",
     "gulp-clean-css": "^4.2.0",
     "gulp-if": "^3.0.0",
     "gulp-livereload": "^4.0.2",

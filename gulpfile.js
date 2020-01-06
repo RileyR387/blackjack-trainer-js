@@ -2,6 +2,7 @@
 'use strict';
 
 const gulp = require('gulp'),
+    embedTemplates = require('gulp-angular-embed-templates'),
     sourcemaps = require('gulp-sourcemaps'),
     useref = require('gulp-useref'),
     lazypipe = require('lazypipe'),
@@ -39,6 +40,7 @@ const paths = {
 gulp.task('build', function(){
   return gulp.src(paths.htdocs.src)
     .pipe(useref({}, lazypipe().pipe(sourcemaps.init, { loadMaps: true })))
+    .pipe(gulpif('*.js', embedTemplates()))
     .pipe(gulpif('*.js', terser()))
     .pipe(gulpif('*.css', minifyCss()))
     .pipe(sourcemaps.write('maps'))
