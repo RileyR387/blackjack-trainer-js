@@ -4,9 +4,10 @@
   "description": "Blackjack AI with optional human interaction.",
   "main": "index.html",
   "scripts": {
-    "start": "live-server ./src/",
-    "build": "gulp --gulpfile ./build-scripts/gulpfile.js --cwd ./",
-    "build-livereload": "gulp --gulpfile ./build-scripts/gulpfile.js --cwd ./ watch",
+    "dev": "live-server ./src/",
+    "build": "gulp",
+    "build-livereload": "gulp watch",
+    "start": "npm run build && live-server ./dist/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,9 +31,11 @@
     "gulp-clean-css": "^4.2.0",
     "gulp-if": "^3.0.0",
     "gulp-livereload": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
     "gulp-terser": "^1.2.0",
     "gulp-uglify": "^3.0.2",
     "gulp-useref": "^4.0.0",
+    "lazypipe": "^1.0.2",
     "live-server": "^1.2.0"
   },
   "dependencies": {

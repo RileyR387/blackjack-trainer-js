@@ -1,7 +1,10 @@
+
 'use strict';
 
 const gulp = require('gulp'),
+    sourcemaps = require('gulp-sourcemaps'),
     useref = require('gulp-useref'),
+    lazypipe = require('lazypipe'),
     gulpif = require('gulp-if'),
     terser = require('gulp-terser'),
     minifyCss = require('gulp-clean-css'),
@@ -34,6 +37,15 @@ const paths = {
  * Task Streams
  */
 gulp.task('build', function(){
+  return gulp.src(paths.htdocs.src)
+    .pipe(useref({}, lazypipe().pipe(sourcemaps.init, { loadMaps: true })))
+    .pipe(gulpif('*.js', terser()))
+    .pipe(gulpif('*.css', minifyCss()))
+    .pipe(sourcemaps.write('maps'))
+    .pipe(gulp.dest('dist'));
+});
+// Excludes sourcemaps
+gulp.task('build-prod', function(){
   return gulp.src(paths.htdocs.src)
     .pipe(useref())
     .pipe(gulpif('*.js', terser()))
