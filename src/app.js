@@ -15,10 +15,10 @@ function( $scope,   BlackjackGameService ) {
 
   this.game = {
     opts: {
-      deckCount: 2,
-      dealRate: 0.2,
+      deckCount: 6,
+      dealRate: 0.1,
       showDeckStats: false,
-      payout: '1.5',
+      payout: '2.0',
       minBet: 10,
     },
     players: [
