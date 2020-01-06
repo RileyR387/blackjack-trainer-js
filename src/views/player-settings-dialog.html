@@ -9,14 +9,14 @@
       </div>
       <div class="modal-body">
         <ul class="list-group">
-          <div ng-repeat="player in model.players">
+          <div ng-repeat="player in model.bjg.game.players">
             <li class="list-group-item">{{player.name}} Balance: ${{player.bankRoll}}</li>
           </div>
         </ul>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Shuffle</button>
+        <button type="button" class="btn btn-primary" ng-click="model.bjg.shuffleShoe()">Shuffle</button>
       </div>
     </div>
   </div>

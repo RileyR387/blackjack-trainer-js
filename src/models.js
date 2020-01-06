@@ -212,10 +212,10 @@ const GameSettingsDialogModel = function() {
 };
 
 const PlayerSettingsDialogModel = function() {
-  this.players = [];
+  this.bjg = {};
   this.visible = false;
-  this.open = function(players) {
-    this.players = players;
+  this.open = function(bjg) {
+    this.bjg = bjg;
     this.visible = true;
   };
   this.close = function() {
