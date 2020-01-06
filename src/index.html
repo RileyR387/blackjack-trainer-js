@@ -14,7 +14,10 @@
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="styles.css?v=0.02" >
+
+  <!-- build:css styles/blackjack.min.css -->
+  <link rel="stylesheet" href="styles.css" >
+  <!-- endbuild -->
 
   <title>Blackjack</title>
 
@@ -29,7 +32,7 @@
           <li class="list-group-item">Dealer (<span ng-bind="bjg.game.opts.deckCount"></span> Decks)</li>
         </ul>
         <div class="dealer-hand" >
-          <div ng-repeat="card in bjg.game.dealer.hands[0].cards" >
+          <div ng-repeat="card in bjg.game.dealer.hands[0].cards track by $index" >
             <div ng-if="bjg.gameState.status == 'SCORE' || bjg.gameState.status == 'GAMEOVER'">
               <playing-card data-cardvalue="card" data-displayDepth="0" ></playing-card>
             </div>
@@ -48,14 +51,14 @@
       <div ng-repeat="player in bjg.gameState.seats | reverse | filter: { name: '!Dealer' }" class="player col-xs-2">
 
         <div ng-if="player.hands.length < 2" ng-repeat="hand in player.hands" class="hand">
-            <div ng-repeat="card in hand.cards" >
+            <div ng-repeat="card in hand.cards track by $index" >
               <playing-card data-cardvalue="card" data-displayDepth="$index+1" ></playing-card>
             </div>
         </div><!-- ng-repeat .hand -->
 
         <div ng-if="player.hands.length > 1" class="splitHand">
           <div ng-repeat="hand in player.hands" class="hand">
-            <div ng-repeat="card in hand.cards" >
+            <div ng-repeat="card in hand.cards track by $index" >
               <playing-card data-cardvalue="card" data-displayDepth="$index+1" ></playing-card>
             </div>
           </div><!-- ng-repeat .hand -->
@@ -120,9 +123,11 @@
 <!--
     App
     -->
-  <script src="models.js?v=0.01"></script>
-  <script src="gamestate.js?v=0.01"></script>
-  <script src="app.js?v=0.01"></script>
-  <script src="directives.js?v=0.01"></script>
+  <!-- build:js scripts/app.min.js -->
+  <script src="models.js"></script>
+  <script src="gamestate.js"></script>
+  <script src="app.js"></script>
+  <script src="directives.js"></script>
+  <!-- endbuild -->
 </body>
 </html>
