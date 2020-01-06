@@ -1,7 +1,7 @@
 {
-  "name": "blackjack-ai-js",
+  "name": "blackjack-trainer-js",
   "version": "0.0.0",
-  "description": "Blackjack AI with optional human interaction.",
+  "description": "Blackjack trainer with optional AI seating placement",
   "main": "index.html",
   "scripts": {
     "dev": "live-server ./src/",
@@ -16,16 +16,15 @@
   },
   "keywords": [
     "blackjack",
-    "webworker",
-    "web-worker",
+    "angularjs",
     "ai"
   ],
   "author": "Riley Raschke",
   "license": "OSL-3.0",
   "bugs": {
-    "url": "https://github.com/RileyR387/blackjack-ai-js/issues"
+    "url": "https://github.com/RileyR387/blackjack-trainer-js/issues"
   },
-  "homepage": "https://github.com/RileyR387/blackjack-ai-js#readme",
+  "homepage": "https://github.com/RileyR387/blackjack-trainer-js#readme",
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.2.0",
