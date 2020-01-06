@@ -124,7 +124,7 @@ const HandModel = function(){
   }
 
   this.offerInsurance = function(){
-    if( this.cards[0].value() == 1 && this.cards.length == 2 ){
+    if( this.cards[0].value() == 11 && this.cards.length == 2 ){
       return true;
     }
     return false;
