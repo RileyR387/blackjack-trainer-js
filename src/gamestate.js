@@ -241,7 +241,7 @@ const GameState = function(game){
             this._getDealer().bankRoll += hand.bet;
             hand.bet = 0;
           } else if(
-            (dealer.value() > 21 && hand.value < 22)
+            (dealer.value() > 21 && hand.value() < 22)
             ||
             (hand.value() < 22 && hand.value() > dealer.value() )
           ){
@@ -252,7 +252,7 @@ const GameState = function(game){
             this._getDealer().bankRoll -= win;
             this._getDealer().stats.loses++;
             hand.bet = 0;
-          } else if( hand.value() < 22 && hand.value == dealer.value() ){
+          } else if( hand.value() < 22 && hand.value() == dealer.value() ){
             score = ScoreModel.push;
             this._getDealer().stats.pushes++;
             seat.stats.pushes++;
