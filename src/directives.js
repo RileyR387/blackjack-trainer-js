@@ -45,6 +45,7 @@ app.directive('gameSettingsDialog', [function() {
     templateUrl: 'views/game-settings-dialog.html',
   };
 }]);
+
 app.directive('playerSettingsDialog', [function() {
   return {
     restrict: 'E',
@@ -70,18 +71,22 @@ app.directive('playerSettingsDialog', [function() {
     templateUrl: 'views/player-settings-dialog.html',
   };
 }]);
+
 app.directive('aboutDialog', [function() {
   return {
     templateUrl: 'views/about-dialog.html',
   };
 }]);
+
 app.directive('helpDialog', [function() {
   return {
     templateUrl: 'views/help-dialog.html',
   };
 }]);
+
 app.directive('gameNavbar', [function() {
   return {
     templateUrl: 'views/game-navbar.html',
   };
 }]);
+
