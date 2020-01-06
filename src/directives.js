@@ -15,6 +15,9 @@ app.directive('playingCard', [function() {
       if( scope.card.suit == '♦' ) { element.addClass('Card-Red'); }
       //if( scope.card.suit == '♠' ) { element.addClass('Card-Spade'); }
       //if( scope.card.suit == '♣' ) { element.addClass('Card-Club'); }
+      element.on('$destroy', function() {
+        scope = null;
+      });
     },
     templateUrl: 'views/playing-card.html',
   };

@@ -58,7 +58,7 @@ function( $scope,   BlackjackGameService ) {
       $scope.$apply();
     }
   }
-  //this.dealHands();
+  this.dealHands();
 }]);
 
 app.factory('BlackjackGameService', [ '$q', function( $q ){
