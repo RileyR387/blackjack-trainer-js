@@ -5,6 +5,7 @@
   "main": "index.html",
   "scripts": {
     "dev": "live-server ./src/",
+    "deploy": "test -f .deploy.sh && bash .deploy.sh || (echo \"No .deploy.sh was found.\"; exit 1)",
     "build": "gulp",
     "build-livereload": "gulp watch",
     "start": "npm run build && live-server ./dist/",
