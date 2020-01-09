@@ -1,15 +1,6 @@
 
 const sleep = (ms) => { return new Promise(resolve => setTimeout(resolve, ms)); }
 
-const ShuffleShoeException = function(){
-  this.name    = "ShuffleShoeException";
-  this.message = "Need to shuffle the deck before the next round begins.";
-  this.level   = "information";
-  this.htmlMessage = "Need to shuffle the deck before the next round begins.";
-  this.toString = function(){ return this.name + ": " + this.message; };
-  return this;
-};
-
 const CardModel = function(rank, suit){
   this.rank = rank;
   this.suit = suit;
@@ -60,7 +51,7 @@ const ShoeModel = function(decks){
 
   this.nextCard = function(){
     if( this.sentShuffleNotice ||
-        (this.decks < 4 && this._shoe.length > this.decks*52*0.2) ||
+        (this.decks < 4 && this._shoe.length > this.decks*52*0.3) ||
         (this.decks > 3 && this._shoe.length > 52 * this._shuffleAtDecks )
       ){
       return this._shoe.pop();
