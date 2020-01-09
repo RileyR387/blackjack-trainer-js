@@ -73,30 +73,30 @@
 
     <div id="actionInput" class="d-flex justify-content-center">
       <div class="btn-group btn-group-justified" role="group" aria-label="Hand Actions">
-        <button type="button" class="btn btn-warning disabled">Split</button>
-        <button type="button" class="btn btn-danger">Double</button>
-        <button type="button" class="btn btn-secondary">Hit</button>
-        <button type="button" class="btn btn-success">Stand</button>
+        <button type="button" class="btn btn-warning disabled" ng-click="bjg.actionSplit()" >Split</button>
+        <button type="button" class="btn btn-danger" ng-click="bjg.actionDouble()" >Double</button>
+        <button type="button" class="btn btn-secondary" ng-click="bjg.actionHit()" >Hit</button>
+        <button type="button" class="btn btn-success" ng-click="bjg.actionStand()" >Stand</button>
       </div>
     </div><!-- #actionInput -->
 
     <div id="betActions" class="d-flex justify-content-center">
       <div class="btn-group  btn-group-justified" role="group" aria-label="Bet Actions">
-        <button type="button" class="btn btn-secondary" aria-label="Clear Current Bet">Clear</button>
-        <button type="button" class="btn btn-light" aria-label="Half Last Bet">Half</button>
-        <button type="button" class="btn btn-dark" aria-label="Double Last Bet">Double</button>
-        <button type="button" class="btn btn-success" ng-click="bjg.dealHands()" aria-label="Deal Hand">Deal</button>
+        <button type="button" class="btn btn-secondary" ng-click="bjg.clearBet()" aria-label="Clear Current Bet">Clear</button>
+        <button type="button" class="btn btn-light" ng-click="bjg.halfBet()" aria-label="Half Last Bet">Half</button>
+        <button type="button" class="btn btn-dark" ng-click="bjg.doubleBet()" aria-label="Double Last Bet">Double</button>
+        <button type="button" class="btn btn-success" ng-click="bjg.deal()" aria-label="Deal Hand">Deal</button>
       </div><!-- .btn-group -->
     </div><!-- #betActions -->
 
     <div id="betControls" class="d-flex justify-content-center">
       <div class="btn-group  btn-group-justified" role="group" aria-label="Bet Inputs">
-        <button type="button" class="btn btn-danger" aria-label="Bet Five">5</button>
-        <button type="button" class="btn btn-dark" aria-label="Bet Ten">10</button>
-        <button type="button" class="btn btn-success" aria-label="Bet Twenty-Five">25</button>
-        <button type="button" class="btn btn-primary" aria-label="Bet One Hundred">100</button>
-        <button type="button" class="btn btn-info disabled" aria-label="Bet Five Hundred">500</button>
-        <button type="button" class="btn btn-danger disabled" aria-label="Bet One Thousand">1000</button>
+        <button type="button" class="btn btn-danger" ng-click="bjg.addBet(5)" aria-label="Bet Five">5</button>
+        <button type="button" class="btn btn-dark" ng-click="bjg.addBet(10)" aria-label="Bet Ten">10</button>
+        <button type="button" class="btn btn-success" ng-click="bjg.addBet(25)" aria-label="Bet Twenty-Five">25</button>
+        <button type="button" class="btn btn-primary" ng-click="bjg.addBet(100)" aria-label="Bet One Hundred">100</button>
+        <button type="button" class="btn btn-info disabled" ng-click="bjg.addBet(500)" aria-label="Bet Five Hundred">500</button>
+        <button type="button" class="btn btn-danger disabled" ng-click="bjg.addBet(1000)" aria-label="Bet One Thousand">1000</button>
       </div><!-- .btn-group -->
     </div><!-- #betControls -->
   </div><!-- #gameContainer -->

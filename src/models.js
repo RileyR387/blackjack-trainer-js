@@ -1,6 +1,15 @@
 
 const sleep = (ms) => { return new Promise(resolve => setTimeout(resolve, ms)); }
 
+const ShuffleShoeException = function(){
+  this.name    = "ShuffleShoeException";
+  this.message = "Need to shuffle the deck before the next round begins.";
+  this.level   = "information";
+  this.htmlMessage = "Need to shuffle the deck before the next round begins.";
+  this.toString = function(){ return this.name + ": " + this.message; };
+  return this;
+};
+
 const CardModel = function(rank, suit){
   this.rank = rank;
   this.suit = suit;
@@ -57,7 +66,7 @@ const ShoeModel = function(decks){
       return this._shoe.pop();
     } else {
       this.sentShuffleNotice = true;
-      throw shuffleShoeException;
+      throw new ShuffleShoeException();
     }
   }
 }
@@ -99,7 +108,7 @@ const HandModel = function(){
   }
 
   this.canSplit = function(){
-    if( this.cards.length == 2 && cards[0].value() == cards[1].value() ){
+    if( this.cards.length == 2 && this.cards[0].value() == this.cards[1].value() ){
       return true;
     }
     return false;
@@ -169,8 +178,9 @@ const HandModel = function(){
   }
 }
 
-const PlayerModel = function(name, agent, bankRoll) {
+const PlayerModel = function(name, agent, bankRoll, isHuman) {
   this.name  = name;
+  this.isHuman = false || isHuman;
   this.hands = [];
   this.agent = agent;
   this.bankRoll = bankRoll;

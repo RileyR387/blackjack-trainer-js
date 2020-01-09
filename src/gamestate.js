@@ -23,10 +23,15 @@ const GameState = function(game){
 
   this.status = 'DEALING_HANDS';
 
-  this.consumeCard = function(card){
+  this.getCurrentPlayer = function(){
+    return this.seats[this._currPlayerIndex];
+  }
+
+  this.consumeCard = async function(card){
     player = this.nextPlayer();
+
     if( this.status == 'DEALING_HANDS'){
-      if( this._dealHand( player, card) != null ){
+      if( await this._dealHand( player, card) != null ){
         this.status = 'DELT';
       } else {
         return;
@@ -34,7 +39,7 @@ const GameState = function(game){
     }
 
     if( this.status == "DELT" ){
-      if( this._queryPlayers(player, card) != null ){
+      if( await this._queryPlayers(player, card) != null ){
         // A player didn't consume the card.. update state and continue
         this.status = 'SCORE';
       } else {
@@ -45,16 +50,15 @@ const GameState = function(game){
 
     if( this.status == 'SCORE' ){
       // TODO: _clearRound should somehow wait for input.. maybe clear upon bet placement?
-      if( this._clearRound() ){
-        console.log("consumeCard recursion after _clearRound()");
-        this.consumeCard( card );
+      if( await this._clearRound() ){
+        throw new Error("The card wasn't used, try again.");
       } else {
         this.status = 'GAMEOVER';
       }
     }
   }
 
-  this._queryPlayers = function(player, card){
+  this._queryPlayers = async function(player, card){
     var action = null;
     if( ! this._roundCanStart(player, card) ){
       return 'SCORE';
@@ -73,8 +77,7 @@ const GameState = function(game){
     } else {
       thisHand = this._nextHand(player);
       if( thisHand == null ){
-        console.log("consumeCard recursion in _queryPlayers()");
-        this.consumeCard( card );
+        throw new Error("The card wasn't used, try again.");
         return;
       }
       if( thisHand.cards.length < 2 ){
@@ -82,7 +85,7 @@ const GameState = function(game){
         return;
       }
       try {
-        action = player.agent.nextAction( this.playerGameStateObject(), thisHand );
+        action = await player.agent.nextAction( this.playerGameStateObject(), thisHand );
       } catch(e){
         console.log(player.name + " didn't return an action!");
       }
@@ -90,12 +93,13 @@ const GameState = function(game){
     }
   }
 
-  this._handleAction = function( player, card, hand, action ){
+  this._handleAction = async function( player, card, hand, action ){
     switch( action ) {
       case 'STAND':
         hand.isFinal = true;
-        console.log("consumeCard recursion in STAND");
-        this.consumeCard(card);
+        //console.log("consumeCard recursion in STAND");
+        //this.consumeCard(card);
+        throw new Error("The card wasn't used, try again.");
         return;
         break;
       case 'DOUBLE':
@@ -108,6 +112,7 @@ const GameState = function(game){
         } else {
           hand.addCard( card );
         }
+        break;
       case 'HIT':
         hand.addCard(card);
         break;
@@ -139,7 +144,7 @@ const GameState = function(game){
     }
   }
 
-  this._roundCanStart = function(player, card){
+  this._roundCanStart = async function(player, card){
     if(
         this._currPlayerIndex == 0 &&
         player.hands[0].cards.length == 2 &&
@@ -150,7 +155,7 @@ const GameState = function(game){
         console.log("Offering Insurance");
         for( var i = 0; i < this.seats.length-1; ++i){
           try{
-            if( this.seats[i].agent.takeInsurance( this.playerGameStateObject(), this.seats[i].hands[0] ) ){
+            if( await this.seats[i].agent.takeInsurance( this.playerGameStateObject(), this.seats[i].hands[0] ) ){
               // TODO: Account for insurance
             }
           } catch( e ){
@@ -183,7 +188,7 @@ const GameState = function(game){
     return false;
   }
 
-  this._clearRound = function(){
+  this._clearRound = async function(){
     this.priorGameState = this.playerGameStateObject();
     if( ! this.newShoeFlag ){
       this.seats.forEach( player => {
@@ -220,9 +225,12 @@ const GameState = function(game){
             seat.stats.wins++;
             var win = Math.round((hand.bet * parseFloat(this.opts.payout)) + hand.bet, 2);
             seat.bankRoll              += win;
-            this._getDealer().bankRoll -= win;
-            this._getDealer().stats.loses++;
-
+            if(seat.name != 'Dealer'){
+              this._getDealer().bankRoll -= win;
+              this._getDealer().stats.loses++;
+            } else {
+              console.log("Dealer Blackjack!");
+            }
           } else if( seat.name == 'Dealer' ){
             if( ! hand.hasBusted() ){
               if( ! this.playersRemain() ){
@@ -281,7 +289,6 @@ const GameState = function(game){
 
         });
       });
-      // TODO: Score the game elseware unlike my python terminal version...
     } else {
       this.seats.forEach( (seat, idx) => {
         seat.hands.forEach( hand => {
@@ -317,6 +324,7 @@ const GameState = function(game){
         });
       });
     }
+    // Need to wait for input/bet here somehow
     return gameView;
   }
 
@@ -360,10 +368,10 @@ const GameState = function(game){
     return null;
   }
 
-  this._dealHand = function( player, card ){
+  this._dealHand = async function( player, card ){
     thisHand = player.hands[0];
     if( this._currPlayerIndex == 0 && thisHand.cards.length == 0 ){
-      this._takeBets();
+      await this._takeBets();
       console.log("Dealing...");
     }
 
@@ -375,16 +383,18 @@ const GameState = function(game){
     }
   }
 
-  this._takeBets = function(){
-    for( var i = 0; i < this.seats.length; ++i){
-      var seat = this.seats[i];
+  this._takeBets = async function(){
+    for( this._currPlayerIndex = 0; this._currPlayerIndex < this.seats.length; ++this._currPlayerIndex){
+      var seat = this.seats[this._currPlayerIndex];
       if( seat.name != 'Dealer' ){
         for( var j = 0; j < seat.hands.length; ++j){
           if( seat.name != 'Dealer' ){
             try {
-              var pBet = seat.agent.placeBet( this.priorGameState );
-              seat.hands[j].bet = pBet;
-              seat.bankRoll -= pBet;
+              var pBet = await seat.agent.placeBet( this.priorGameState );
+              if( ! seat.isHuman ){
+                seat.hands[j].bet = pBet;
+                seat.bankRoll -= pBet;
+              }
             } catch ( e ){
               console.log( "Player: " + seat.name + " didn't bet!" );
               seat.hands[j].bet = this.opts.minBet;
@@ -394,7 +404,7 @@ const GameState = function(game){
         }
       }
     }
-
+    this._currPlayerIndex = 0;
   }
 
 }
