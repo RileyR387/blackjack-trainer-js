@@ -1,0 +1,77 @@
+
+/**
+ * iPhone X
+ */
+@media only screen
+    and (device-width : 375px)
+    and (device-height : 812px)
+    and (-webkit-device-pixel-ratio : 3)
+    and (orientation : landscape) {
+  .navbar {
+    display: none;
+  }
+  /*
+  .bet-manips {
+    display: inline;
+  }
+  .bet-manips .btn-group {
+    display: inline !important;
+    float: right !important;
+  }
+  .bet-manips .btn-group {
+    display: inline !important;
+    float: left !important;
+  }
+  */
+}
+
+/**
+ * iPhone 8 Plus
+ */
+@media only screen
+    and (device-width : 375px)
+    and (device-height : 667px)
+    and (-webkit-device-pixel-ratio : 2)
+    and (orientation : landscape) {
+  .navbar {
+    display: none;
+  }
+  /*
+  .bet-manips {
+    display: inline;
+  }
+  .bet-manips .betActions {
+    display: inline;
+  }
+  .bet-manips .betControls {
+    display: inline;
+  }
+  */
+}
+
+/**
+ * iPhone 8 Plus
+ */
+@media only screen
+    and (device-width : 414px)
+    and (device-height : 736px)
+    and (-webkit-device-pixel-ratio : 3)
+    and (orientation : landscape) {
+  .navbar {
+    display: none;
+  }
+  /*
+  .bet-manips {
+    display: inline;
+  }
+  .bet-manips {
+    display: inline;
+    float: right;
+  }
+  .bet-manips .betControls {
+    display: inline;
+    float: left;
+  }
+  */
+}
+
