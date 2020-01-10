@@ -70,7 +70,7 @@ const HandModel = function(){
   this.wasSplitAces = false;
   this._canHit = true;
   this._canDouble = true;
-  this.standing = null;
+  this.result = null;
   this.bet = 0;
 
   this.addCard = function(card){

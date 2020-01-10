@@ -17,13 +17,13 @@ function( $scope,   HumanActionService ) {
   this.game = {
     opts: {
       deckCount: 6,
-      dealRate: 0.1,
+      dealRate: 0.2,
       showDeckStats: false,
       payout: '1.5',
       minBet: 10,
     },
     players: [
-      new PlayerModel('You', HumanActionService, 200, true),
+      //new PlayerModel('You', HumanActionService, 200, true),
       new PlayerModel('HighLow', null, 200),
       new PlayerModel('AverageJoe', null, 200),
       new PlayerModel('KayOh', null, 200),
@@ -59,12 +59,12 @@ function( $scope,   HumanActionService ) {
       }
       try{
         await this.gameState.consumeCard( card );
-        await sleep( Math.round(this.game.opts.dealRate * 1000) );
         this.cardConsumed = true;
       } catch( e ){
         this.cardConsumed = false;
       }
       $scope.$apply();
+      await sleep( Math.round(this.game.opts.dealRate * 1000) );
     }
   }
 
