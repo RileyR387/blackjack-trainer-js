@@ -22,6 +22,10 @@
 body {
   background-color: var(--tableBgColor);
   margin-bottom: 10px;
+  touch-action: none;
+}
+button {
+  touch-action: none;
 }
 .container-footer {
   width: auto;
