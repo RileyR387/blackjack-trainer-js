@@ -1,6 +1,6 @@
 {
   "name": "blackjack-trainer-js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Blackjack trainer with optional AI seating placement",
   "main": "index.html",
   "scripts": {
