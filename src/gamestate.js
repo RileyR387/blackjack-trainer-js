@@ -64,7 +64,7 @@ const GameState = function(game){
 
     if( player.name == 'Dealer' ){
       var dealerHand = this._getDealerHand();
-      if( this.playersRemain() && ((dealerHand.value() == 17 && dealerHand.isSoft) || dealerHand.value() < 17 ) ){
+      if( this.playersRemain() && (dealerHand.value() < 17 || (dealerHand.value() == 17 && dealerHand.isSoft) ) ){
         dealerHand.addCard( card );
         return;
       } else {
