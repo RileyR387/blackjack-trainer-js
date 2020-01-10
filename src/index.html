@@ -45,7 +45,8 @@
     </div><!-- #dealerBox -->
 
     <div id="playersBox" class="row no-gutters">
-      <div ng-repeat="player in bjg.gameState.seats | reverse | filter: { name: '!Dealer' }" class="player col-xs-2">
+      <div ng-repeat="player in bjg.gameState.seats | reverse | filter: { name: '!Dealer' }" 
+            ng-class="{true: 'player player-active col-xs-2', false: 'player col-xs-2'}[player === bjg.gameState.getCurrentPlayer()]">
 
         <div ng-if="player.hands.length < 2" ng-repeat="hand in player.hands" class="hand">
             <div ng-repeat="card in hand.cards track by $index" >
@@ -54,7 +55,7 @@
         </div><!-- ng-repeat .hand -->
 
         <div ng-if="player.hands.length > 1" class="splitHand">
-          <div ng-repeat="hand in player.hands" class="hand">
+          <div ng-repeat="hand in player.hands" ng-class="{true: 'hand hand-active', false: 'hand'}[hand === bjg.gameState.getCurrentHand()]">
             <div ng-repeat="card in hand.cards track by $index" >
               <playing-card data-cardvalue="card" data-displayDepth="$index+1" ></playing-card>
             </div>
@@ -63,7 +64,14 @@
 
         <ul class="list-group player-data">
           <li class="list-group-item">
-            Bet: ${{player.hands[0].bet || 0}} <span ng-if="player.hands.length > 1">X {{player.hands.length}}</span>
+            <div ng-if="bjg.gameState.status == 'SCORE' || bjg.gameState.status == 'GAMEOVER'">
+              <div ng-repeat="hand in player.hands" >
+                {{hand.result}} ({{hand.value()}})
+              </div>
+            </div>
+            <div ng-if="bjg.gameState.status != 'SCORE' && bjg.gameState.status != 'GAMEOVER'">
+              Bet: ${{player.hands[0].bet || 0}} <span ng-if="player.hands.length > 1">X {{player.hands.length}}</span>
+            </div>
           </li>
           <li class="list-group-item">{{player.name}}</li>
           <li class="list-group-item">Bank: ${{player.bankRoll}}</li>

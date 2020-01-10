@@ -23,7 +23,7 @@ function( $scope,   HumanActionService ) {
       minBet: 10,
     },
     players: [
-      //new PlayerModel('You', HumanActionService, 200, true),
+      new PlayerModel('You', HumanActionService, 200, true),
       new PlayerModel('HighLow', null, 200),
       new PlayerModel('AverageJoe', null, 200),
       new PlayerModel('KayOh', null, 200),
@@ -112,14 +112,12 @@ function( $scope,   HumanActionService ) {
   this.actionStand  = function(){ HumanActionService.action = 'STAND'; }
   this.actionHit    = function(){ HumanActionService.action = 'HIT'; }
   this.actionDouble = function(){
-    // TODO: Need to implement `this.gameState.getCurrentHand()`
-    if( this.gameState.getCurrentPlayer().hands[0].canDouble() ){
+    if( this.gameState.getCurrentHand().canDouble() ){
       HumanActionService.action = 'DOUBLE';
     }
   }
   this.actionSplit = function(){
-    // TODO: Need to implement `this.gameState.getCurrentHand()`
-    if( this.gameState.getCurrentPlayer().hands[0].canSplit() ){
+    if( this.gameState.getCurrentHand().canSplit() ){
       HumanActionService.action = 'SPLIT';
     }
   }

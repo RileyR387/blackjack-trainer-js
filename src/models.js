@@ -71,6 +71,7 @@ const HandModel = function(){
   this._canHit = true;
   this._canDouble = true;
   this.result = null;
+  this.currentHand = false;
   this.bet = 0;
 
   this.addCard = function(card){
@@ -178,6 +179,8 @@ const PlayerModel = function(name, agent, bankRoll, isHuman) {
   this.hands = [];
   this.agent = agent;
   this.bankRoll = bankRoll;
+  this.lastBet = 0;
+  this.currPlayer = false;
   this.roundsPlayed = 0;
   this.handsPlayed = 0;
   this.stats = {
@@ -191,13 +194,13 @@ const PlayerModel = function(name, agent, bankRoll, isHuman) {
   };
 }
 
-const ScoreModel = function(){
-  this.blackjack = '*!BlackJack!*';
-  this.win = 'Winner!';
-  this.push = 'Pushed';
-  this.bust = 'Busted';
-  this.lose = 'LOSER';
-}
+const ScoreModel = {
+  blackjack: '*!BlackJack!*',
+  win: 'Winner!',
+  push: 'Pushed',
+  bust: 'Busted',
+  lose: 'LOSER',
+};
 
 const GameSettingsDialogModel = function() {
   this.bjg = {};

@@ -95,6 +95,15 @@ body {
   box-sizing: border-box;
   border: 0.1em solid var(--playerOutlineColor);
 }
+.player-active {
+  display: inline-block;
+  position: relative;
+  margin-top: 0.2em;
+  min-width: 8em;
+  border-radius: .3em;
+  box-sizing: border-box;
+  border: 0.1em solid yellow;
+}
 .player > ul > .list-group-item {
   background: var(--playerBgColor);
   font-size: 10pt;
@@ -107,6 +116,15 @@ body {
   display: block;
   margin: 0.5em;
   height: 4.2em;
+}
+.hand-active {
+  position: sticky;
+  display: block;
+  margin: 0.5em;
+  height: 4.2em;
+  box-sizing: border-box;
+  border-left: 0.15em solid var(--playerOutlineColor);
+  border-top:  0.15em solid var(--playerOutlineColor);
 }
 .splitHand {
   display: block;
@@ -178,7 +196,6 @@ body {
 }
 .CardMiddleBody {
   display: none;
-  margin: 20px;
   text-align: center;
 }
 /*

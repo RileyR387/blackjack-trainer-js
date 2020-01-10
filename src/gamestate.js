@@ -24,7 +24,19 @@ const GameState = function(game){
   this.status = 'DEALING_HANDS';
 
   this.getCurrentPlayer = function(){
+    if( this._currPlayerIndex < 0 ){
+      return this.seats[0];
+    }
     return this.seats[this._currPlayerIndex];
+  }
+
+  this.getCurrentHand = function(){
+    var currPlayer = this.getCurrentPlayer();
+    for( i = 0; i < currPlayer.hands.length; ++i){
+      if( !currPlayer.hands[i].isFinal ){
+        return currPlayer.hands[i];
+      }
+    }
   }
 
   this.consumeCard = async function(card){
@@ -248,7 +260,6 @@ const GameState = function(game){
       seat.hands.forEach( hand => {
         seat.handsPlayed++;
         var startBalance = seat.bankRoll;
-        var score = '';
         // Blackjack
         if(
             hand.value() == 21 && hand.cards.length == 2 &&
@@ -257,7 +268,7 @@ const GameState = function(game){
               (dealer.value() == 21 && seat.name != 'Dealer' && dealer.cards.length > 2)
             )
         ){
-          score = ScoreModel.blackjack;
+          hand.result = ScoreModel.blackjack;
           seat.stats.bjs++;
           seat.stats.wins++;
           var win = Math.round((hand.bet * parseFloat(this.opts.payout)) + hand.bet, 2);
@@ -271,17 +282,17 @@ const GameState = function(game){
         } else if( seat.name == 'Dealer' ){
           if( ! hand.hasBusted() ){
             if( ! this.playersRemain() ){
-              score = ScoreModel.win;
+              hand.result = ScoreModel.win;
               seat.stats.wins++;
             } else {
-              score = '';
+              hand.result = null;
             }
           } else {
-            score = ScoreModel.bust;
+            hand.result = ScoreModel.bust;
             seat.stats.loses++;
           }
         } else if( hand.value() > 21 ){
-          score = ScoreModel.bust;
+          hand.result = ScoreModel.bust;
           seat.stats.busts++;
           this._getDealer().bankRoll += hand.bet;
           hand.bet = 0;
@@ -290,7 +301,7 @@ const GameState = function(game){
           ||
           (hand.value() < 22 && hand.value() > dealer.value() )
         ){
-          score = ScoreModel.win;
+          hand.result = ScoreModel.win;
           seat.stats.wins++;
           var win = Math.round(hand.bet * 2, 2);
           seat.bankRoll += win;
@@ -298,13 +309,13 @@ const GameState = function(game){
           this._getDealer().stats.loses++;
           hand.bet = 0;
         } else if( hand.value() < 22 && hand.value() == dealer.value() ){
-          score = ScoreModel.push;
+          hand.result = ScoreModel.push;
           this._getDealer().stats.pushes++;
           seat.stats.pushes++;
           seat.bankRoll += hand.bet;
           hand.bet = 0;
         } else if( hand.value() < 22 && hand.value() < dealer.value() ){
-          score = ScoreModel.lose;
+          hand.result = ScoreModel.lose;
           seat.stats.loses++;
           this._getDealer().stats.wins++;
           this._getDealer().bankRoll += hand.bet;
@@ -318,7 +329,7 @@ const GameState = function(game){
             agent: seat.name,
             hand: hand,
             handVal: hand.value(),
-            score: score,
+            score: hand.result,
             amt: hand._bet,
             bankRoll: seat.bankRoll
           }
@@ -396,6 +407,7 @@ const GameState = function(game){
                 seat.hands[j].bet = pBet;
                 seat.bankRoll -= pBet;
               }
+              seat.lastBet = seat.hands[j].bet;
             } catch ( e ){
               console.log( "Player: " + seat.name + " didn't bet!" );
               seat.hands[j].bet = this.opts.minBet;
