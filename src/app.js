@@ -16,7 +16,7 @@ function( $scope,   HumanActionService ) {
 
   this.game = {
     opts: {
-      deckCount: 6,
+      deckCount: 8,
       dealRate: 0.2,
       showDeckStats: false,
       payout: '1.5',
@@ -111,12 +111,15 @@ function( $scope,   HumanActionService ) {
   this.halfBet = function(){
     this.endRound();
     var currPlayer = this.gameState.getCurrentPlayer();
-    if( HumanActionService.tempBet == 0 && currPlayer.lastBet != 0){
+    if( HumanActionService.tempBet == 0 && currPlayer.lastBet != 0 ){
+      currPlayer.lastBet = currPlayer.lastBet - currPlayer.lastBet%10;
       HumanActionService.tempBet = currPlayer.lastBet;
-      currPlayer.bankRoll -= currPlayer.lastBet
+      currPlayer.hands[0].bet = currPlayer.lastBet;
+      currPlayer.bankRoll -= currPlayer.lastBet;
       currPlayer.lastBet = 0;
     }
-    if( (HumanActionService.tempBet/2) % 5 == 0 ){
+    if( HumanActionService.tempBet != 0 && (HumanActionService.tempBet/2) % 5 == 0 ){
+      HumanActionService.tempBet -= (HumanActionService.tempBet/2)%5;
       HumanActionService.tempBet /= 2;
       currPlayer.bankRoll += HumanActionService.tempBet;
       currPlayer.hands[0].bet = HumanActionService.tempBet;
@@ -165,7 +168,6 @@ app.factory('HumanActionService', [ '$q', function( $q ){
   this.bet = null;
   this.placeBet = async function(priorGameStateView){
     console.log("HumanActionService - placeBet start");
-    // TODO: Fire event to notify controller and apply eligible actions to buttons
     while( this.bet == null ){
       await sleep(50);
     }
@@ -176,7 +178,6 @@ app.factory('HumanActionService', [ '$q', function( $q ){
   }
   this.nextAction = async function(gameStateView, hand){
     console.log("HumanActionService - nextAction start");
-    // TODO: Fire event to notify controller and apply eligible actions to buttons
     while( this.action == null ){
       await sleep(50);
     }
@@ -187,7 +188,7 @@ app.factory('HumanActionService', [ '$q', function( $q ){
   }
   this.takeInsurance = async function(gameStateView, hand){
     console.log("HumanActionService - takeInsurance start");
-    // TODO: Fire event to notify controller and apply eligible actions to buttons
+    // TODO: Add insurance UI
     console.log("HumanActionService - takeInsurance end");
   }
   return this;
