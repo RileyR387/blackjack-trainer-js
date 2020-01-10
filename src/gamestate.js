@@ -24,7 +24,7 @@ const GameState = function(game){
   this.status = 'DEALING_HANDS';
 
   this.getCurrentPlayer = function(){
-    if( this._currPlayerIndex < 0 ){
+    if( this._currPlayerIndex < 0 || this._currPlayerIndex >= this.seats.length ){
       return this.seats[0];
     }
     return this.seats[this._currPlayerIndex];
@@ -396,6 +396,7 @@ const GameState = function(game){
   }
 
   this._takeBets = async function(){
+    this.status = 'TAKING_BETS';
     for( this._currPlayerIndex = 0; this._currPlayerIndex < this.seats.length; ++this._currPlayerIndex){
       var seat = this.seats[this._currPlayerIndex];
       if( seat.name != 'Dealer' ){
@@ -418,6 +419,7 @@ const GameState = function(game){
       }
     }
     this._currPlayerIndex = 0;
+    this.status = 'DEALING_HANDS';
   }
 
 }

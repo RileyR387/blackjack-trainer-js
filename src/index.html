@@ -45,7 +45,7 @@
     </div><!-- #dealerBox -->
 
     <div id="playersBox" class="row no-gutters">
-      <div ng-repeat="player in bjg.gameState.seats | reverse | filter: { name: '!Dealer' }" 
+      <div ng-repeat="player in bjg.gameState.seats | reverse | filter: { name: '!Dealer' }"
             ng-class="{true: 'player player-active col-xs-2', false: 'player col-xs-2'}[player === bjg.gameState.getCurrentPlayer()]">
 
         <div ng-if="player.hands.length < 2" ng-repeat="hand in player.hands" class="hand">
@@ -79,15 +79,20 @@
       </div><!-- ng-repeat .player -->
     </div> <!-- #playersBox -->
 
+    <div ng-if="bjg.gameState.status == 'DELT' && bjg.gameState.getCurrentPlayer().isHuman && bjg.gameState.getCurrentHand().value() < 21" >
     <div id="actionInput" class="d-flex justify-content-center">
       <div class="btn-group btn-group-justified" role="group" aria-label="Hand Actions">
-        <button type="button" class="btn btn-warning disabled" ng-click="bjg.actionSplit()" >Split</button>
-        <button type="button" class="btn btn-danger" ng-click="bjg.actionDouble()" >Double</button>
+        <button ng-if="bjg.gameState.getCurrentHand().canSplit()"
+                 type="button" class="btn btn-warning disabled" ng-click="bjg.actionSplit()" >Split</button>
+        <button ng-if="bjg.gameState.getCurrentHand().canDouble()"
+                 type="button" class="btn btn-danger" ng-click="bjg.actionDouble()" >Double</button>
         <button type="button" class="btn btn-secondary" ng-click="bjg.actionHit()" >Hit</button>
         <button type="button" class="btn btn-success" ng-click="bjg.actionStand()" >Stand</button>
       </div>
     </div><!-- #actionInput -->
+    </div>
 
+    <div ng-if="bjg.gameState.status == 'TAKING_BETS' || bjg.gameState.status == 'SCORE'" >
     <div id="betActions" class="d-flex justify-content-center">
       <div class="btn-group  btn-group-justified" role="group" aria-label="Bet Actions">
         <button type="button" class="btn btn-secondary" ng-click="bjg.clearBet()" aria-label="Clear Current Bet">Clear</button>
@@ -107,7 +112,9 @@
         <button type="button" class="btn btn-danger disabled" ng-click="bjg.addBet(1000)" aria-label="Bet One Thousand">1000</button>
       </div><!-- .btn-group -->
     </div><!-- #betControls -->
+    </div>
   </div><!-- #gameContainer -->
+  <p>{{bjg.gameState.status}}</p>
   <game-settings-dialog model="gameSettingsDialog"></game-settings-dialog>
   <player-settings-dialog model="playerSettingsDialog"></player-settings-dialog>
   <about-dialog></about-dialog>

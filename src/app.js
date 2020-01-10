@@ -78,35 +78,68 @@ function( $scope,   HumanActionService ) {
   }
 
   this.deal = function(){
+    this.endRound();
     var finalBet = HumanActionService.tempBet;
-    HumanActionService.tempBet = 0;
-    HumanActionService.bet = finalBet;
+    var currPlayer = this.gameState.getCurrentPlayer();
+    if( finalBet != 0 ){
+      HumanActionService.tempBet = 0;
+      HumanActionService.bet = finalBet;
+    }
+    if( currPlayer.lastBet != 0 && currPlayer.isHuman ){
+      currPlayer.bankRoll -= currPlayer.lastBet;
+      currPlayer.hands[0].bet = currPlayer.lastBet;
+      HumanActionService.bet = currPlayer.lastBet;
+    }
   }
 
   this.addBet = function(betAmt){
     this.endRound();
+    var currPlayer = this.gameState.getCurrentPlayer();
+    currPlayer.lastBet = 0;
     HumanActionService.tempBet += betAmt;
-    this.gameState.getCurrentPlayer().bankRoll -= betAmt;
-    this.gameState.getCurrentPlayer().hands[0].bet = HumanActionService.tempBet;
+    currPlayer.bankRoll -= betAmt;
+    currPlayer.hands[0].bet = HumanActionService.tempBet;
   }
   this.clearBet = function(){
-    this.gameState.getCurrentPlayer().bankRoll += HumanActionService.tempBet;
+    this.endRound();
+    var currPlayer = this.gameState.getCurrentPlayer();
+    currPlayer.bankRoll += HumanActionService.tempBet;
+    currPlayer.lastBet = 0;
     HumanActionService.tempBet = 0;
-    this.gameState.getCurrentPlayer().hands[0].bet = HumanActionService.tempBet;
+    currPlayer.hands[0].bet = HumanActionService.tempBet;
   }
   this.halfBet = function(){
     this.endRound();
+    var currPlayer = this.gameState.getCurrentPlayer();
+    if( HumanActionService.tempBet == 0 && currPlayer.lastBet != 0){
+      HumanActionService.tempBet = currPlayer.lastBet;
+      currPlayer.bankRoll -= currPlayer.lastBet
+      currPlayer.lastBet = 0;
+    }
     if( (HumanActionService.tempBet/2) % 5 == 0 ){
       HumanActionService.tempBet /= 2;
-      this.gameState.getCurrentPlayer().bankRoll += HumanActionService.tempBet;
-      this.gameState.getCurrentPlayer().hands[0].bet = HumanActionService.tempBet;
+      currPlayer.bankRoll += HumanActionService.tempBet;
+      currPlayer.hands[0].bet = HumanActionService.tempBet;
+      this.deal();
     }
   }
   this.doubleBet = function(){
     this.endRound();
+    var currPlayer = this.gameState.getCurrentPlayer();
+
+    if( HumanActionService.tempBet == 0 && currPlayer.lastBet != 0){
+      HumanActionService.tempBet = currPlayer.lastBet;
+      currPlayer.bankRoll -= currPlayer.lastBet
+      currPlayer.lastBet = 0;
+    }
+
+    if( HumanActionService.tempBet == 0 && currPlayer.lastBet != 0){
+      HumanActionService.tempBet = currPlayer.lastBet;
+    }
     this.gameState.getCurrentPlayer().bankRoll -= HumanActionService.tempBet;
     HumanActionService.tempBet *= 2;
     this.gameState.getCurrentPlayer().hands[0].bet = HumanActionService.tempBet;
+    this.deal();
   }
 
   this.actionStand  = function(){ HumanActionService.action = 'STAND'; }
