@@ -17,7 +17,7 @@ function( $scope,   HumanActionService ) {
   this.game = {
     opts: {
       deckCount: 8,
-      dealRate: 0.2,
+      dealRate: 0.3,
       showDeckStats: false,
       payout: '1.5',
       minBet: 10,
@@ -47,7 +47,7 @@ function( $scope,   HumanActionService ) {
 
   this.dealRound = async function(){
     console.log( "Controller Dealing" );
-    while( this.gameState.status != "SCORE" && this.gameState.status != "GAMEOVER" ){
+    while( this.gameState.status != "Score" && this.gameState.status != "Game Over" ){
       if( this.cardConsumed ){
         try{
           card = this.shoe.nextCard();
@@ -69,9 +69,9 @@ function( $scope,   HumanActionService ) {
   }
 
   this.endRound = function(){
-    if( this.gameState.status == 'GAMEOVER' ){
+    if( this.gameState.status == 'Game Over' ){
       this.shuffleShoe();
-    } else if( this.gameState.status == 'SCORE'){
+    } else if( this.gameState.status == 'Score'){
       this.gameState.clearRound();
       this.dealRound();
     }

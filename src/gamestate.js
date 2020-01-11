@@ -21,7 +21,7 @@ const GameState = function(game){
   game.dealer.hands = [ new HandModel() ];
   this.seats.push( game.dealer );
 
-  this.status = 'DEALING_HANDS';
+  this.status = 'Dealing Hands';
 
   this.getCurrentPlayer = function(){
     if( this._currPlayerIndex < 0 || this._currPlayerIndex >= this.seats.length ){
@@ -42,28 +42,28 @@ const GameState = function(game){
   this.consumeCard = async function(card){
     player = this.nextPlayer();
 
-    if( this.status == 'DEALING_HANDS'){
+    if( this.status == 'Dealing Hands'){
       if( await this._dealHand( player, card) != null ){
-        this.status = 'DELT';
+        this.status = 'Delt';
       } else {
         return;
       }
     }
 
-    if( this.status == "DELT" ){
+    if( this.status == "Delt" ){
       if( await this._queryPlayers(player, card) != null ){
         // A player didn't consume the card.. update state and continue
-        this.status = 'SCORE';
+        this.status = 'Score';
       } else {
         // some player consumed the card
         return;
       }
     }
 
-    if( this.status == 'SCORE' ){
+    if( this.status == 'Score' ){
       this.priorGameState = this.ScoreRound();
       if( this.newShoeFlag ){
-        this.status = 'GAMEOVER';
+        this.status = 'Game Over';
       }
     }
   }
@@ -71,7 +71,7 @@ const GameState = function(game){
   this._queryPlayers = async function(player, card){
     var action = null;
     if( ! this._roundCanStart(player, card) ){
-      return 'SCORE';
+      return 'Score';
     }
 
     if( player.name == 'Dealer' ){
@@ -81,8 +81,8 @@ const GameState = function(game){
         return;
       } else {
         dealerHand.isFinal = true;
-        this.status = 'SCORE';
-        return 'SCORE';
+        this.status = 'Score';
+        return 'Score';
       }
     } else {
       thisHand = this._nextHand(player);
@@ -172,7 +172,7 @@ const GameState = function(game){
           }
         }
         if( dealerHand.isBlackjack() ){
-          this.status = 'SCORE';
+          this.status = 'Score';
           return false;
         } else {
           // TODO: Consume any failed insurance bets
@@ -202,7 +202,7 @@ const GameState = function(game){
       this.seats.forEach( player => {
         player.hands = [ new HandModel ];
       });
-      this.status = 'DEALING_HANDS';
+      this.status = 'Dealing Hands';
       this._currPlayerIndex = -1;
       return true;
     } else {
@@ -211,7 +211,7 @@ const GameState = function(game){
   }
 
   this.GameSnapshot = function(){
-    if( this.status == 'SCORE' ){
+    if( this.status == 'Score' ){
       return this.ScoreRound();
     } else {
       var gameView = [];
@@ -348,7 +348,7 @@ const GameState = function(game){
   }
 
   this.nextPlayer = function(){
-    if( this.status == 'DEALING_HANDS' ){
+    if( this.status == 'Dealing Hands' ){
       this._currPlayerIndex += 1;
       if( this._currPlayerIndex >= this.seats.length ){
         this._currPlayerIndex = 0;
@@ -388,7 +388,7 @@ const GameState = function(game){
     }
 
     if( this._currPlayerIndex == 0 && thisHand.cards.length == 2 ){
-      this.status = "DELT";
+      this.status = "Delt";
     } else {
       thisHand.addCard( card );
       return null;
@@ -396,7 +396,7 @@ const GameState = function(game){
   }
 
   this._takeBets = async function(){
-    this.status = 'TAKING_BETS';
+    this.status = 'Taking Bets';
     for( this._currPlayerIndex = 0; this._currPlayerIndex < this.seats.length; ++this._currPlayerIndex){
       var seat = this.seats[this._currPlayerIndex];
       if( seat.name != 'Dealer' ){
@@ -419,7 +419,7 @@ const GameState = function(game){
       }
     }
     this._currPlayerIndex = 0;
-    this.status = 'DEALING_HANDS';
+    this.status = 'Dealing Hands';
   }
 
 }

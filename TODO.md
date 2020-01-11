@@ -1,7 +1,8 @@
 
 ## Dealing
-  * Dealer didn't hit a soft 17? Maybe fixed via stack eval order... maybe all the players had busted.. 
+  * Dealer didn't hit a soft 17? 
   * Handle Insurance
+  * Even if no one takes insurance... detect the dealer blackjack. Big problem...
 
 ## Events
   * Scope doesn't apply to update current play CSS while taking bets, visible when seated outside of the first position

@@ -23,29 +23,45 @@
 <body ng-controller="BlackjackGameController as bjg">
   <game-navbar></game-navbar>
   <div id="gameContainer">
+    <div id="dealerRow" class="row" >
+      <div id="dealerBox" class="dealerBox">
+        <div class="dealer">
+          <ul class="list-group dealer-data">
+              <div ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'">
+                <div ng-repeat="hand in player.hands" >
+                  {{hand.result}} ({{hand.value()}})
+                </div>
+              </div>
+            <li class="list-group-item">
+              Dealer
+              <span ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'" >({{bjg.game.dealer.hands[0].value()}})<span>
+            </li>
+          </ul>
+          <div class="dealer-hand" >
+            <div ng-repeat="card in bjg.game.dealer.hands[0].cards track by $index" >
+              <div ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'">
+                <playing-card data-cardvalue="card" data-displayDepth="0" ></playing-card>
+              </div>
+              <div ng-if="bjg.gameState.status != 'Score' && bjg.gameState.status != 'Game Over' && $index == 0">
+                <playing-card data-cardvalue="card" data-displayDepth="0" ></playing-card>
+              </div>
+              <div ng-if="bjg.gameState.status != 'Score' && bjg.gameState.status != 'Game Over' && $index == 1">
+                <playing-card data-cardvalue="card" data-displayDepth="0" data-facedown="true" ></playing-card>
+              </div>
+            </div>
+          </div><!-- .dealer-hand -->
+        </div><!-- .player -->
+        <div class="shoe">
+          <ul class="list-group shoe-data">
+            <li class="list-group-item"><span ng-bind="bjg.game.opts.deckCount"></span> Deck Shoe</li>
+            <li class="list-group-item"><span ng-bind="bjg.shoe._shoe.length + 1"></span> Cards Left</li>
+            <li class="list-group-item"><span ng-bind="bjg.gameState.status"></span></li>
+          </ul>
+        </div>
+      </div><!-- #dealerBox -->
+    </div>
 
-    <div id="dealerBox" class="dealerBox">
-      <div class="dealer">
-        <ul class="list-group dealer-data">
-          <li class="list-group-item">Dealer (<span ng-bind="bjg.game.opts.deckCount"></span> Decks)</li>
-        </ul>
-        <div class="dealer-hand" >
-          <div ng-repeat="card in bjg.game.dealer.hands[0].cards track by $index" >
-            <div ng-if="bjg.gameState.status == 'SCORE' || bjg.gameState.status == 'GAMEOVER'">
-              <playing-card data-cardvalue="card" data-displayDepth="0" ></playing-card>
-            </div>
-            <div ng-if="bjg.gameState.status != 'SCORE' && bjg.gameState.status != 'GAMEOVER' && $index == 0">
-              <playing-card data-cardvalue="card" data-displayDepth="0" ></playing-card>
-            </div>
-            <div ng-if="bjg.gameState.status != 'SCORE' && bjg.gameState.status != 'GAMEOVER' && $index == 1">
-              <playing-card data-cardvalue="card" data-displayDepth="0" data-facedown="true" ></playing-card>
-            </div>
-          </div>
-        </div><!-- .dealer-hand -->
-      </div><!-- .player -->
-    </div><!-- #dealerBox -->
-
-    <div id="playersBox" class="row no-gutters">
+    <div id="playersBox" class="row no-gutters mb-2">
       <div ng-repeat="player in bjg.gameState.seats | reverse | filter: { name: '!Dealer' }"
             ng-class="{true: 'player player-active col-xs-2', false: 'player col-xs-2'}[player === bjg.gameState.getCurrentPlayer()]">
 
@@ -65,12 +81,12 @@
 
         <ul class="list-group player-data">
           <li class="list-group-item">
-            <div ng-if="bjg.gameState.status == 'SCORE' || bjg.gameState.status == 'GAMEOVER'">
+            <div ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'">
               <div ng-repeat="hand in player.hands" >
                 {{hand.result}} ({{hand.value()}})
               </div>
             </div>
-            <div ng-if="bjg.gameState.status != 'SCORE' && bjg.gameState.status != 'GAMEOVER'">
+            <div ng-if="bjg.gameState.status != 'Score' && bjg.gameState.status != 'Game Over'">
               Bet: ${{player.hands[0].bet || 0}} <span ng-if="player.hands.length > 1">X {{player.hands.length}}</span>
             </div>
           </li>
@@ -80,11 +96,19 @@
       </div><!-- ng-repeat .player -->
     </div> <!-- #playersBox -->
 
-    <div ng-if="bjg.gameState.status == 'DELT' && bjg.gameState.getCurrentPlayer().isHuman && bjg.gameState.getCurrentHand().value() < 21" >
-      <div id="actionInput" class="d-flex justify-content-center">
+    <div ng-if="bjg.gameState.status == 'Game Over'" >
+      <div id="dealerActionsInput" class="d-flex justify-content-center mb-1">
+        <div class="btn-group btn-group-justified" role="group" aria-label="Dealer Actions">
+          <button type="button" class="btn btn-success" ng-click="bjg.shuffleShoe()" >Shuffle Shoe</button>
+        </div>
+      </div><!-- #actionInput -->
+    </div>
+
+    <div ng-if="bjg.gameState.status == 'Delt' && bjg.gameState.getCurrentPlayer().isHuman && bjg.gameState.getCurrentHand().value() < 21" >
+      <div id="actionInput" class="d-flex justify-content-center mb-1">
         <div class="btn-group btn-group-justified" role="group" aria-label="Hand Actions">
           <button ng-if="bjg.gameState.getCurrentHand().canSplit()"
-                   type="button" class="btn btn-warning disabled" ng-click="bjg.actionSplit()" >Split</button>
+                   type="button" class="btn btn-warning" ng-click="bjg.actionSplit()" >Split</button>
           <button ng-if="bjg.gameState.getCurrentHand().canDouble()"
                    type="button" class="btn btn-danger" ng-click="bjg.actionDouble()" >Double</button>
           <button type="button" class="btn btn-secondary" ng-click="bjg.actionHit()" >Hit</button>
@@ -93,8 +117,8 @@
       </div><!-- #actionInput -->
     </div>
 
-    <div ng-if="bjg.gameState.status == 'TAKING_BETS' || bjg.gameState.status == 'SCORE'" class="bet-manips">
-      <div id="betActions" class="d-flex justify-content-center">
+    <div ng-if="bjg.gameState.status == 'Taking Bets' || bjg.gameState.status == 'Score'" class="bet-manips">
+      <div id="betActions" class="d-flex justify-content-center mb-2">
         <div class="btn-group  btn-group-justified" role="group" aria-label="Bet Actions">
           <button type="button" class="btn btn-secondary" ng-click="bjg.clearBet()" aria-label="Clear Current Bet">Clear</button>
           <button type="button" class="btn btn-light" ng-click="bjg.halfBet()" aria-label="Half Last Bet">Half</button>
@@ -103,14 +127,14 @@
         </div><!-- .btn-group -->
       </div><!-- #betActions -->
 
-      <div id="betControls" class="d-flex justify-content-center">
+      <div id="betControls" class="d-flex justify-content-center mb-1">
         <div class="btn-group  btn-group-justified" role="group" aria-label="Bet Inputs">
           <button type="button" class="btn btn-danger" ng-click="bjg.addBet(5)" aria-label="Bet Five">5</button>
           <button type="button" class="btn btn-dark" ng-click="bjg.addBet(10)" aria-label="Bet Ten">10</button>
           <button type="button" class="btn btn-success" ng-click="bjg.addBet(25)" aria-label="Bet Twenty-Five">25</button>
           <button type="button" class="btn btn-primary" ng-click="bjg.addBet(100)" aria-label="Bet One Hundred">100</button>
-          <button type="button" class="btn btn-info disabled" ng-click="bjg.addBet(500)" aria-label="Bet Five Hundred">500</button>
-          <button type="button" class="btn btn-danger disabled" ng-click="bjg.addBet(1000)" aria-label="Bet One Thousand">1000</button>
+          <button type="button" class="btn btn-info" ng-click="bjg.addBet(500)" aria-label="Bet Five Hundred">500</button>
+          <button type="button" class="btn btn-danger" ng-click="bjg.addBet(1000)" aria-label="Bet One Thousand">1000</button>
         </div><!-- .btn-group -->
       </div><!-- #betControls -->
 
