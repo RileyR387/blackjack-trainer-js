@@ -45,21 +45,37 @@ const ShoeModel = function(decks){
       this._shoe[i] = this._shoe[j];
       this._shoe[j] = x;
     }
+    console.log("Shoe shuffled");
   }
-
-  this.shuffle();
 
   this.nextCard = function(){
     if( this.sentShuffleNotice ||
         (this.decks < 4 && this._shoe.length > this.decks*52*0.3) ||
         (this.decks > 3 && this._shoe.length > 52 * this._shuffleAtDecks )
       ){
-      return this._shoe.pop();
+      return this._shoe.shift();
     } else {
       this.sentShuffleNotice = true;
       throw new ShuffleShoeException();
     }
   }
+
+  this.rigTestShoe = function(){
+    console.log( "Rigging shoe");
+    var aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
+    console.log( this._shoe[aceIndex] );
+    this._swap( 4, aceIndex );
+    console.log( this._shoe[4] );
+    console.log( this._shoe[9] );
+  }
+
+  this._swap = function(i,j){
+    var t = this._shoe[i];
+    this._shoe[i] = this._shoe[j];
+    this._shoe[j] = t;
+  }
+  this.shuffle();
+  this.rigTestShoe();
 }
 
 const HandModel = function(){
