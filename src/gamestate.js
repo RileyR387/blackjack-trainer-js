@@ -255,88 +255,136 @@ const GameState = function(game){
   this.ScoreRound = function() {
     var gameView = [];
     dealer = this._getDealerHand();
-    this.seats.forEach( (seat, idx) => {
-      seat.roundsPlayed++;
-      seat.hands.forEach( hand => {
-        seat.handsPlayed++;
-        var startBalance = seat.bankRoll;
-        // Blackjack
-        if(
-            hand.value() == 21 && hand.cards.length == 2 &&
-            (
-              (dealer.value() != 21 || seat.name == 'Dealer' ) ||
-              (dealer.value() == 21 && seat.name != 'Dealer' && dealer.cards.length > 2)
-            )
-        ){
-          hand.result = ScoreModel.blackjack;
-          seat.stats.bjs++;
-          seat.stats.wins++;
-          var win = Math.round((hand.bet * parseFloat(this.opts.payout)) + hand.bet, 2);
-          seat.bankRoll              += win;
-          if(seat.name != 'Dealer'){
+
+    if( dealer.offerInsurance() && dealer.isBlackjack() ){
+      this.seats.forEach( (seat, idx) => {
+        seat.roundsPlayed++;
+        seat.hands.forEach( hand => {
+          seat.handsPlayed++;
+          if( seat.name != 'Dealer' ){
+            if( hand.insured ){
+              hand.result = ScoreModel.insured;
+              seat.bankRoll += hand.bet;
+              seat.bankRoll += (hand.bet/2);
+              hand.bet = 0;
+            } else if( hand.isBlackjack() ){
+              hand.result = ScoreModel.push;
+              this._getDealer().stats.pushes++;
+              seat.stats.pushes++;
+              seat.bankRoll += hand.bet;
+              hand.bet = 0;
+            } else {
+              hand.change = 0-hand.bet;
+              hand.bet = 0;
+              hand.result = ScoreModel.lose;
+              seat.stats.loses++;
+              this._getDealer().stats.wins++;
+              this._getDealer().bankRoll += hand.bet;
+              this._getDealer().stats.loses++;
+            }
+          }
+          gameView.push({
+            [seat.name + "-" + idx]: {
+              name: seat.name,
+              //agent: seat.agent.name || seat.name,
+              agent: seat.name,
+              hand: hand,
+              handVal: hand.value(),
+              score: hand.result,
+              amt: hand._bet,
+              bankRoll: seat.bankRoll
+            }
+          });
+        });
+      });
+    } else {
+      this.seats.forEach( (seat, idx) => {
+        seat.roundsPlayed++;
+        seat.hands.forEach( hand => {
+          seat.handsPlayed++;
+          var startBalance = seat.bankRoll;
+          // Blackjack
+          if(
+              hand.value() == 21 && hand.cards.length == 2 &&
+              (
+                (dealer.value() != 21 || seat.name == 'Dealer' ) ||
+                (dealer.value() == 21 && seat.name != 'Dealer' && dealer.cards.length > 2)
+              )
+          ){
+            hand.result = ScoreModel.blackjack;
+            seat.stats.bjs++;
+            seat.stats.wins++;
+            var win = Math.round((hand.bet * parseFloat(this.opts.payout)) + hand.bet, 2);
+            hand.change = Math.round((hand.bet * parseFloat(this.opts.payout)), 2);
+            seat.bankRoll              += win;
+            if(seat.name != 'Dealer'){
+              this._getDealer().bankRoll -= win;
+              this._getDealer().stats.loses++;
+            } else {
+              console.log("Dealer Blackjack!");
+            }
+          } else if( seat.name == 'Dealer' ){
+            if( ! hand.hasBusted() ){
+              if( ! this.playersRemain() ){
+                hand.result = ScoreModel.win;
+                seat.stats.wins++;
+              } else {
+                hand.result = null;
+              }
+            } else {
+              hand.result = ScoreModel.bust;
+              seat.stats.loses++;
+            }
+          } else if( hand.value() > 21 ){
+            hand.result = ScoreModel.bust;
+            seat.stats.busts++;
+            hand.change = 0-hand.bet;
+            this._getDealer().bankRoll += hand.bet;
+            hand.bet = 0;
+          } else if(
+            (dealer.value() > 21 && hand.value() < 22)
+            ||
+            (hand.value() < 22 && hand.value() > dealer.value() )
+          ){
+            hand.result = ScoreModel.win;
+            seat.stats.wins++;
+            var win = Math.round(hand.bet * 2, 2);
+            hand.change = hand.bet;
+            seat.bankRoll += win;
             this._getDealer().bankRoll -= win;
             this._getDealer().stats.loses++;
-          } else {
-            console.log("Dealer Blackjack!");
-          }
-        } else if( seat.name == 'Dealer' ){
-          if( ! hand.hasBusted() ){
-            if( ! this.playersRemain() ){
-              hand.result = ScoreModel.win;
-              seat.stats.wins++;
-            } else {
-              hand.result = null;
-            }
-          } else {
-            hand.result = ScoreModel.bust;
+            hand.bet = 0;
+          } else if( hand.value() < 22 && hand.value() == dealer.value() ){
+            hand.result = ScoreModel.push;
+            this._getDealer().stats.pushes++;
+            seat.stats.pushes++;
+            seat.bankRoll += hand.bet;
+            hand.bet = 0;
+          } else if( hand.value() < 22 && hand.value() < dealer.value() ){
+            hand.result = ScoreModel.lose;
             seat.stats.loses++;
+            hand.change = 0-hand.bet;
+            this._getDealer().stats.wins++;
+            this._getDealer().bankRoll += hand.bet;
+            hand.bet = 0;
           }
-        } else if( hand.value() > 21 ){
-          hand.result = ScoreModel.bust;
-          seat.stats.busts++;
-          this._getDealer().bankRoll += hand.bet;
-          hand.bet = 0;
-        } else if(
-          (dealer.value() > 21 && hand.value() < 22)
-          ||
-          (hand.value() < 22 && hand.value() > dealer.value() )
-        ){
-          hand.result = ScoreModel.win;
-          seat.stats.wins++;
-          var win = Math.round(hand.bet * 2, 2);
-          seat.bankRoll += win;
-          this._getDealer().bankRoll -= win;
-          this._getDealer().stats.loses++;
-          hand.bet = 0;
-        } else if( hand.value() < 22 && hand.value() == dealer.value() ){
-          hand.result = ScoreModel.push;
-          this._getDealer().stats.pushes++;
-          seat.stats.pushes++;
-          seat.bankRoll += hand.bet;
-          hand.bet = 0;
-        } else if( hand.value() < 22 && hand.value() < dealer.value() ){
-          hand.result = ScoreModel.lose;
-          seat.stats.loses++;
-          this._getDealer().stats.wins++;
-          this._getDealer().bankRoll += hand.bet;
-          hand.bet = 0;
-        }
 
-        gameView.push({
-          [seat.name + "-" + idx]: {
-            name: seat.name,
-            //agent: seat.agent.name || seat.name,
-            agent: seat.name,
-            hand: hand,
-            handVal: hand.value(),
-            score: hand.result,
-            amt: hand._bet,
-            bankRoll: seat.bankRoll
-          }
+          gameView.push({
+            [seat.name + "-" + idx]: {
+              name: seat.name,
+              //agent: seat.agent.name || seat.name,
+              agent: seat.name,
+              hand: hand,
+              handVal: hand.value(),
+              score: hand.result,
+              amt: hand._bet,
+              bankRoll: seat.bankRoll
+            }
+          });
+
         });
-
       });
-    });
+    }
     return gameView;
   }
 
