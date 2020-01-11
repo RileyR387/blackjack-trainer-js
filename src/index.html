@@ -104,7 +104,19 @@
       </div><!-- #actionInput -->
     </div>
 
-    <div ng-if="bjg.gameState.status == 'Delt' && bjg.gameState.getCurrentPlayer().isHuman && bjg.gameState.getCurrentHand().value() < 21" >
+    <div ng-if="bjg.gameState.status == 'Insurance?' && bjg.gameState._getDealerHand().offerInsurance() && bjg.gameState.getCurrentPlayer().isHuman && bjg.gameState.getCurrentHand().value() < 21" >
+      <div id="actionInput" class="d-flex justify-content-center mb-1">
+        <div class="input-group-prepend border-0">
+          <div class="input-group-text border-0 bg-dark text-white ">Buy Insurance?</div>
+        </div>
+        <div class="btn-group btn-group-justified" role="group" aria-labeledby="actionLabel">
+          <button type="button" class="btn btn-success" ng-click="bjg.declineInsurance()" >No</button>
+          <button type="button" class="btn btn-warning" ng-click="bjg.takeInsurance()" >Yes</button>
+        </div>
+      </div><!-- #actionInput -->
+    </div>
+
+    <div ng-if=" bjg.gameState.status == 'Delt' && bjg.gameState.getCurrentPlayer().isHuman && bjg.gameState.getCurrentHand().value() < 21" >
       <div id="actionInput" class="d-flex justify-content-center mb-1">
         <div class="btn-group btn-group-justified" role="group" aria-label="Hand Actions">
           <button ng-if="bjg.gameState.getCurrentHand().canSplit()"
