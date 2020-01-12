@@ -68,6 +68,7 @@ const ShoeModel = function(decks){
     console.log( this._shoe[4] );
     console.log( this._shoe[9] );
   }
+
   this.rigSoftSevenTeen = function(){
     console.log( "Rigging shoe");
     var aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
@@ -86,7 +87,6 @@ const ShoeModel = function(decks){
     this._shoe[j] = t;
   }
   this.shuffle();
-  this.rigSoftSevenTeen();
 }
 
 const HandModel = function(){
