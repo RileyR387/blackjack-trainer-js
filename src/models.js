@@ -101,7 +101,6 @@ const HandModel = function(){
   this.currentHand = false;
   this.bet = 0;
   this.insured = false;
-  this.change = 0;
 
   this.addCard = function(card){
     // try to allow allow aces to re-split... How to prevent the option to hit though... hrmmm
@@ -208,6 +207,7 @@ const PlayerModel = function(name, agent, bankRoll, isHuman) {
   this.bankRoll = bankRoll;
   this.lastBet = 0;
   this.currPlayer = false;
+  this.change = 0;
   this.roundsPlayed = 0;
   this.handsPlayed = 0;
   this.stats = {

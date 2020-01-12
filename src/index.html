@@ -90,7 +90,10 @@
               Bet: ${{player.hands[0].bet || 0}} <span ng-if="player.hands.length > 1">X {{player.hands.length}}</span>
             </div>
           </li>
-          <li class="list-group-item">{{player.name}}</li>
+          <li class="list-group-item">
+            {{player.name}}
+            <span ng-if="bjg.gameState.status == 'Score'"><span ng-if="player.change >= 0">+</span>{{player.change | currency:"$":0}}</span>
+          </li>
           <li class="list-group-item">Bank: ${{player.bankRoll}}</li>
         </ul>
       </div><!-- ng-repeat .player -->
