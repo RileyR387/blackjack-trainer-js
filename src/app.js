@@ -13,14 +13,18 @@ function( $scope,   HumanActionService ) {
   $scope.gameSettingsDialog   = new GameSettingsDialogModel();
   $scope.playerSettingsDialog = new PlayerSettingsDialogModel();
 
+  this.applyScope = async function(){
+    await $scope.$applyAsync();
+  }
+
   this.game = {
     opts: {
       deckCount: 8,
-      dealRate: 0.1,
+      dealRate: 0.3,
       showDeckStats: true,
       payout: '1.5',
       minBet: 10,
-      enableInsurance: false,
+      enableInsurance: true,
     },
     players: [
       new PlayerModel('You', HumanActionService, 200, true),
@@ -32,11 +36,12 @@ function( $scope,   HumanActionService ) {
     dealer: new PlayerModel('Dealer', null, 100000),
   };
 
-  this.gameState = new GameState( this.game );
+  this.gameState = new GameState( this.game, this.applyScope );
   this.shoe      = new ShoeModel( this.game.opts.deckCount );
   this.c
   this.card = null;
   this.cardConsumed = true;
+
 
   this.shuffleShoe = function() {
     console.log("Shuffling shoe...");
@@ -63,13 +68,15 @@ function( $scope,   HumanActionService ) {
       } catch( e ){
         this.cardConsumed = false;
       }
+      //$scope.$applyAsync();
       $scope.$apply();
       await sleep( Math.round(this.game.opts.dealRate * 1000) );
     }
-    $scope.$apply();
+    await sleep( Math.round(this.game.opts.dealRate * 1000) );
+    $scope.$applyAsync();
   }
 
-  this.endRound = function(){
+  this.endRound = async function(){
     if( this.gameState.status == 'Game Over' ){
       this.shuffleShoe();
     } else if( this.gameState.status == 'Score'){
@@ -80,6 +87,7 @@ function( $scope,   HumanActionService ) {
 
   this.deal = function(){
     this.endRound();
+    $scope.$applyAsync();
     var finalBet = HumanActionService.tempBet;
     var currPlayer = this.gameState.getCurrentPlayer();
     if( finalBet != 0 ){
@@ -100,6 +108,7 @@ function( $scope,   HumanActionService ) {
     HumanActionService.tempBet += betAmt;
     currPlayer.bankRoll -= betAmt;
     currPlayer.hands[0].bet = HumanActionService.tempBet;
+    $scope.$applyAsync();
   }
   this.clearBet = function(){
     this.endRound();
