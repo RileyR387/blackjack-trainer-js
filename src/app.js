@@ -66,6 +66,7 @@ function( $scope,   HumanActionService ) {
       $scope.$apply();
       await sleep( Math.round(this.game.opts.dealRate * 1000) );
     }
+    $scope.$apply();
   }
 
   this.endRound = function(){
