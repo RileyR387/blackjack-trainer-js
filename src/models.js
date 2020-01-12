@@ -173,6 +173,7 @@ const HandModel = function(){
   this.value = function(){
     var x = 0;
     var aceCount = 0;
+    var maybeSoft = false;
 
     for( i = 0; i < this.cards.length; ++i){
       var cVal = this.cards[i].value();
@@ -185,16 +186,17 @@ const HandModel = function(){
 
     while( aceCount > 0 ){
       if( x == 10 && aceCount == 1){
-        this.isSoft = true;
+        maybeSoft = true;
         x += 11;
       } else if( x > 10-aceCount ){
         x += 1;
       } else {
-        this.isSoft = true;
+        maybeSoft = true;
         x += 11;
       }
       aceCount--;
     }
+    this.isSoft = maybeSoft;
     return x;
   }
 }
