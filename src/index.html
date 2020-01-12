@@ -92,7 +92,10 @@
           </li>
           <li class="list-group-item">
             {{player.name}}
-            <span ng-if="bjg.gameState.status == 'Score'"><span ng-if="player.change >= 0">+</span>{{player.change | currency:"$":0}}</span>
+            <span ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'"
+                  class="float-right" ng-class="{true: 'bg-success', false: 'bg-danger'}[player.change >= 0]">
+              <span ng-if="player.change >= 0">+</span>{{player.change | currency:"$":0}}
+            </span>
           </li>
           <li class="list-group-item">Bank: ${{player.bankRoll}}</li>
         </ul>

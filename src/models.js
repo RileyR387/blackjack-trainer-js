@@ -222,12 +222,12 @@ const PlayerModel = function(name, agent, bankRoll, isHuman) {
 }
 
 const ScoreModel = {
-  insured: 'Insured',
+  insured: '-Insured-',
   blackjack: '*!BlackJack!*',
-  win: 'Winner!',
+  win: 'Win',
   push: 'Pushed',
   bust: 'Busted',
-  lose: 'LOSER',
+  lose: 'Lost',
 };
 
 const GameSettingsDialogModel = function() {

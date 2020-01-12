@@ -12,7 +12,8 @@
   --cardHorizonalSpace: 1.6em;
   --cardVerticalSpace: 2.1em;
   --tableBgColor: #185333;
-  --playerOutlineColor: #37c837;
+  /*--playerOutlineColor: #37c837;*/
+  --playerOutlineColor: #28a745;
   --playerBgColor: #156215;
 }
 
