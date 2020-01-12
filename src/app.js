@@ -20,7 +20,7 @@ function( $scope,   HumanActionService ) {
   this.game = {
     opts: {
       deckCount: 8,
-      dealRate: 0.3,
+      dealRate: 0.25,
       showDeckStats: true,
       payout: '1.5',
       minBet: 10,
@@ -46,7 +46,7 @@ function( $scope,   HumanActionService ) {
   this.shuffleShoe = function() {
     console.log("Shuffling shoe...");
     this.shoe = new ShoeModel( this.game.opts.deckCount );
-    this.gameState = new GameState( this.game );
+    this.gameState = new GameState( this.game, this.applyScope );
     this.dealRound();
   }
 
