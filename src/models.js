@@ -68,6 +68,17 @@ const ShoeModel = function(decks){
     console.log( this._shoe[4] );
     console.log( this._shoe[9] );
   }
+  this.rigSoftSevenTeen = function(){
+    console.log( "Rigging shoe");
+    var aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
+    console.log( this._shoe[aceIndex] );
+    this._swap( 4, aceIndex );
+    var sixIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(6, 50);
+    console.log( this._shoe[aceIndex] );
+    this._swap( 9, sixIndex );
+    console.log( this._shoe[4] );
+    console.log( this._shoe[9] );
+  }
 
   this._swap = function(i,j){
     var t = this._shoe[i];
@@ -75,6 +86,7 @@ const ShoeModel = function(decks){
     this._shoe[j] = t;
   }
   this.shuffle();
+  this.rigSoftSevenTeen();
 }
 
 const HandModel = function(){
