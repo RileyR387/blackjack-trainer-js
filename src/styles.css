@@ -23,7 +23,7 @@
 body {
   background-color: var(--tableBgColor);
   margin-bottom: 10px;
-  touch-action: none;
+  /*touch-action: none;*/
 }
 button {
   touch-action: none;
@@ -60,6 +60,11 @@ button {
  */
 #dealerRow {
   display: block;
+}
+#dealerRow.row {
+  display: block;
+  margin-right: 0;
+  margin-left: 0;
 }
 #dealerBox {
   display: block;
@@ -114,7 +119,9 @@ button {
   display: inline-block;
   position: relative;
   margin-top: 0.2em;
-  min-width: 8em;
+  margin-right: 0.1em;
+  margin-left: 0.1em;
+  min-width: 11em;
   border-radius: .3em;
   box-sizing: border-box;
   border: 0.1em solid var(--playerOutlineColor);
@@ -123,7 +130,9 @@ button {
   display: inline-block;
   position: relative;
   margin-top: 0.2em;
-  min-width: 8em;
+  margin-right: 0.1em;
+  margin-left: 0.1em;
+  min-width: 11em;
   border-radius: .3em;
   box-sizing: border-box;
   border: 0.1em solid yellow;
