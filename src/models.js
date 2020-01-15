@@ -1,6 +1,13 @@
 
 const sleep = (ms) => { return new Promise(resolve => setTimeout(resolve, ms)); }
 
+var global;
+try {
+  global = Function('return this')() || (42, eval)('this');
+} catch(e) {
+  global = window;
+}
+
 const CardModel = function(rank, suit){
   this.rank = rank;
   this.suit = suit;
@@ -221,6 +228,32 @@ const PlayerModel = function(name, agent, bankRoll, isHuman) {
      'loses': 0,
      'busts': 0,
   };
+}
+
+const AgentModel = function(gameOpts) {
+
+  this.deckCount = gameOpts.deckCount;
+  this.minBet    = gameOpts.minBet;
+
+  this.myHands = function( gameState ){
+    var hands = [];
+    gameState.forEach( playerHand => {
+      if( playerHand.name == this.name ){
+        hands.push( playerHand.hand );
+      }
+    });
+    return hands;
+  }
+
+  this.dealerHand = function( gameState ){
+    return gameState[gameState.length-1].hand;
+  }
+
+  /*
+  this.placeBet      = function (priorGameSnapshot){}
+  this.nextAction    = function (gameSnapshot){}
+  this.takeInsurance = function (gameSnapshot){}
+  */
 }
 
 const ScoreModel = {

@@ -9,7 +9,8 @@ const GameState = function(game, updateGameCallback){
   this.priorGameState = null;
 
   this.agentOpts = {
-    decks: this.opts.deckCount,
+    deckCount: this.opts.deckCount,
+    minBet: this.opts.minBet,
     actions: ['N','S','H','D'],
   };
 
@@ -40,7 +41,7 @@ const GameState = function(game, updateGameCallback){
   }
 
   this.consumeCard = async function(card){
-    console.log("Consume card start status: " + this.status + " CurrPlayer is: " + this._currPlayerIndex );
+    //console.log("Consume card start status: " + this.status + " CurrPlayer is: " + this._currPlayerIndex );
     player = await this.nextPlayer();
 
     if( this.status == 'Dealing Hands'){
@@ -101,7 +102,7 @@ const GameState = function(game, updateGameCallback){
         await this.updateView();
         action = await player.agent.nextAction( this.GameSnapshot(), thisHand );
       } catch(e){
-        console.log(player.name + " didn't return an action!");
+        //console.log(player.name + " didn't return an action!");
       }
       this._handleAction( player, card, thisHand, action );
     }
@@ -136,14 +137,14 @@ const GameState = function(game, updateGameCallback){
           nextHand.bet = hand.bet;
           player.hands.push( nextHand );
         } else {
-          console.log("_handleAction recursion");
+          //console.log("_handleAction recursion");
           this._handleAction( player, card, hand, null );
         }
         break;
       default:
         if( hand.value() >= 17 ){
           hand.isFinal = true;
-          console.log("consumeCard recursion in default");
+          //console.log("consumeCard recursion in default");
           this.consumeCard( card );
           return;
         } else {
@@ -167,17 +168,17 @@ const GameState = function(game, updateGameCallback){
       if( dealerHand.offerInsurance() && this.opts.enableInsurance ){
         this.status = 'Insurance?';
         await this.updateView();
-        console.log("Offering Insurance");
+        //console.log("Offering Insurance");
         for( this._currPlayerIndex = 0; this._currPlayerIndex < this.seats.length-1; ++this._currPlayerIndex){
           if( ! this.seats[this._currPlayerIndex].hands[0].isBlackjack() ){
-            console.log(this.seats[this._currPlayerIndex].name + "Doesn't have a blackjact, offering them insurance" );
+            //console.log(this.seats[this._currPlayerIndex].name + "Doesn't have a blackjack, offering them insurance" );
             var buyInsurance = false;
             try{
               //await sleep( Math.round(this.opts.dealRate * 1000) );
               await this.updateView();
               buyInsurance = await this.seats[this._currPlayerIndex].agent.takeInsurance( this.GameSnapshot(), this.seats[this._currPlayerIndex].hands[0] );
             } catch( e ){
-              console.log(this.seats[this._currPlayerIndex].name + " didn't handle insurance option.");
+              //console.log(this.seats[this._currPlayerIndex].name + " didn't handle insurance option.");
             }
             if( buyInsurance && ! this.seats[this._currPlayerIndex].isHuman ){
               this.seats[this._currPlayerIndex].hands[0].insured = true;
@@ -243,29 +244,25 @@ const GameState = function(game, updateGameCallback){
           if( hand.cards.length > 0 ){
             if( seat.name == 'Dealer' ){
               gameView.push({
-                [seat.name + "-" + idx]: {
-                  name: seat.name,
-                  //agent: seat.agent.name, // FIXME
-                  agent: seat.name,
-                  hand: [ hand.cards[0] ],
-                  handVal: hand.cards[0].value(),
-                  score: '',
-                  amt: 0,
-                  bankRoll: seat.bankRoll
-                }
+                name: seat.name,
+                //agent: seat.agent.name, // FIXME
+                agent: seat.name,
+                hand: [ hand.cards[0] ],
+                handVal: hand.cards[0].value(),
+                score: '',
+                amt: 0,
+                bankRoll: seat.bankRoll
               });
             } else {
               gameView.push({
-                [seat.name + "-" + idx]: {
-                  name: seat.name,
-                  //agent: seat.agent.name, // FIXME
-                  agent: seat.name,
-                  hand: hand,
-                  handVal: hand.value(),
-                  score: '',
-                  amt: hand._bet,
-                  bankRoll: seat.bankRoll
-                }
+                name: seat.name,
+                //agent: seat.agent.name, // FIXME
+                agent: seat.name,
+                hand: hand,
+                handVal: hand.value(),
+                score: '',
+                amt: hand._bet,
+                bankRoll: seat.bankRoll
               });
             }
           }
@@ -308,16 +305,14 @@ const GameState = function(game, updateGameCallback){
             }
           }
           gameView.push({
-            [seat.name + "-" + idx]: {
-              name: seat.name,
-              //agent: seat.agent.name || seat.name,
-              agent: seat.name,
-              hand: hand,
-              handVal: hand.value(),
-              score: hand.result,
-              amt: hand._bet,
-              bankRoll: seat.bankRoll
-            }
+            name: seat.name,
+            //agent: seat.agent.name || seat.name,
+            agent: seat.name,
+            hand: hand,
+            handVal: hand.value(),
+            score: hand.result,
+            amt: hand._bet,
+            bankRoll: seat.bankRoll
           });
         });
       });
@@ -346,7 +341,7 @@ const GameState = function(game, updateGameCallback){
               this._getDealer().bankRoll -= win;
               this._getDealer().stats.loses++;
             } else {
-              console.log("Dealer Blackjack!");
+              //console.log("Dealer Blackjack!");
             }
           } else if( seat.name == 'Dealer' ){
             if( ! hand.hasBusted() ){
@@ -395,16 +390,14 @@ const GameState = function(game, updateGameCallback){
           }
 
           gameView.push({
-            [seat.name + "-" + idx]: {
-              name: seat.name,
-              //agent: seat.agent.name || seat.name,
-              agent: seat.name,
-              hand: hand,
-              handVal: hand.value(),
-              score: hand.result,
-              amt: hand._bet,
-              bankRoll: seat.bankRoll
-            }
+            name: seat.name,
+            //agent: seat.agent.name || seat.name,
+            agent: seat.name,
+            hand: hand,
+            handVal: hand.value(),
+            score: hand.result,
+            amt: hand._bet,
+            bankRoll: seat.bankRoll
           });
 
         });
@@ -457,7 +450,7 @@ const GameState = function(game, updateGameCallback){
     thisHand = player.hands[0];
     if( this._currPlayerIndex == 0 && thisHand.cards.length == 0 ){
       await this._takeBets();
-      console.log("Dealing...");
+      //console.log("Dealing...");
     }
 
     if( this._currPlayerIndex == 0 && thisHand.cards.length == 2 ){
@@ -485,7 +478,7 @@ const GameState = function(game, updateGameCallback){
               }
               seat.lastBet = seat.hands[j].bet;
             } catch ( e ){
-              console.log( "Player: " + seat.name + " didn't bet!" );
+              //console.log( "Player: " + seat.name + " didn't bet!" );
               seat.hands[j].bet = this.opts.minBet;
               seat.bankRoll -= this.opts.minBet;
             }

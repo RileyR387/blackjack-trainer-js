@@ -26,22 +26,22 @@ function( $scope,   HumanActionService ) {
       minBet: 10,
       enableInsurance: true,
     },
-    players: [
-      new PlayerModel('You', HumanActionService, 200, true),
-      new PlayerModel('HighLow', null, 200),
-      new PlayerModel('AverageJoe', null, 200),
-      new PlayerModel('KayOh', null, 200),
-      //new PlayerModel('You', HumanActionService, 200, true),
-    ],
     dealer: new PlayerModel('Dealer', null, 100000),
   };
+  this.game.players = [
+    new PlayerModel('You', HumanActionService, 200, true),
+    new PlayerModel('HighLow', null, 200),
+    //new PlayerModel('AverageJoe', null, 200),
+    new PlayerModel('PullUp', new PullUp(this.game.opts), 200),
+    new PlayerModel('KayOh', null, 200),
+    //new PlayerModel('You', HumanActionService, 200, true),
+  ];
 
   this.gameState = new GameState( this.game, this.applyScope );
   this.shoe      = new ShoeModel( this.game.opts.deckCount );
-  this.c
+
   this.card = null;
   this.cardConsumed = true;
-
 
   this.shuffleShoe = function() {
     console.log("Shuffling shoe...");
