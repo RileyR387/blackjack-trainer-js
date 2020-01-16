@@ -3,12 +3,28 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="helpModalLabel">Blackjack Help</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" data-toggle="collapse" data-target=".navbar-collapse.show" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          To be determined... Wikipedia Link? :P
+          <p class="lead">Place a bet and click deal!</p>
+          <p>After the first round, you can bounce your bet back and forth using the "Half" and "Double" controls. These bet controls will also deal simultanously.</p>
+          <p class="lead">General Strategy</p>
+          <ul class="list-group ml-2 mb-2">
+            <li>Decline Insurance unless you're counting cards</li>
+            <li>Double on 11 with dealer showing less than 7</li>
+            <li>Double on 10 when no face cards/tens are visible and more than 3 players playing</li>
+            <li>Always Split aces, sevens, eights</li>
+            <li>Split nines with dealer showing 9 or less than 8</li>
+            <li>Never Split fives, tens, or face cards</li>
+            <li>Hit soft 13-16, it's a free card.<li>
+            <li>Have 13 or more with dealer showing 3-6; Stand! Let the dealer bust.</li>
+            <li>Otherwise hit till ya get 17, more than 17, or bust; except 13-16 with dealer showing 3-6</li>
+          </ul>
+          <p class="lead">
+            Need more help? See <a href="https://en.wikipedia.org/wiki/Blackjack" target="_blank">Wikipedia</a>.
+          </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="collapse" data-target=".navbar-collapse.show">Close</button>

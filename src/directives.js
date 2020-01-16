@@ -42,6 +42,7 @@ app.directive('gameSettingsDialog', [function() {
       element.on('hidden.bs.modal', function() {
         scope.$apply(function() {
           scope.model.visible = false;
+          scope.model.nav.collapse();
         });
       });
     },
@@ -68,6 +69,7 @@ app.directive('playerSettingsDialog', [function() {
       element.on('hidden.bs.modal', function() {
         scope.$apply(function() {
           scope.model.visible = false;
+          scope.model.nav.collapse();
         });
       });
     },

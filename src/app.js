@@ -35,13 +35,13 @@ function( $scope,   HumanActionService ) {
 
   this.gameState = new GameState( this.game, this.applyScope );
   this.shoe      = new ShoeModel( this.game.opts.deckCount );
-  this.c
+
   this.card = null;
   this.cardConsumed = true;
 
   $scope.navbar               = new NavbarModel();
-  $scope.gameSettingsDialog   = new GameSettingsDialogModel(this);
-  $scope.playerSettingsDialog = new PlayerSettingsDialogModel(this);
+  $scope.gameSettingsDialog   = new GameSettingsDialogModel(this, $scope.navbar);
+  $scope.playerSettingsDialog = new PlayerSettingsDialogModel(this, $scope.navbar);
 
   this.shuffleShoe = function() {
     console.log("Shuffling shoe...");

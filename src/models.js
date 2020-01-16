@@ -232,8 +232,9 @@ const ScoreModel = {
   lose: 'Lost',
 };
 
-const GameSettingsDialogModel = function(bjg) {
+const GameSettingsDialogModel = function(bjg, nav) {
   this.bjg = bjg;
+  this.nav = nav;
   this.visible = false;
   this.incDeckCount = function() { if( this.bjg.game.opts.deckCount < 12){ this.bjg.game.opts.deckCount++;}};
   this.decDeckCount = function() { if( this.bjg.game.opts.deckCount > 1 ){ this.bjg.game.opts.deckCount--;}};
@@ -247,11 +248,11 @@ const GameSettingsDialogModel = function(bjg) {
   };
 };
 
-const PlayerSettingsDialogModel = function(bjg) {
+const PlayerSettingsDialogModel = function(bjg, nav) {
   this.bjg = bjg;
+  this.nav = nav;
   this.visible = false;
-  this.open = function(bjg) {
-    this.bjg = bjg;
+  this.open = function() {
     this.visible = true;
   };
   this.close = function() {
