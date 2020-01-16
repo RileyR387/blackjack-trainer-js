@@ -42,6 +42,7 @@ app.directive('gameSettingsDialog', [function() {
       element.on('hidden.bs.modal', function() {
         scope.$apply(function() {
           scope.model.visible = false;
+          scope.model.nav.collapse();
         });
       });
     },
@@ -68,6 +69,7 @@ app.directive('playerSettingsDialog', [function() {
       element.on('hidden.bs.modal', function() {
         scope.$apply(function() {
           scope.model.visible = false;
+          scope.model.nav.collapse();
         });
       });
     },
@@ -89,6 +91,26 @@ app.directive('helpDialog', [function() {
 
 app.directive('gameNavbar', [function() {
   return {
+    restrict: 'E',
+    scope: {
+      model: '=',
+    },
+    link: function(scope, element, attr) {
+      scope.$watch('model.collapsed', function(newValue) {
+        var modalElement = element.find('#navbarlinks');
+        $(modalElement).collapse(newValue ? 'hide' : 'show');
+      });
+      element.on('shown.bs.collapse', function() {
+        scope.$apply(function() {
+          scope.model.collapsed = false;
+        });
+      });
+      element.on('hidden.bs.collapse', function() {
+        scope.$apply(function() {
+          scope.model.collapsed = true;
+        });
+      });
+    },
     templateUrl: 'views/game-navbar.html',
   };
 }]);
