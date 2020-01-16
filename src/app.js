@@ -28,9 +28,11 @@ function( $scope,   HumanActionService ) {
   this.game.players = [
     new PlayerModel('You', HumanActionService, 200, true),
     new PlayerModel('HighLow', null, 200),
+    //new PlayerModel('HighLow', new PullUp(this.game.opts), 200),
     //new PlayerModel('AverageJoe', null, 200),
     new PlayerModel('PullUp', new PullUp(this.game.opts), 200),
     new PlayerModel('KayOh', null, 200),
+    //new PlayerModel('KayOh', new PullUp(this.game.opts), 200),
     //new PlayerModel('You', HumanActionService, 200, true),
   ];
 
@@ -57,9 +59,9 @@ function( $scope,   HumanActionService ) {
       if( this.cardConsumed ){
         try{
           card = this.shoe.nextCard();
-          console.log( this.shoe._shoe.length + " cards remain - CardUpcoming: " + card.value());
+          //console.log( this.shoe._shoe.length + " cards remain - CardUpcoming: " + card.value());
         } catch( ShuffleShoeException ){
-          console.log("Last hand in shoe!");
+          //console.log("Last hand in shoe!");
           this.gameState.newShoeFlag = true;;
         }
       }
@@ -193,35 +195,35 @@ app.factory('HumanActionService', [ '$q', function( $q ){
   this.insurance = null;
 
   this.placeBet = async function(priorGameStateView){
-    console.log("HumanActionService - placeBet start");
+    //console.log("HumanActionService - placeBet start");
     while( this.bet == null ){
       await sleep(50);
     }
     var nextBet = this.bet;
     this.bet = null;
-    console.log("HumanActionService - placeBet end (amt: " + nextBet +")");
+    //console.log("HumanActionService - placeBet end (amt: " + nextBet +")");
     return nextBet;
   }
 
   this.nextAction = async function(gameStateView, hand){
-    console.log("HumanActionService - nextAction start");
+    //console.log("HumanActionService - nextAction start");
     while( this.action == null ){
       await sleep(50);
     }
     var myNextAction = this.action;
     this.action = null;
-    console.log("HumanActionService - nextAction end");
+    //console.log("HumanActionService - nextAction end");
     return myNextAction;
   }
 
   this.takeInsurance = async function(gameStateView, hand){
-    console.log("HumanActionService - takeInsurance start");
+    //console.log("HumanActionService - takeInsurance start");
     while( this.insurance == null ){
       await sleep(50);
     }
     var choice = this.insurance;
     this.insurance = null;
-    console.log("HumanActionService - takeInsurance end");
+    //console.log("HumanActionService - takeInsurance end");
     return choice;
   }
 

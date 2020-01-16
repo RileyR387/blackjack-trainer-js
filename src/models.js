@@ -108,7 +108,7 @@ const HandModel = function(){
   this.currentHand = false;
   this.bet = 0;
   this.insured = false;
-
+  
   this.addCard = function(card){
     // try to allow allow aces to re-split... How to prevent the option to hit though... hrmmm
     if( this.wasSplitAces && card.value == 11 ){
@@ -121,7 +121,7 @@ const HandModel = function(){
     if( this.value() >= 21 || this.wasSplitAces){
       this.isFinal = true;
     }
-    return this.isFinal;
+    return this;
   }
 
   this.hasBusted = function(){
@@ -172,7 +172,7 @@ const HandModel = function(){
    */
   this.dealerHand = function(){
     dHand = new HandModel();
-    dHand.addCard(cards[0]);
+    dHand.addCard(this.cards[0]);
     dHand.addCard(new Card(null, null, true) );
     return dHand;
   }

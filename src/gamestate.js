@@ -102,7 +102,10 @@ const GameState = function(game, updateGameCallback){
         await this.updateView();
         action = await player.agent.nextAction( this.GameSnapshot(), thisHand );
       } catch(e){
-        //console.log(player.name + " didn't return an action!");
+        if( player.name == 'PullUp'){
+          console.log(e);
+          console.log(player.name + " didn't return an action!");
+        }
       }
       this._handleAction( player, card, thisHand, action );
     }
@@ -247,7 +250,7 @@ const GameState = function(game, updateGameCallback){
                 name: seat.name,
                 //agent: seat.agent.name, // FIXME
                 agent: seat.name,
-                hand: [ hand.cards[0] ],
+                hand: new HandModel().addCard(hand.cards[0]),
                 handVal: hand.cards[0].value(),
                 score: '',
                 amt: 0,
