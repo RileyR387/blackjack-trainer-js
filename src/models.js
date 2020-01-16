@@ -232,13 +232,24 @@ const ScoreModel = {
   lose: 'Lost',
 };
 
-const GameSettingsDialogModel = function() {
-  this.bjg = {};
+const GameSettingsDialogModel = function(bjg) {
+  this.bjg = bjg;
   this.visible = false;
   this.incDeckCount = function() { if( this.bjg.game.opts.deckCount < 12){ this.bjg.game.opts.deckCount++;}};
   this.decDeckCount = function() { if( this.bjg.game.opts.deckCount > 1 ){ this.bjg.game.opts.deckCount--;}};
   this.incDealRate  = function() { this.bjg.game.opts.dealRate += 0.1; };
   this.decDealRate  = function() { if( this.bjg.game.opts.dealRate > 0.01) {this.bjg.game.opts.dealRate -= 0.1; }};
+  this.open = function() {
+    this.visible = true;
+  };
+  this.close = function() {
+    this.visible = false;
+  };
+};
+
+const PlayerSettingsDialogModel = function(bjg) {
+  this.bjg = bjg;
+  this.visible = false;
   this.open = function(bjg) {
     this.bjg = bjg;
     this.visible = true;
@@ -248,15 +259,13 @@ const GameSettingsDialogModel = function() {
   };
 };
 
-const PlayerSettingsDialogModel = function() {
-  this.bjg = {};
-  this.visible = false;
-  this.open = function(bjg) {
-    this.bjg = bjg;
-    this.visible = true;
+const NavbarModel = function() {
+  this.collapsed = true;
+  this.expand = function() {
+    this.collapsed = false;
   };
-  this.close = function() {
-    this.visible = false;
+  this.collapse = function() {
+    this.collapsed = true;
   };
 };
 

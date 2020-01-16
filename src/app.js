@@ -10,9 +10,6 @@ app.controller( 'BlackjackGameController', [
          '$scope', 'HumanActionService',
 function( $scope,   HumanActionService ) {
 
-  $scope.gameSettingsDialog   = new GameSettingsDialogModel();
-  $scope.playerSettingsDialog = new PlayerSettingsDialogModel();
-
   this.applyScope = async function(){
     await $scope.$applyAsync();
   }
@@ -42,6 +39,9 @@ function( $scope,   HumanActionService ) {
   this.card = null;
   this.cardConsumed = true;
 
+  $scope.navbar               = new NavbarModel();
+  $scope.gameSettingsDialog   = new GameSettingsDialogModel(this);
+  $scope.playerSettingsDialog = new PlayerSettingsDialogModel(this);
 
   this.shuffleShoe = function() {
     console.log("Shuffling shoe...");
@@ -179,6 +179,9 @@ function( $scope,   HumanActionService ) {
   }
 
   this.dealRound();
+
+  //$scope.gameSettingsDialog.open();
+  //$scope.navbar.expand();
 }]);
 
 app.factory('HumanActionService', [ '$q', function( $q ){
