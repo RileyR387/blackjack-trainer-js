@@ -11,6 +11,11 @@ try {
 const CardModel = function(rank, suit){
   this.rank = rank;
   this.suit = suit;
+  this.clone = function( card ){
+    this.rank = Object.assign("", card.rank);
+    this.suit = Object.assign("", card.suit);
+    return this;
+  }
   this.value = function(){
     if( jQuery.isNumeric(this.rank) ){
       return parseInt(this.rank);
@@ -108,7 +113,24 @@ const HandModel = function(){
   this.currentHand = false;
   this.bet = 0;
   this.insured = false;
-  
+
+  this.clone = function(hand){
+    this.cards = [];
+    hand.cards.forEach(card => {
+      this.cards.push( new CardModel().clone( card ));
+    });
+    this.isSoft = hand.isSoft;
+    this.nextHand = null;
+    this.isFinal = hand.isFinal;
+    this.wasSplitAces = hand.wasSplitAces;
+    this._canHit = hand._canHit;
+    this._canDouble = hand._canDouble;
+    this.result = hand.result;
+    this.currentHand = hand.currentHand;
+    this.bet = hand.bet;
+    this.insured = hand.insured;
+    return this;
+  }
   this.addCard = function(card){
     // try to allow allow aces to re-split... How to prevent the option to hit though... hrmmm
     if( this.wasSplitAces && card.value == 11 ){

@@ -89,7 +89,7 @@ const GameState = function(game, updateGameCallback){
     } else {
       thisHand = this._nextHand(player);
       if( thisHand == null ){
-        this.consumeCard( card );
+        await this.consumeCard( card );
         return;
       }
       // Finish dealing a split
@@ -100,22 +100,19 @@ const GameState = function(game, updateGameCallback){
       try {
         await sleep( Math.round(this.opts.dealRate * 1000) );
         await this.updateView();
-        action = await player.agent.nextAction( this.GameSnapshot(), thisHand );
+        action = await player.agent.nextAction( this.GameSnapshot(), new HandModel().clone(thisHand) );
       } catch(e){
-        if( player.name == 'PullUp'){
-          console.log(e);
-          console.log(player.name + " didn't return an action!");
-        }
+        console.log(player.name + " didn't return an action! - " + e.message);
       }
-      this._handleAction( player, card, thisHand, action );
+      await this._handleAction( player, card, thisHand, action );
     }
   }
 
-  this._handleAction = function( player, card, hand, action ){
+  this._handleAction = async function( player, card, hand, action ){
     switch( action ) {
       case 'STAND':
         hand.isFinal = true;
-        this.consumeCard( card );
+        await this.consumeCard( card );
         return;
         break;
       case 'DOUBLE':
@@ -148,7 +145,7 @@ const GameState = function(game, updateGameCallback){
         if( hand.value() >= 17 ){
           hand.isFinal = true;
           //console.log("consumeCard recursion in default");
-          this.consumeCard( card );
+          await this.consumeCard( card );
           return;
         } else {
           hand.addCard( card );
@@ -179,7 +176,7 @@ const GameState = function(game, updateGameCallback){
             try{
               //await sleep( Math.round(this.opts.dealRate * 1000) );
               await this.updateView();
-              buyInsurance = await this.seats[this._currPlayerIndex].agent.takeInsurance( this.GameSnapshot(), this.seats[this._currPlayerIndex].hands[0] );
+              buyInsurance = await this.seats[this._currPlayerIndex].agent.takeInsurance( this.GameSnapshot(), new HandModel().clone(this.seats[this._currPlayerIndex].hands[0]) );
             } catch( e ){
               //console.log(this.seats[this._currPlayerIndex].name + " didn't handle insurance option.");
             }

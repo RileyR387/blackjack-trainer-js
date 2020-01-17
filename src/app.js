@@ -31,7 +31,7 @@ function( $scope,   HumanActionService ) {
     //new PlayerModel('HighLow', new PullUp(this.game.opts), 200),
     //new PlayerModel('AverageJoe', null, 200),
     new PlayerModel('PullUp', new PullUp(this.game.opts), 200),
-    new PlayerModel('KayOh', null, 200),
+    new PlayerModel('KayOh', null, 200)
     //new PlayerModel('KayOh', new PullUp(this.game.opts), 200),
     //new PlayerModel('You', HumanActionService, 200, true),
   ];
