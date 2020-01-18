@@ -26,12 +26,12 @@ function( $scope,   HumanActionService ) {
     dealer: new PlayerModel('Dealer', null, 100000),
   };
   this.game.players = [
-    new PlayerModel('You', HumanActionService, 200, true),
     new PlayerModel('HighLow', null, 200),
     //new PlayerModel('HighLow', new PullUp(this.game.opts), 200),
     //new PlayerModel('AverageJoe', null, 200),
     new PlayerModel('PullUp', new PullUp(this.game.opts), 200),
-    new PlayerModel('KayOh', null, 200)
+    new PlayerModel('KayOh', null, 200),
+    new PlayerModel('You', HumanActionService, 200, true),
     //new PlayerModel('KayOh', new PullUp(this.game.opts), 200),
     //new PlayerModel('You', HumanActionService, 200, true),
   ];
@@ -46,11 +46,11 @@ function( $scope,   HumanActionService ) {
   $scope.gameSettingsDialog   = new GameSettingsDialogModel(this, $scope.navbar);
   $scope.playerSettingsDialog = new PlayerSettingsDialogModel(this, $scope.navbar);
 
-  this.shuffleShoe = function() {
+  this.shuffleShoe = async function() {
     console.log("Shuffling shoe...");
     this.shoe = new ShoeModel( this.game.opts.deckCount );
     this.gameState = new GameState( this.game, this.applyScope );
-    this.dealRound();
+    await this.dealRound();
   }
 
   this.dealRound = async function(){
@@ -81,49 +81,65 @@ function( $scope,   HumanActionService ) {
 
   this.endRound = async function(){
     if( this.gameState.status == 'Game Over' ){
-      this.shuffleShoe();
+      await this.shuffleShoe();
     } else if( this.gameState.status == 'Score'){
       this.gameState.clearRound();
-      this.dealRound();
+      await this.dealRound();
     }
   }
 
-  this.deal = function(){
+  this.deal = async function(){
     this.endRound();
     $scope.$applyAsync();
-    var finalBet = HumanActionService.tempBet;
     var currPlayer = this.gameState.getCurrentPlayer();
+    while( ! currPlayer.isHuman ){
+      await sleep( this.game.opts.dealRate * 1001 );
+      currPlayer = this.gameState.getCurrentPlayer();
+    }
+    var finalBet = HumanActionService.tempBet;
     if( finalBet != 0 ){
       HumanActionService.tempBet = 0;
       HumanActionService.bet = finalBet;
     }
-    if( currPlayer.lastBet != 0 && currPlayer.isHuman ){
+    if( currPlayer.lastBet != 0 ){
       currPlayer.bankRoll -= currPlayer.lastBet;
       currPlayer.hands[0].bet = currPlayer.lastBet;
       HumanActionService.bet = currPlayer.lastBet;
     }
   }
 
-  this.addBet = function(betAmt){
+  this.addBet = async function(betAmt){
     this.endRound();
     var currPlayer = this.gameState.getCurrentPlayer();
+    while( ! currPlayer.isHuman ){
+      await sleep( this.game.opts.dealRate * 1001 );
+      currPlayer = this.gameState.getCurrentPlayer();
+    }
     currPlayer.lastBet = 0;
     HumanActionService.tempBet += betAmt;
     currPlayer.bankRoll -= betAmt;
     currPlayer.hands[0].bet = HumanActionService.tempBet;
     $scope.$applyAsync();
   }
-  this.clearBet = function(){
+  this.clearBet = async function(){
     this.endRound();
     var currPlayer = this.gameState.getCurrentPlayer();
+    while( ! currPlayer.isHuman ){
+      await sleep( this.game.opts.dealRate * 1001 );
+      currPlayer = this.gameState.getCurrentPlayer();
+    }
     currPlayer.bankRoll += HumanActionService.tempBet;
     currPlayer.lastBet = 0;
     HumanActionService.tempBet = 0;
     currPlayer.hands[0].bet = HumanActionService.tempBet;
   }
-  this.halfBet = function(){
+  this.halfBet = async function(){
     this.endRound();
     var currPlayer = this.gameState.getCurrentPlayer();
+    while( ! currPlayer.isHuman ){
+      await sleep( this.game.opts.dealRate * 1001 );
+      currPlayer = this.gameState.getCurrentPlayer();
+    }
     if( HumanActionService.tempBet == 0 && currPlayer.lastBet != 0 ){
       currPlayer.lastBet = currPlayer.lastBet - currPlayer.lastBet%10;
       HumanActionService.tempBet = currPlayer.lastBet;
@@ -139,9 +155,13 @@ function( $scope,   HumanActionService ) {
       this.deal();
     }
   }
-  this.doubleBet = function(){
+  this.doubleBet = async function(){
     this.endRound();
     var currPlayer = this.gameState.getCurrentPlayer();
+    while( ! currPlayer.isHuman ){
+      await sleep( this.game.opts.dealRate * 1001 );
+      currPlayer = this.gameState.getCurrentPlayer();
+    }
 
     if( HumanActionService.tempBet == 0 && currPlayer.lastBet != 0){
       HumanActionService.tempBet = currPlayer.lastBet;
