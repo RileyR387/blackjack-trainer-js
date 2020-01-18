@@ -8,8 +8,19 @@ var testSuccess = true;
 
 try {
   /**
+   * Basic value checks
+   */
+  testHand.addCard( deck[7] );
+  testHand.addCard( deck[0] );
+  if( testHand.value() != 19 ){
+    console.log('Model error in hand.value()');
+    throw new Error( 'hand.value() is broke!' );
+  }
+
+  /**
    * Dealer double Ace
    */
+  testHand = new HandModel();
   testHand.addCard( deck[0] ); // ACE
   testHand.addCard( deck[0] ); // ACE
 
@@ -103,10 +114,30 @@ try {
   if( testHand.offerInsurance() ){
     throw new Error( 'Incorrect insurance offering, ace wasn\'t first card or in hand!' );
   }
-
-  // Test Cloning a card.
-  var cardA = deck[0];
+  /**
+   * Test cloning numeric card
+   */
+  cardA = deck[9];
+  cardB = new CardModel().clone(cardA);
+  if( cardA.rank != cardB.rank ){
+    throw new Error( 'Model error in CardModel.clone() - rank didn\'t equal post clone on numeric card' );
+  }
+  cardB.rank--;
+  cardB.suit = deck[8].suit;
+  if( cardA.suit != cardB.suit ){
+    throw new Error( 'Model error in CardModel.clone() - both cards suit should be equal after assignment' );
+  }
+  if( cardA.rank == cardB.rank ){
+    throw new Error( 'Model error in CardModel.clone() - both cards rank were equal after change' );
+  }
+  /**
+   * Test Cloning a face card.
+   */
+  var cardA = deck[11];
   var cardB = new CardModel().clone(cardA);
+  if( cardA.rank != cardB.rank ){
+    throw new Error( 'Model error in CardModel.clone() - rank didn\'t equal post clone on facecard' );
+  }
   cardB.rank = 2;
   cardB.suit = deck[25].suit;
   if( cardA.suit == cardB.suit ){
@@ -115,6 +146,26 @@ try {
   if( cardA.rank == cardB.rank ){
     throw new Error( 'Model error in CardModel.clone() - both cards rank were equal after change' );
   }
+  /**
+   * Test cloneing a whole hand
+   */
+  testHand = new HandModel();
+  testHand.addCard( deck[7] );
+  testHand.addCard( deck[0] );
+  var otherHand = new HandModel().clone( testHand );
+  if( otherHand === testHand ){
+    throw new Error( 'HandModel().clone() copied the reference, and didn\'t clone' );
+  }
+
+  if( otherHand.value() != testHand.value() ){
+    throw new Error( 'HandModel().clone() didn\'t clone properly, value()\'s differ' );
+  }
+  otherHand.addCard(deck[30]);
+  if( otherHand.value() == testHand.value() ){
+    throw new Error( 'HandModel().clone() didn\'t clone properly, object reference was copied' );
+  }
+  otherHand = null;
+
 
 } catch(e) {
   console.log( '!!! TESTS FAILED !!!' );

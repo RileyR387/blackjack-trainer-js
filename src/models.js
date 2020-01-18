@@ -12,8 +12,8 @@ const CardModel = function(rank, suit){
   this.rank = rank;
   this.suit = suit;
   this.clone = function( card ){
-    this.rank = Object.assign("", card.rank);
-    this.suit = Object.assign("", card.suit);
+    this.rank = card.rank;
+    this.suit = card.suit;
     return this;
   }
   this.value = function(){
@@ -252,12 +252,16 @@ const PlayerModel = function(name, agent, bankRoll, isHuman) {
      'loses': 0,
      'busts': 0,
   };
+  if( this.agent != null ){
+    this.agent.name = name;
+  }
 }
 
 const AgentModel = function(gameOpts) {
 
   this.deckCount = gameOpts.deckCount;
   this.minBet    = gameOpts.minBet;
+  this.name = '';
 
   this.myHands = function( gameState ){
     var hands = [];

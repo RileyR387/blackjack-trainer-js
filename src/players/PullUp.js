@@ -15,10 +15,10 @@ class PullUp extends AgentModel {
   }
 
   async placeBet(gameState){
-    console.log(this.name + " bet start");
+    //console.log(this.name + " bet start");
     this.riskLevel = this.winStreak;
     if( gameState == null || gameState == '' ){
-      console.log(this.name + " bet end");
+      //console.log(this.name + " bet end");
       this.lastBet = this.minBet * 2;
       return this.minBet * 2;
     }
@@ -50,27 +50,28 @@ class PullUp extends AgentModel {
     var myBet = 0;
 
     if( this.winStreak > 0 && this.lossStreak < 3 ){
-      console.log('Betting progression');
+      //console.log('Betting progression');
       myBet = this.betProgression[this.winStreak] * this.minBet;
     }
     if( this.lossStreak > 0 && (this.lossStreak%2 == 0 || this.lastBet == this.minBet) ){
-      console.log('Betting flip');
+      //console.log('Betting flip');
       myBet = this.minBet*2;
     }
     if( myBet == 0 ){
-      console.log("Betting default");
+      //console.log("Betting default");
       myBet = this.minBet;
     }
     this.lastBet = myBet;
-    console.log(this.name + " bet end. amt: " + myBet);
+    //console.log(this.name + " bet end. amt: " + myBet);
     return myBet;
   }
 
   async nextAction( gameSnapshot, myHand ){
-    //console.log(this.name + " nextAction start");
+    console.log(this.name + " nextAction start");
     var dealer = this.dealerHand(gameSnapshot);
     var hands = this.myHands(gameSnapshot);
-    //console.log("Dealer has: " + dealer.value());
+    console.log("Dealer has: " + dealer.value());
+    console.log(this.name + " has: " + myHand.value());
     if( this.riskLevel < this.maxRisk && this.splitEnabled &&
         myHand.canSplit() &&
         (
