@@ -13,8 +13,6 @@ app.directive('playingCard', [function() {
       if( scope.faceDown ){ element.addClass('Card-FaceDown'); }
       if( scope.card.suit == '♥' ) { element.addClass('Card-Red'); }
       if( scope.card.suit == '♦' ) { element.addClass('Card-Red'); }
-      //if( scope.card.suit == '♠' ) { element.addClass('Card-Spade'); }
-      //if( scope.card.suit == '♣' ) { element.addClass('Card-Club'); }
       element.on('$destroy', function() {
         scope = null;
       });

@@ -67,7 +67,7 @@
 
         <div ng-if="player.hands.length < 2" ng-repeat="hand in player.hands" class="hand">
             <div ng-repeat="card in hand.cards track by $index" >
-              <playing-card data-cardvalue="card" data-displayDepth="$index+1" ></playing-card>
+              <playing-card data-cardvalue="card" data-displayDepth="$index+1" data-doubleDown="hand._didDouble"></playing-card>
             </div>
         </div><!-- ng-repeat .hand -->
 

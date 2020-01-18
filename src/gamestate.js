@@ -122,6 +122,7 @@ const GameState = function(game, updateGameCallback){
           player.bankRoll -= hand.bet;
           hand.bet *= 2;
           hand.isFinal = true;
+          hand._didDouble = true;
         } else {
           hand.addCard( card );
         }

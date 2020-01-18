@@ -245,8 +245,8 @@ button {
 }
 .doubledDownCard .PlayingCard {
   transform: rotate(-90deg);
-  margin-top: calc(var(--cardHorizonalSpace)*.2);
-  margin-left: calc(var(--cardHorizonalSpace));
+  margin-top: calc(var(--cardHorizonalSpace)*0.8);
+  margin-left: -1.2em;
 }
 .Card-FaceDown .CardFace {
   visibility: hidden;
