@@ -1,4 +1,7 @@
 
+## BIG ISSUE
+  * Seeing blackjack's get paid out twice...
+
 ## Dealing
   * Dealer didn't hit a soft 17? 
   * Handle Insurance
