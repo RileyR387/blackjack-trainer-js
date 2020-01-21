@@ -27,7 +27,7 @@ function( $scope,   HumanActionService ) {
   };
   this.game.players = [
     new PlayerModel('HighLow', new PullUp(this.game.opts), 200),
-    new PlayerModel('You', HumanActionService, 200, true),
+    //new PlayerModel('You', HumanActionService, 200, true),
     new PlayerModel('PullUp', new PullUp(this.game.opts), 200),
     new PlayerModel('KayOh', new PullUp(this.game.opts), 200),
     //new PlayerModel('You', HumanActionService, 200, true),
@@ -81,7 +81,7 @@ function( $scope,   HumanActionService ) {
     if( this.gameState.status == 'Game Over' ){
       await this.shuffleShoe();
     } else if( this.gameState.status == 'Score'){
-      this.gameState.clearRound();
+      await this.gameState.clearRound();
       await this.dealRound();
     }
   }

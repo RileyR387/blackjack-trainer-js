@@ -58,6 +58,7 @@ const ShoeModel = function(decks){
       this._shoe[j] = x;
     }
     console.log("Shoe shuffled");
+    this.rigBlackjacks();
   }
 
   this.nextCard = function(){
@@ -73,7 +74,7 @@ const ShoeModel = function(decks){
   }
 
   this.rigInsuranceShoe = function(){
-    console.log( "Rigging shoe");
+    console.log( "Rigging shoe for insurance");
     var aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
     console.log( this._shoe[aceIndex] );
     this._swap( 4, aceIndex );
@@ -82,13 +83,27 @@ const ShoeModel = function(decks){
   }
 
   this.rigSoftSevenTeen = function(){
-    console.log( "Rigging shoe");
+    console.log( "Rigging shoe for deal soft 17");
     var aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
     console.log( this._shoe[aceIndex] );
     this._swap( 4, aceIndex );
     var sixIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(6, 50);
     console.log( this._shoe[aceIndex] );
     this._swap( 9, sixIndex );
+    console.log( this._shoe[4] );
+    console.log( this._shoe[9] );
+  }
+
+  this.rigBlackjacks = function(){
+    console.log( "Rigging Blackjack shoe");
+    var aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
+    var faceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50);
+    this._swap( 0, faceIndex );
+    this._swap( 4, aceIndex );
+    aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
+    faceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50);
+    this._swap( 2, faceIndex );
+    this._swap( 6, aceIndex );
     console.log( this._shoe[4] );
     console.log( this._shoe[9] );
   }

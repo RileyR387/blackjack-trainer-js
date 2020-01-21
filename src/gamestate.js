@@ -225,7 +225,7 @@ const GameState = function(game, updateGameCallback){
     this.priorGameState = this.GameSnapshot();
     if( ! this.newShoeFlag ){
       this.seats.forEach( player => {
-        player.hands = [ new HandModel ];
+        player.hands = [ new HandModel() ];
       });
       this.status = 'Dealing Hands';
       this._currPlayerIndex = -1;
@@ -286,6 +286,7 @@ const GameState = function(game, updateGameCallback){
           if( seat.name != 'Dealer' ){
             if( hand.insured ){
               hand.result = ScoreModel.insured;
+              console.log("Bank is: {seat.bankRoll} - Adding {hand.bet} and {hand.bet/2}");
               seat.bankRoll += hand.bet;
               seat.bankRoll += (hand.bet/2);
               hand.bet = 0;
@@ -337,6 +338,7 @@ const GameState = function(game, updateGameCallback){
             seat.stats.wins++;
             var win = Math.round((hand.bet * parseFloat(this.opts.payout)) + hand.bet, 2);
             seat.change += Math.round((hand.bet * parseFloat(this.opts.payout)), 2);
+            console.log(`${seat.name} bank is: ${seat.bankRoll} - Adding ${win}`);
             seat.bankRoll              += win;
             if(seat.name != 'Dealer'){
               this._getDealer().bankRoll -= win;
@@ -344,6 +346,7 @@ const GameState = function(game, updateGameCallback){
             } else {
               //console.log("Dealer Blackjack!");
             }
+            hand.bet = 0;
           } else if( seat.name == 'Dealer' ){
             if( ! hand.hasBusted() ){
               if( ! this.playersRemain() ){
