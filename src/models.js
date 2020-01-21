@@ -58,7 +58,6 @@ const ShoeModel = function(decks){
       this._shoe[j] = x;
     }
     console.log("Shoe shuffled");
-    this.rigBlackjacks();
   }
 
   this.nextCard = function(){
