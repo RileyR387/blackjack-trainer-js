@@ -26,8 +26,8 @@ function( $scope,   HumanActionService ) {
     dealer: new PlayerModel('Dealer', null, 100000),
   };
   this.game.players = [
-    new PlayerModel('HighLow', new PullUp(this.game.opts), 200),
     new PlayerModel('You', HumanActionService, 200, true),
+    new PlayerModel('HighLow', new PullUp(this.game.opts), 200),
     new PlayerModel('PullUp', new PullUp(this.game.opts), 200),
     new PlayerModel('KayOh', new PullUp(this.game.opts), 200),
     //new PlayerModel('You', HumanActionService, 200, true),
@@ -73,8 +73,9 @@ function( $scope,   HumanActionService ) {
       $scope.$apply();
       await sleep( Math.round(this.game.opts.dealRate * 1000) );
     }
-    await sleep( Math.round(this.game.opts.dealRate * 1000) );
+    this.gameState.ScoreRound();
     $scope.$applyAsync();
+    await sleep( Math.round(this.game.opts.dealRate * 1000) );
   }
 
   this.endRound = async function(){

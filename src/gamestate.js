@@ -47,6 +47,7 @@ const GameState = function(game, updateGameCallback){
     if(this.status == 'Delt' && this.getCurrentPlayer().name == 'Dealer'){
       return true;
     }
+    return false;
   }
 
   this.consumeCard = async function(card){
@@ -56,6 +57,7 @@ const GameState = function(game, updateGameCallback){
     if( this.status == 'Dealing Hands'){
       if( await this._dealHand( player, card) != null ){
         this.status = 'Delt';
+        //return;
       } else {
         return;
       }
@@ -82,7 +84,9 @@ const GameState = function(game, updateGameCallback){
   this._queryPlayers = async function(player, card){
     var action = null;
     if( ! await this._roundCanStart(player, card) ){
-      return 'Score';
+      this.status = 'Score';
+      throw Error("Card not used!");
+      return;
     }
 
     if( player.name == 'Dealer' ){
@@ -97,12 +101,13 @@ const GameState = function(game, updateGameCallback){
       } else {
         dealerHand.isFinal = true;
         this.status = 'Score';
-        return 'Score';
+        throw Error('Card not used!');
+        return;
       }
     } else {
       thisHand = this._nextHand(player);
       if( thisHand == null ){
-        await this.consumeCard( card );
+        throw Error('Card not used!');
         return;
       }
       // Finish dealing a split
@@ -125,7 +130,7 @@ const GameState = function(game, updateGameCallback){
     switch( action ) {
       case 'STAND':
         hand.isFinal = true;
-        await this.consumeCard( card );
+        throw Error('Card not used!');
         return;
         break;
       case 'DOUBLE':
@@ -158,8 +163,7 @@ const GameState = function(game, updateGameCallback){
       default:
         if( hand.value() >= 17 ){
           hand.isFinal = true;
-          //console.log("consumeCard recursion in default");
-          await this.consumeCard( card );
+          throw Error('Card not used!');
           return;
         } else {
           hand.addCard( card );
@@ -477,6 +481,8 @@ const GameState = function(game, updateGameCallback){
 
     if( this._currPlayerIndex == 0 && thisHand.cards.length == 2 ){
       this.status = "Check Insurance";
+      throw Error('Card not used!');
+      return;
     } else {
       thisHand.addCard( card );
       return null;
