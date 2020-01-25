@@ -78,23 +78,22 @@ button {
 #dealerBox {
   display: block;
   text-align: center;
+  height: 6.75em;
   width: 100%;
 }
 .dealer {
   display: inline-block;
   position: relative;
-  margin-top: 0.2em;
-  margin-right: 0.1em;
   min-width: 25%;
   border-radius: .3em;
-  min-width: 11em;
   box-sizing: border-box;
   border: 0.1em solid var(--playerOutlineColor);
 }
 .dealer-hand {
   position: relative;
+  display: inline-block;
   margin: 0.5em;
-  height: 4.2em;
+  height: 4.3em;
 }
 .dealer-hand .ng-scope {
   display: inline;
