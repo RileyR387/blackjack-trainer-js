@@ -70,8 +70,13 @@ function( $scope,   HumanActionService ) {
         this.cardConsumed = false;
       }
       //$scope.$applyAsync();
-      $scope.$apply();
-      await sleep( Math.round(this.game.opts.dealRate * 1000) );
+      if( this.gameState.status != 'Score' && this.gameState.status != 'Game Over' ){
+        $scope.$apply();
+        await sleep( Math.round(this.game.opts.dealRate * 1000) );
+      }
+    }
+    if( this.gameState.status == 'Score' && this.gameState.newShoeFlag ){
+      this.gameState.status = 'Game Over';
     }
     this.gameState.ScoreRound();
     $scope.$applyAsync();

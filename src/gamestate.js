@@ -90,6 +90,7 @@ const GameState = function(game, updateGameCallback){
     }
 
     if( player.name == 'Dealer' ){
+      // DealOut the dealers hand
       if( player.hands[0].cards.length == 2 ){
         await this.updateView();
         await sleep( Math.round(this.opts.dealRate * 1000) );
@@ -97,6 +98,9 @@ const GameState = function(game, updateGameCallback){
       var dealerHand = this._getDealerHand();
       if( this.playersRemain() && (dealerHand.value() < 17 || (dealerHand.value() == 17 && dealerHand.isSoft) ) ){
         dealerHand.addCard( card );
+        if( dealerHand.value() == 21 || dealerHand.hasBusted() ){
+          this.status = 'Score';
+        }
         return;
       } else {
         dealerHand.isFinal = true;
