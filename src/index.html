@@ -39,13 +39,13 @@
           </ul>
           <div class="dealer-hand" >
             <div ng-repeat="card in bjg.game.dealer.hands[0].cards track by $index" >
-              <div ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'">
+              <div ng-if="bjg.gameState.showDealerCards()">
                 <playing-card data-cardvalue="card" data-displayDepth="0" ></playing-card>
               </div>
-              <div ng-if="bjg.gameState.status != 'Score' && bjg.gameState.status != 'Game Over' && $index == 0">
+              <div ng-if=" $index == 0 && !bjg.gameState.showDealerCards()">
                 <playing-card data-cardvalue="card" data-displayDepth="0" ></playing-card>
               </div>
-              <div ng-if="bjg.gameState.status != 'Score' && bjg.gameState.status != 'Game Over' && $index == 1">
+              <div ng-if=" $index == 1 && !bjg.gameState.showDealerCards()">
                 <playing-card data-cardvalue="card" data-displayDepth="0" data-facedown="true" ></playing-card>
               </div>
             </div>

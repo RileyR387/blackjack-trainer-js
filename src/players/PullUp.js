@@ -67,11 +67,11 @@ class PullUp extends AgentModel {
   }
 
   async nextAction( gameSnapshot, myHand ){
-    console.log(this.name + " nextAction start");
+    //console.log(this.name + " nextAction start");
     var dealer = this.dealerHand(gameSnapshot);
     var hands = this.myHands(gameSnapshot);
-    console.log("Dealer has: " + dealer.value());
-    console.log(this.name + " has: " + myHand.value());
+    //console.log("Dealer has: " + dealer.value());
+    //console.log(this.name + " has: " + myHand.value());
     if( this.riskLevel < this.maxRisk && this.splitEnabled &&
         myHand.canSplit() &&
         (

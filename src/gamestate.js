@@ -40,6 +40,15 @@ const GameState = function(game, updateGameCallback){
     }
   }
 
+  this.showDealerCards = function() {
+    if( this.status == 'Score' || this.status == 'Game Over') {
+      return true;
+    }
+    if(this.status == 'Delt' && this.getCurrentPlayer().name == 'Dealer'){
+      return true;
+    }
+  }
+
   this.consumeCard = async function(card){
     //console.log("Consume card start status: " + this.status + " CurrPlayer is: " + this._currPlayerIndex );
     player = await this.nextPlayer();
@@ -77,6 +86,10 @@ const GameState = function(game, updateGameCallback){
     }
 
     if( player.name == 'Dealer' ){
+      if( player.hands[0].cards.length == 2 ){
+        await this.updateView();
+        await sleep( Math.round(this.opts.dealRate * 1000) );
+      }
       var dealerHand = this._getDealerHand();
       if( this.playersRemain() && (dealerHand.value() < 17 || (dealerHand.value() == 17 && dealerHand.isSoft) ) ){
         dealerHand.addCard( card );
@@ -169,20 +182,20 @@ const GameState = function(game, updateGameCallback){
       if( dealerHand.offerInsurance() && this.opts.enableInsurance ){
         this.status = 'Insurance?';
         await this.updateView();
-        console.log("Offering Insurance");
+        //console.log("Offering Insurance");
         for( this._currPlayerIndex = 0; this._currPlayerIndex < this.seats.length-1; ++this._currPlayerIndex){
           var buyInsurance = false;
           try{
             await this.updateView();
             buyInsurance = await this.seats[this._currPlayerIndex].agent.takeInsurance( this.GameSnapshot(), new HandModel().clone(this.seats[this._currPlayerIndex].hands[0]) );
           } catch( e ){
-            console.log(this.seats[this._currPlayerIndex].name + " didn't handle insurance option.");
+            //console.log(this.seats[this._currPlayerIndex].name + " didn't handle insurance option.");
           }
           if( buyInsurance && ! this.seats[this._currPlayerIndex].isHuman ){
             this.seats[this._currPlayerIndex].hands[0].insured = true;
             this.seats[this._currPlayerIndex].bankRoll -= (this.seats[this._currPlayerIndex].hands[0].bet/2);
           } else {
-            console.log(this.seats[this._currPlayerIndex].name + " declined insurance.");
+            //console.log(this.seats[this._currPlayerIndex].name + " declined insurance.");
           }
         }
         this._currPlayerIndex = 0;
@@ -343,7 +356,7 @@ const GameState = function(game, updateGameCallback){
             seat.stats.wins++;
             var win = Math.round((hand.bet * parseFloat(this.opts.payout)) + hand.bet, 2);
             seat.change += Math.round((hand.bet * parseFloat(this.opts.payout)), 2);
-            console.log(`${seat.name} bank is: ${seat.bankRoll} - Adding ${win}`);
+            //console.log(`${seat.name} bank is: ${seat.bankRoll} - Adding ${win}`);
             seat.bankRoll              += win;
             if(seat.name != 'Dealer'){
               this._getDealer().bankRoll -= win;
