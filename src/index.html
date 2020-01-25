@@ -63,7 +63,7 @@
 
     <div id="playersBox" class="row no-gutters mb-2">
       <div ng-repeat="player in bjg.gameState.seats | reverse | filter: { name: '!Dealer' }"
-            ng-class="{true: 'player player-active col-xs-2', false: 'player col-xs-2'}[player === bjg.gameState.getCurrentPlayer()]">
+            ng-class="{true: 'player player-active col-xs-2', false: 'player col-xs-2'}[bjg.isActivePlayer(player)]">
 
         <div ng-if="player.hands.length < 2" ng-repeat="hand in player.hands" class="hand">
             <div ng-repeat="card in hand.cards track by $index" >

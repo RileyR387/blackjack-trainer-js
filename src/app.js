@@ -74,7 +74,7 @@ function( $scope,   HumanActionService ) {
       } catch( e ){
         this.cardConsumed = false;
       }
-      console.log( "Delt: " + card.toString() + " used: " + this.cardConsumed + " Status: " + this.gameState.status);
+      //console.log( "Delt: " + card.toString() + " used: " + this.cardConsumed + " Status: " + this.gameState.status);
       //$scope.$applyAsync();
       if( this.gameState.status != 'Score' && this.gameState.status != 'Game Over' ){
         $scope.$apply();
@@ -240,6 +240,16 @@ function( $scope,   HumanActionService ) {
       return this.shoe._shoe.length;
     }
     return this.shoe._shoe.length+1;
+  }
+
+  this.isActivePlayer = function(player){
+    if( player === this.gameState.getCurrentPlayer() && this.gameState.status != 'New Game'){
+      return true;
+    }
+    if( player.isHuman && this.gameState.status == 'New Game'){
+      return true;
+    }
+    return false;
   }
 
   //this.dealRound(); // Doesn't play nice with dk count changes.. maybe..
