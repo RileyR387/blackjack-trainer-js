@@ -98,13 +98,13 @@ const ShoeModel = function(decks){
     var aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
     var faceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50);
     this._swap( 0, faceIndex );
-    this._swap( 4, aceIndex );
+    this._swap( 5, aceIndex );
     aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
     faceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50);
-    this._swap( 2, faceIndex );
+    this._swap( 1, faceIndex );
     this._swap( 6, aceIndex );
-    console.log( this._shoe[4] );
-    console.log( this._shoe[9] );
+    console.log( this._shoe[1] );
+    console.log( this._shoe[6] );
   }
 
   this._swap = function(i,j){
@@ -112,6 +112,7 @@ const ShoeModel = function(decks){
     this._shoe[i] = this._shoe[j];
     this._shoe[j] = t;
   }
+
   this.shuffle();
 }
 
