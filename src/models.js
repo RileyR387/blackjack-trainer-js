@@ -78,7 +78,14 @@ const ShoeModel = function(decks){
       throw new ShuffleShoeException();
     }
   }
-
+  /**
+   * Rigged decks for testing.
+   */
+  this._swap = function(i,j){
+    var t = this._shoe[i];
+    this._shoe[i] = this._shoe[j];
+    this._shoe[j] = t;
+  }
   this.rigInsuranceShoe = function(){
     console.log( "Rigging shoe for insurance");
     var aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
@@ -87,7 +94,6 @@ const ShoeModel = function(decks){
     console.log( this._shoe[4] );
     console.log( this._shoe[9] );
   }
-
   this.rigSoftSevenTeen = function(){
     console.log( "Rigging shoe for deal soft 17");
     var aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
@@ -99,7 +105,6 @@ const ShoeModel = function(decks){
     console.log( this._shoe[4] );
     console.log( this._shoe[9] );
   }
-
   this.rigBlackjacks = function(){
     console.log( "Rigging Blackjack shoe");
     var aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
@@ -113,7 +118,6 @@ const ShoeModel = function(decks){
     console.log( this._shoe[1] );
     console.log( this._shoe[6] );
   }
-
   this.rigLowDealer = function(){
     console.log( "Rigging Dealer 2's");
     this._swap( 4, this._shoe.map(function(e){ return e.value(); }).indexOf(2, 50) );
@@ -129,7 +133,6 @@ const ShoeModel = function(decks){
     this._swap( 8, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
     this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(2, 50) );
   }
-
   this.rigDoubleSplitAces = function(){
     console.log( "Rigging Dealer 2's");
     this._swap( 4, this._shoe.map(function(e){ return e.value(); }).indexOf(2, 50) );
@@ -177,15 +180,39 @@ const ShoeModel = function(decks){
     this._swap( 8, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
     this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(6, 50) );
   }
-
-  this._swap = function(i,j){
-    var t = this._shoe[i];
-    this._shoe[i] = this._shoe[j];
-    this._shoe[j] = t;
+  this.rigDealerBjPlayerBjNoInsur = function(){
+    console.log( "Rigging Dealer 10 A");
+    this._swap( 4, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 9, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
+    console.log( "Rigging Seat1 BJ");
+    this._swap( 0, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
+    this._swap( 5, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    console.log( "Other seats 20");
+    this._swap( 1, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 2, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 3, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 6, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 7, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 8, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(6, 50) );
   }
-
+  this.rigDealerBjPlayerBjInsur = function(){
+    console.log( "Rigging Dealer 10 A");
+    this._swap( 4, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
+    this._swap( 9, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    console.log( "Rigging Player 10's");
+    this._swap( 0, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
+    this._swap( 5, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    console.log( "Other seats 20");
+    this._swap( 1, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 2, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 3, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 6, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 7, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 8, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(6, 50) );
+  }
   this.shuffle();
-  this.rigDealerBjPlayer21();
 }
 
 const HandModel = function(){

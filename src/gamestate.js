@@ -210,7 +210,7 @@ const GameState = function(game, updateGameCallback){
         this._currPlayerIndex = 0;
         this.status = 'Delt';
       }
-      if( dealerHand.offerInsurance() && dealerHand.isBlackjack() ){
+      if( dealerHand.isBlackjack() ){
         this.status = 'Score';
         return false;
       }
