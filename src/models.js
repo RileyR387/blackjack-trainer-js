@@ -16,6 +16,13 @@ const CardModel = function(rank, suit){
     this.suit = card.suit;
     return this;
   }
+  this.toString = function(){
+    if( this.rank == '10'){
+      return this.rank + this.suit;
+    } else {
+      return ' ' + this.rank + this.suit;
+    }
+  }
   this.value = function(){
     if( jQuery.isNumeric(this.rank) ){
       return parseInt(this.rank);
@@ -123,7 +130,7 @@ const ShoeModel = function(decks){
     this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(2, 50) );
   }
 
-  this.rigDoubleSplit = function(){
+  this.rigDoubleSplitAces = function(){
     console.log( "Rigging Dealer 2's");
     this._swap( 4, this._shoe.map(function(e){ return e.value(); }).indexOf(2, 50) );
     this._swap( 9, this._shoe.map(function(e){ return e.value(); }).indexOf(2, 50) );
@@ -136,11 +143,40 @@ const ShoeModel = function(decks){
     this._swap( 6, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
     this._swap( 7, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
     this._swap( 8, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    //this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
-    //this._swap( 11, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
-    //this._swap( 12, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
+    this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
+    this._swap( 11, this._shoe.map(function(e){ return e.value(); }).indexOf(9, 50) );
+    this._swap( 12, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
   }
-
+  this.rigDealer21PlayerBj = function(){
+    console.log( "Rigging Dealer 10 5 5");
+    this._swap( 4, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 9, this._shoe.map(function(e){ return e.value(); }).indexOf(5, 50) );
+    this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(6, 50) );
+    console.log( "Rigging Player 10's");
+    this._swap( 0, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
+    this._swap( 1, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 2, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 3, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 5, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 6, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 7, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 8, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+  }
+  this.rigDealerBjPlayer21 = function(){
+    console.log( "Rigging Dealer 10 5 5");
+    this._swap( 4, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 9, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
+    console.log( "Rigging Player 10's");
+    this._swap( 0, this._shoe.map(function(e){ return e.value(); }).indexOf(5, 50) );
+    this._swap( 1, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 2, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 3, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 5, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 6, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 7, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 8, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(6, 50) );
+  }
 
   this._swap = function(i,j){
     var t = this._shoe[i];
@@ -149,6 +185,7 @@ const ShoeModel = function(decks){
   }
 
   this.shuffle();
+  this.rigDealerBjPlayer21();
 }
 
 const HandModel = function(){
@@ -184,16 +221,17 @@ const HandModel = function(){
     return this;
   }
   this.addCard = function(card){
-    // try to allow allow aces to re-split... How to prevent the option to hit though... hrmmm
-    if( this.wasSplitAces && card.value == 11 ){
+    // allow allow aces to re-split
+    if( this.wasSplitAces && card.value() == 11 ){
       this.wasSplitAces = false;
       this._canHit = false;
       this._canDouble = false;
-    }
-
-    this.cards.push( card );
-    if( this.value() >= 21 || this.wasSplitAces){
-      this.isFinal = true;
+      this.cards.push( card );
+    } else {
+      this.cards.push( card );
+      if( this.value() >= 21 || this.wasSplitAces){
+        this.isFinal = true;
+      }
     }
     return this;
   }
@@ -216,9 +254,12 @@ const HandModel = function(){
     return false;
   }
 
+  this.canHit = function(){
+    return this._canHit;
+  }
+
   this.canDouble = function(){
-    // FIXME: prevent double after split aces?
-    return (this.cards.length == 2 ? true : false );
+    return ((this._canDouble && this.cards.length == 2) ? true : false );
   }
 
   this.splitHand = function(){

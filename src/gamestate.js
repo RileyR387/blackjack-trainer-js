@@ -159,6 +159,7 @@ const GameState = function(game, updateGameCallback){
           var nextHand = hand.splitHand();
           nextHand.bet = hand.bet;
           player.hands.push( nextHand );
+          throw Error('Card Not used!');
         } else {
           //console.log("_handleAction recursion");
           this._handleAction( player, card, hand, null );

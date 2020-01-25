@@ -129,7 +129,8 @@
                    type="button" class="btn btn-warning" ng-click="bjg.actionSplit()" >Split</button>
           <button ng-if="bjg.gameState.getCurrentHand().canDouble()"
                    type="button" class="btn btn-danger" ng-click="bjg.actionDouble()" >Double</button>
-          <button type="button" class="btn btn-secondary" ng-click="bjg.actionHit()" >Hit</button>
+          <button ng-if="bjg.gameState.getCurrentHand().canHit()"
+                   type="button" class="btn btn-secondary" ng-click="bjg.actionHit()" >Hit</button>
           <button type="button" class="btn btn-success" ng-click="bjg.actionStand()" >Stand</button>
         </div>
       </div><!-- #actionInput -->

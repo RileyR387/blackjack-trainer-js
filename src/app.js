@@ -69,6 +69,7 @@ function( $scope,   HumanActionService ) {
       } catch( e ){
         this.cardConsumed = false;
       }
+      console.log( "Delt: " + card.toString() + " used: " + this.cardConsumed );
       //$scope.$applyAsync();
       if( this.gameState.status != 'Score' && this.gameState.status != 'Game Over' ){
         $scope.$apply();
