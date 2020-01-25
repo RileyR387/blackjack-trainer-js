@@ -83,7 +83,6 @@ button {
 }
 #dealerBox {
   display: block;
-  margin-top: 0.5em;
   text-align: center;
 }
 .dealer {
@@ -96,7 +95,6 @@ button {
 }
 .dealer-hand {
   position: sticky;
-  display: inline-block;
   margin: 0.5em;
   height: 4.2em;
 }
@@ -175,14 +173,13 @@ button {
   border-top:  0.15em solid var(--playerOutlineColor);
 }
 .splitHand {
+  display: inline-flex;
+}
+.splitHand > .hand {
   display: block;
   position: relative;
-}
-
-.splitHand > .hand {
-  display: inline-block;
-  position: relative;
   min-width: 4em;
+  margin-right: 1em;
 }
 .player-data {
   position: relative;
