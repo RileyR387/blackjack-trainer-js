@@ -23,8 +23,8 @@
 <body ng-controller="BlackjackGameController as bjg">
   <game-navbar model="navbar"></game-navbar>
   <div id="gameContainer">
-    <div id="dealerRow" class="mt-2" >
-      <div id="dealerBox" class="dealerBox">
+    <div id="dealerRow" class="mt-2 mb-1" >
+      <div id="dealerBox" class="row no-gutters">
         <div class="dealer">
           <ul class="list-group dealer-data">
               <div ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'">
