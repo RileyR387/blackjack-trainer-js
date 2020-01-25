@@ -417,8 +417,8 @@ const GameSettingsDialogModel = function(bjg, nav) {
   this.visible = false;
   this.incDeckCount = function() { if( this.bjg.game.opts.deckCount < 12){ this.bjg.game.opts.deckCount++;}};
   this.decDeckCount = function() { if( this.bjg.game.opts.deckCount > 1 ){ this.bjg.game.opts.deckCount--;}};
-  this.incDealRate  = function() { this.bjg.game.opts.dealRate += 0.1; };
-  this.decDealRate  = function() { if( this.bjg.game.opts.dealRate > 0.01) {this.bjg.game.opts.dealRate -= 0.1; }};
+  this.incDealRate  = function() { this.bjg.game.opts.dealRate += 0.05; };
+  this.decDealRate  = function() { if( this.bjg.game.opts.dealRate > 0.01) {this.bjg.game.opts.dealRate -= 0.05; }};
   this.open = function() {
     this.visible = true;
   };

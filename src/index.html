@@ -53,8 +53,8 @@
         </div><!-- .player -->
         <div class="shoe">
           <ul class="list-group shoe-data">
-            <li class="list-group-item"><span ng-bind="bjg.game.opts.deckCount"></span> Deck Shoe</li>
-            <li class="list-group-item"><span ng-bind="bjg.shoe._shoe.length + 1"></span> Cards Left</li>
+            <li class="list-group-item"><span ng-bind="bjg.shoe.decks"></span> Deck Shoe</li>
+            <li class="list-group-item"><span ng-bind="bjg.ShoeLength()"></span> Cards Left</li>
             <li class="list-group-item"><span ng-bind="bjg.gameState.status"></span></li>
           </ul>
         </div>
@@ -136,7 +136,8 @@
       </div><!-- #actionInput -->
     </div>
 
-    <div ng-if="bjg.gameState.status == 'Taking Bets' || bjg.gameState.status == 'Score'" class="bet-manips">
+    <!--<div ng-if="bjg.gameState.status == 'Taking Bets' || bjg.gameState.status == 'Score'" class="bet-manips">-->
+    <div ng-if="bjg.showBetActions()" class="bet-manips">
       <div id="betActions" class="d-flex justify-content-center mb-2">
         <div class="btn-group  btn-group-justified" role="group" aria-label="Bet Actions">
           <button type="button" class="btn btn-secondary" ng-click="bjg.clearBet()" aria-label="Clear Current Bet">Clear</button>

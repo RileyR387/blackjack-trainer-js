@@ -22,7 +22,7 @@ const GameState = function(game, updateGameCallback){
   game.dealer.hands = [ new HandModel() ];
   this.seats.push( game.dealer );
 
-  this.status = 'Dealing Hands';
+  this.status = 'New Game';
 
   this.getCurrentPlayer = function(){
     if( this._currPlayerIndex < 0 || this._currPlayerIndex >= this.seats.length ){

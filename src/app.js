@@ -26,8 +26,8 @@ function( $scope,   HumanActionService ) {
     dealer: new PlayerModel('Dealer', null, 100000),
   };
   this.game.players = [
-    new PlayerModel('You', HumanActionService, 200, true),
     new PlayerModel('HighLow', new PullUp(this.game.opts), 200),
+    new PlayerModel('You', HumanActionService, 200, true),
     new PlayerModel('PullUp', new PullUp(this.game.opts), 200),
     new PlayerModel('KayOh', new PullUp(this.game.opts), 200),
     //new PlayerModel('You', HumanActionService, 200, true),
@@ -45,10 +45,15 @@ function( $scope,   HumanActionService ) {
   $scope.playerSettingsDialog = new PlayerSettingsDialogModel(this, $scope.navbar);
 
   this.shuffleShoe = async function() {
-    console.log("Shuffling shoe...");
-    this.shoe = new ShoeModel( this.game.opts.deckCount );
-    this.gameState = new GameState( this.game, this.applyScope );
-    await this.dealRound();
+    if( this.CanShuffle() ){
+      console.log("Shuffling shoe...");
+      await this.clearAllBets();
+      this.card = null;
+      this.cardConsumed = true;
+      this.shoe = new ShoeModel( this.game.opts.deckCount );
+      this.gameState = new GameState( this.game, this.applyScope );
+      $scope.$applyAsync();
+    }
   }
 
   this.dealRound = async function(){
@@ -69,7 +74,7 @@ function( $scope,   HumanActionService ) {
       } catch( e ){
         this.cardConsumed = false;
       }
-      console.log( "Delt: " + card.toString() + " used: " + this.cardConsumed );
+      console.log( "Delt: " + card.toString() + " used: " + this.cardConsumed + " Status: " + this.gameState.status);
       //$scope.$applyAsync();
       if( this.gameState.status != 'Score' && this.gameState.status != 'Game Over' ){
         $scope.$apply();
@@ -87,7 +92,7 @@ function( $scope,   HumanActionService ) {
   this.endRound = async function(){
     if( this.gameState.status == 'Game Over' ){
       await this.shuffleShoe();
-    } else if( this.gameState.status == 'Score'){
+    } else if( this.gameState.status == 'Score' || this.gameState.status == 'New Game'){
       await this.gameState.clearRound();
       await this.dealRound();
     }
@@ -110,6 +115,22 @@ function( $scope,   HumanActionService ) {
       currPlayer.bankRoll -= currPlayer.lastBet;
       currPlayer.hands[0].bet = currPlayer.lastBet;
       HumanActionService.bet = currPlayer.lastBet;
+    }
+  }
+
+  this.clearAllBets = async function(){
+    if( this.gameState.status == 'Taking Bets'){
+      this.gameState.seats.forEach(seat => {
+        if( seat.isHuman ){
+          seat.bankRoll += HumanActionService.tempBet;
+          seat.lastBet = 0;
+          HumanActionService.tempBet = 0;
+          seat.hands[0].bet = HumanActionService.tempBet;
+        } else {
+          seat.bankRoll += seat.hands[0].bet;
+          seat.hands[0].bet = 0;
+        }
+      });
     }
   }
 
@@ -206,8 +227,22 @@ function( $scope,   HumanActionService ) {
     }
   }
 
-  this.dealRound();
+  this.showBetActions = function(){
+    return (/^((Taking Bets)|(Score)|(New Game))$/).test(this.gameState.status);
+  }
 
+  this.CanShuffle = function(){
+    return (/^((Taking Bets)|(Score)|(New Game)|(Game Over))$/).test(this.gameState.status);
+  }
+
+  this.ShoeLength = function(){
+    if( this.gameState.status == 'New Game'){
+      return this.shoe._shoe.length;
+    }
+    return this.shoe._shoe.length+1;
+  }
+
+  //this.dealRound(); // Doesn't play nice with dk count changes.. maybe..
   //$scope.gameSettingsDialog.open();
   //$scope.navbar.expand();
 }]);
