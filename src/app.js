@@ -17,7 +17,7 @@ function( $scope,   HumanActionService ) {
   this.game = {
     opts: {
       deckCount: 8,
-      dealRate: 1,
+      dealRate: 0.25,
       showDeckStats: true,
       payout: '1.5',
       minBet: 10,

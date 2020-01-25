@@ -131,7 +131,6 @@ const ShoeModel = function(decks){
   }
 
   this.shuffle();
-  this.rigLowDealer();
 }
 
 const HandModel = function(){
