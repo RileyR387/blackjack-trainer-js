@@ -115,7 +115,7 @@
     </div> <!-- #playersBox -->
 
     <div ng-if="bjg.gameState.status == 'Game Over'" >
-      <div id="dealerActionsInput" class="d-flex justify-content-center justify-content-md-end mb-1 mx-5">
+      <div id="dealerActionsInput" class="d-flex justify-content-center justify-content-sm-end justify-content-md-center mb-1 mx-5">
         <div class="btn-group btn-group-justified" role="group" aria-label="Dealer Actions">
           <button type="button" class="btn btn-success" ng-click="bjg.shuffleShoe()" >Shuffle Shoe</button>
         </div>
@@ -123,7 +123,7 @@
     </div>
 
     <div ng-if="bjg.gameState.status == 'Insurance?' && bjg.gameState._getDealerHand().offerInsurance() && bjg.gameState.getCurrentPlayer().isHuman" >
-      <div id="actionInput" class="d-flex justify-content-center justify-content-md-end mb-1 mx-5">
+      <div id="actionInput" class="d-flex justify-content-center justify-content-sm-end justify-content-md-center mb-1 mx-5">
         <div class="input-group-prepend border-0">
           <div class="input-group-text border-0 bg-dark text-white ">Buy Insurance?</div>
         </div>
@@ -135,7 +135,7 @@
     </div>
 
     <div ng-if=" bjg.gameState.status == 'Delt' && bjg.gameState.getCurrentPlayer().isHuman && bjg.gameState.getCurrentHand().value() < 21" >
-      <div id="actionInput" class="d-flex justify-content-center justify-content-md-end mb-1 mx-5">
+      <div id="actionInput" class="d-flex justify-content-center justify-content-sm-end justify-content-md-center mb-1 mx-5">
         <div class="btn-group btn-group-justified" role="group" aria-label="Hand Actions">
           <button ng-if="bjg.gameState.getCurrentHand().canSplit()"
                    type="button" class="btn btn-warning" ng-click="bjg.actionSplit()" >Split</button>
