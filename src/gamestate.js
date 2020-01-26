@@ -63,7 +63,7 @@ const GameState = function(game, updateGameCallback){
       }
     }
 
-    if( this.status == "Delt" || this.status == 'Check Insurance' ){
+    if( this.status == "Delt" || this.status == 'Check Hole' ){
       if( await this._queryPlayers(player, card) != null ){
         // A player didn't consume the card.. update state and continue
         this.status = 'Score';
@@ -468,7 +468,7 @@ const GameState = function(game, updateGameCallback){
   this._nextHand = function(player){
     for( var i = 0; i < player.hands.length; ++i){
       var thisHand = player.hands[i];
-      if( (thisHand.isFinal || thisHand.hasBusted() ) && this.status != 'Check Insurance' ){
+      if( (thisHand.isFinal || thisHand.hasBusted() ) && this.status != 'Check Hole' ){
         null; // next/pass
       } else {
         return thisHand;
@@ -485,13 +485,25 @@ const GameState = function(game, updateGameCallback){
     }
 
     if( this._currPlayerIndex == 0 && thisHand.cards.length == 2 ){
-      this.status = "Check Insurance";
+      if( this.shouldCheckHole() ){
+        this.status = "Check Hole";
+      } else {
+        this.status = "Delt";
+      }
       throw Error('Card not used!');
       return;
     } else {
       thisHand.addCard( card );
       return null;
     }
+  }
+
+  this.shouldCheckHole = function(){
+    var dealerHand = this._getDealerHand();
+    if( dealerHand.cards[0].value() == 10 || dealerHand.cards[0].value() == 11 ){
+      return true;
+    }
+    return false;
   }
 
   this._takeBets = async function(){
