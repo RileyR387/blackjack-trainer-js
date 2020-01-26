@@ -126,7 +126,7 @@ button {
 .shoe {
   position: absolute;
   display: inline-block;
-  min-width: 10%;
+  width: 6.2em;
   right: 0.3em;
   text-align: center;
   border-radius: .3em;
@@ -149,6 +149,7 @@ button {
   border-radius: .3em;
   box-sizing: border-box;
   border: 0.1em solid yellow;
+  z-index: 9;
 }
 .player > ul > .list-group-item {
   background: var(--playerBgColor);
@@ -171,6 +172,7 @@ button {
   box-sizing: border-box;
   border-left: 0.15em solid var(--playerOutlineColor);
   border-top:  0.15em solid var(--playerOutlineColor);
+  z-index: 10;
 }
 .splitHand {
   display: inline-flex;

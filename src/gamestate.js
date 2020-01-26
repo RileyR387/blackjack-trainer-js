@@ -327,7 +327,8 @@ const GameState = function(game, updateGameCallback){
               seat.change += 0-hand.bet;
               hand.bet = 0;
               hand.result = ScoreModel.lose;
-              seat.stats.loses++;
+              //seat.stats.loses++;
+              this._addLoss( seat );
               this._getDealer().stats.wins++;
               this._getDealer().bankRoll += hand.bet;
               this._getDealer().stats.loses++;
@@ -362,7 +363,8 @@ const GameState = function(game, updateGameCallback){
           ){
             hand.result = ScoreModel.blackjack;
             seat.stats.bjs++;
-            seat.stats.wins++;
+            //seat.stats.wins++;
+            this._addWin( seat );
             var win = Math.round((hand.bet * parseFloat(this.opts.payout)) + hand.bet, 2);
             seat.change += Math.round((hand.bet * parseFloat(this.opts.payout)), 2);
             //console.log(`${seat.name} bank is: ${seat.bankRoll} - Adding ${win}`);
@@ -378,13 +380,15 @@ const GameState = function(game, updateGameCallback){
             if( ! hand.hasBusted() ){
               if( ! this.playersRemain() ){
                 hand.result = ScoreModel.win;
-                seat.stats.wins++;
+                //seat.stats.wins++;
+                this._addWin( seat );
               } else {
                 hand.result = null;
               }
             } else {
               hand.result = ScoreModel.bust;
-              seat.stats.loses++;
+              //seat.stats.loses++;
+              this._addLoss( seat );
             }
           } else if( hand.value() > 21 ){
             hand.result = ScoreModel.bust;
@@ -398,7 +402,8 @@ const GameState = function(game, updateGameCallback){
             (hand.value() < 22 && hand.value() > dealer.value() )
           ){
             hand.result = ScoreModel.win;
-            seat.stats.wins++;
+            //seat.stats.wins++;
+            this._addWin( seat );
             var win = Math.round(hand.bet * 2, 2);
             seat.change += hand.bet;
             seat.bankRoll += win;
@@ -413,7 +418,8 @@ const GameState = function(game, updateGameCallback){
             hand.bet = 0;
           } else if( hand.value() < 22 && hand.value() < dealer.value() ){
             hand.result = ScoreModel.lose;
-            seat.stats.loses++;
+            //seat.stats.loses++;
+            this._addLoss( seat );
             seat.change += 0-hand.bet;
             this._getDealer().stats.wins++;
             this._getDealer().bankRoll += hand.bet;
@@ -442,6 +448,17 @@ const GameState = function(game, updateGameCallback){
   }
   this._getDealer = function(){
     return this.seats[this.seats.length-1];
+  }
+
+  this._addWin = function(seat){
+    seat.lossStreak = 0;
+    seat.winStreak++;
+    seat.stats.wins++;
+  }
+  this._addLoss = function(seat){
+    seat.winStreak = 0;
+    seat.lossStreak++;
+    seat.stats.loses++;
   }
 
   this.nextPlayer = async function(){
