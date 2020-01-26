@@ -118,7 +118,8 @@ button {
   margin-top: 0.2em;
   margin-right: 0.1em;
   margin-left: 0.1em;
-  min-width: 11em;
+  min-width: 9em;
+  max-width: 14em;
   border-radius: .3em;
   box-sizing: border-box;
   border: 0.1em solid var(--playerOutlineColor);
@@ -145,7 +146,7 @@ button {
   margin-top: 0.2em;
   margin-right: 0.1em;
   margin-left: 0.1em;
-  min-width: 11em;
+  min-width: 9em;
   border-radius: .3em;
   box-sizing: border-box;
   border: 0.1em solid yellow;

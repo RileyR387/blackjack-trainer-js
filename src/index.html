@@ -23,8 +23,8 @@
 <body ng-controller="BlackjackGameController as bjg">
   <game-navbar model="navbar"></game-navbar>
   <div id="gameContainer">
-    <div id="dealerRow" class="mt-2 mb-1" >
-      <div id="dealerBox" class="row no-gutters text-md-center text-xs-left">
+    <div id="dealerRow" class="mt-2 mb-2" >
+      <div id="dealerBox" class="row no-gutters text-sm-center text-xs-left">
         <div class="mx-5 text-center dealer">
           <ul class="list-group dealer-data">
               <div ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'">
@@ -63,9 +63,9 @@
       </div><!-- #dealerBox -->
     </div>
 
-    <div id="playersBox" class="row no-gutters mb-2">
+    <div id="playersBox" class="no-gutters d-flex flex-row flex-wrap justify-content-center mb-2 px-2">
       <div ng-repeat="player in bjg.gameState.seats | reverse | filter: { name: '!Dealer' }"
-            ng-class="{true: 'player player-active col-xs-2', false: 'player col-xs-2'}[bjg.isActivePlayer(player)]">
+            class="d-flex flex-column flex-fill" ng-class="{true: 'player player-active col-xs-2', false: 'player col-xs-2'}[bjg.isActivePlayer(player)]">
 
         <div ng-if="player.hands.length < 2" ng-repeat="hand in player.hands" class="hand">
             <div ng-repeat="card in hand.cards track by $index" >
@@ -93,15 +93,14 @@
             </div>
           </li>
           <li class="list-group-item w-100">
-            <div class="w-25 float-left d-inline-flex justify-content-start">
+            <div ng-if="player.lossStreak != player.winStreak" class="w-25 float-left d-inline-flex justify-content-start">
               <span ng-if="player.winStreak  > 0" class="bg-success">&nbsp;W{{player.winStreak}}&nbsp;</span>
               <span ng-if="player.lossStreak > 0" class="bg-danger">&nbsp;L{{player.lossStreak}}&nbsp;</span>
               <span ng-if="player.lossStreak == player.winStreak">&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </div>
             <div class="w-auto d-inline-flex justify-content-center"><span>{{player.name}}<span></div>
-            <div class="w-25 d-inline-flex float-right justify-content-end">
-              <span ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'"
-                    class="text-right" ng-class="{true: 'bg-success', false: 'bg-danger'}[player.change >= 0]">
+            <div ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'" class="w-25 d-inline-flex float-right justify-content-end">
+              <span class="text-right" ng-class="{true: 'bg-success', false: 'bg-danger'}[player.change >= 0]">
                 <span ng-if="player.change >= 0">+</span>{{player.change | currency:"$":0}}&nbsp;
               </span>
               <span class="text-right" ng-if="bjg.gameState.status != 'Score' && bjg.gameState.status != 'Game Over'">
