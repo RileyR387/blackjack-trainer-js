@@ -84,7 +84,7 @@ function( $scope,   HumanActionService ) {
     if( this.gameState.status == 'Score' && this.gameState.newShoeFlag ){
       this.gameState.status = 'Game Over';
     }
-    this.gameState.ScoreRound();
+    this.gameState.priorGameState = this.gameState.ScoreRound();
     $scope.$applyAsync();
     await sleep( Math.round(this.game.opts.dealRate * 1000) );
   }

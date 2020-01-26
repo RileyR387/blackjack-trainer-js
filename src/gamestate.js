@@ -74,7 +74,6 @@ const GameState = function(game, updateGameCallback){
     }
 
     if( this.status == 'Score' ){
-      this.priorGameState = this.ScoreRound();
       if( this.newShoeFlag ){
         this.status = 'Game Over';
       }
@@ -242,7 +241,6 @@ const GameState = function(game, updateGameCallback){
   }
 
   this.clearRound = async function(){
-    this.priorGameState = this.GameSnapshot();
     if( ! this.newShoeFlag ){
       this.seats.forEach( player => {
         player.hands = [ new HandModel() ];
@@ -393,6 +391,7 @@ const GameState = function(game, updateGameCallback){
           } else if( hand.value() > 21 ){
             hand.result = ScoreModel.bust;
             seat.stats.busts++;
+            this._addLoss(seat);
             seat.change += 0-hand.bet;
             this._getDealer().bankRoll += hand.bet;
             hand.bet = 0;
@@ -531,7 +530,6 @@ const GameState = function(game, updateGameCallback){
         for( var j = 0; j < seat.hands.length; ++j){
           if( seat.name != 'Dealer' ){
             try {
-              //await sleep( Math.round(this.opts.dealRate * 1000) );
               await this.updateView();
               var pBet = await seat.agent.placeBet( this.priorGameState );
               if( ! seat.isHuman ){
