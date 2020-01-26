@@ -93,14 +93,15 @@
             </div>
           </li>
           <li class="list-group-item w-100">
-            <div ng-if="player.lossStreak != player.winStreak" class="w-25 float-left d-inline-flex justify-content-start">
+            <div class="w-25 float-left d-inline-flex justify-content-start">
               <span ng-if="player.winStreak  > 0" class="bg-success">&nbsp;W{{player.winStreak}}&nbsp;</span>
               <span ng-if="player.lossStreak > 0" class="bg-danger">&nbsp;L{{player.lossStreak}}&nbsp;</span>
               <span ng-if="player.lossStreak == player.winStreak">&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </div>
             <div class="w-auto d-inline-flex justify-content-center"><span>{{player.name}}<span></div>
-            <div ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'" class="w-25 d-inline-flex float-right justify-content-end">
-              <span class="text-right" ng-class="{true: 'bg-success', false: 'bg-danger'}[player.change >= 0]">
+            <div class="w-25 d-inline-flex float-right justify-content-end">
+              <span ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'"
+                    class="text-right" ng-class="{true: 'bg-success', false: 'bg-danger'}[player.change >= 0]">
                 <span ng-if="player.change >= 0">+</span>{{player.change | currency:"$":0}}&nbsp;
               </span>
               <span class="text-right" ng-if="bjg.gameState.status != 'Score' && bjg.gameState.status != 'Game Over'">
