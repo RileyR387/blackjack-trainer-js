@@ -550,5 +550,14 @@ const GameState = function(game, updateGameCallback){
     this.status = 'Dealing Hands';
   }
 
+  this.getNextHuman = function(){
+    var i = 0;
+    for( var i = 0; i < this.seats.length-1; ++i){
+      if( this.seats[i].isHuman && (this.seats[i].hands[0].bet == 0 || this._currPlayerIndex == i) ){
+        return this.seats[i];
+      }
+    }
+  }
+
 }
 

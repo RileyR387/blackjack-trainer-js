@@ -24,8 +24,8 @@
   <game-navbar model="navbar"></game-navbar>
   <div id="gameContainer">
     <div id="dealerRow" class="mt-2 mb-1" >
-      <div id="dealerBox" class="row no-gutters">
-        <div class="dealer">
+      <div id="dealerBox" class="row no-gutters text-md-center text-xs-left">
+        <div class="mx-5 text-center dealer">
           <ul class="list-group dealer-data">
               <div ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'">
                 <div ng-repeat="hand in player.hands" >
@@ -115,7 +115,7 @@
     </div> <!-- #playersBox -->
 
     <div ng-if="bjg.gameState.status == 'Game Over'" >
-      <div id="dealerActionsInput" class="d-flex justify-content-center mb-1">
+      <div id="dealerActionsInput" class="d-flex justify-content-center justify-content-md-end mb-1 mx-5">
         <div class="btn-group btn-group-justified" role="group" aria-label="Dealer Actions">
           <button type="button" class="btn btn-success" ng-click="bjg.shuffleShoe()" >Shuffle Shoe</button>
         </div>
@@ -123,7 +123,7 @@
     </div>
 
     <div ng-if="bjg.gameState.status == 'Insurance?' && bjg.gameState._getDealerHand().offerInsurance() && bjg.gameState.getCurrentPlayer().isHuman" >
-      <div id="actionInput" class="d-flex justify-content-center mb-1">
+      <div id="actionInput" class="d-flex justify-content-center justify-content-md-end mb-1 mx-5">
         <div class="input-group-prepend border-0">
           <div class="input-group-text border-0 bg-dark text-white ">Buy Insurance?</div>
         </div>
@@ -135,7 +135,7 @@
     </div>
 
     <div ng-if=" bjg.gameState.status == 'Delt' && bjg.gameState.getCurrentPlayer().isHuman && bjg.gameState.getCurrentHand().value() < 21" >
-      <div id="actionInput" class="d-flex justify-content-center mb-1">
+      <div id="actionInput" class="d-flex justify-content-center justify-content-md-end mb-1 mx-5">
         <div class="btn-group btn-group-justified" role="group" aria-label="Hand Actions">
           <button ng-if="bjg.gameState.getCurrentHand().canSplit()"
                    type="button" class="btn btn-warning" ng-click="bjg.actionSplit()" >Split</button>
@@ -149,8 +149,8 @@
     </div>
 
     <!--<div ng-if="bjg.gameState.status == 'Taking Bets' || bjg.gameState.status == 'Score'" class="bet-manips">-->
-    <div ng-if="bjg.showBetActions()" class="bet-manips">
-      <div id="betActions" class="d-flex justify-content-center mb-2">
+    <div ng-if="bjg.showBetActions()" class="row mx-0 bet-manips d-flex flex-row-reverse">
+      <div id="betActions" class="col-sm-6 col-lg-12 d-flex justify-content-center mb-2">
         <div class="btn-group  btn-group-justified" role="group" aria-label="Bet Actions">
           <button type="button" class="btn btn-secondary" ng-click="bjg.clearBet()" aria-label="Clear Current Bet">Clear</button>
           <button type="button" class="btn btn-light" ng-click="bjg.halfBet()" aria-label="Half Last Bet">Half</button>
@@ -158,15 +158,14 @@
           <button type="button" class="btn btn-success" ng-click="bjg.deal()" aria-label="Deal Hand">Deal</button>
         </div><!-- .btn-group -->
       </div><!-- #betActions -->
-
-      <div id="betControls" class="d-flex justify-content-center mb-1">
+      <div id="betControls" class="col-sm-6 col-lg-12 d-flex justify-content-center mb-2">
         <div class="btn-group  btn-group-justified" role="group" aria-label="Bet Inputs">
           <button type="button" class="btn btn-danger" ng-click="bjg.addBet(5)" aria-label="Bet Five">5</button>
           <button type="button" class="btn btn-dark" ng-click="bjg.addBet(10)" aria-label="Bet Ten">10</button>
-          <button type="button" class="btn btn-success" ng-click="bjg.addBet(25)" aria-label="Bet Twenty-Five">25</button>
-          <button type="button" class="btn btn-primary" ng-click="bjg.addBet(100)" aria-label="Bet One Hundred">100</button>
-          <button type="button" class="btn btn-info" ng-click="bjg.addBet(500)" aria-label="Bet Five Hundred">500</button>
-          <button type="button" class="btn btn-danger" ng-click="bjg.addBet(1000)" aria-label="Bet One Thousand">1000</button>
+          <button ng-if="bjg.gameState.getNextHuman().bankRoll >= 25" type="button" class="btn btn-success" ng-click="bjg.addBet(25)" aria-label="Bet Twenty-Five">25</button>
+          <button ng-if="bjg.gameState.getNextHuman().bankRoll >= 100" type="button" class="btn btn-primary" ng-click="bjg.addBet(100)" aria-label="Bet One Hundred">100</button>
+          <button ng-if="bjg.gameState.getNextHuman().bankRoll >= 500" type="button" class="btn btn-info" ng-click="bjg.addBet(500)" aria-label="Bet Five Hundred">500</button>
+          <button ng-if="bjg.gameState.getNextHuman().bankRoll >= 1000" type="button" class="btn btn-danger" ng-click="bjg.addBet(1000)" aria-label="Bet One Thousand">1000</button>
         </div><!-- .btn-group -->
       </div><!-- #betControls -->
 
