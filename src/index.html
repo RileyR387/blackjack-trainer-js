@@ -63,9 +63,9 @@
       </div><!-- #dealerBox -->
     </div>
 
-    <div id="playersBox" class="no-gutters d-flex flex-row flex-wrap justify-content-center mb-2 px-2">
+    <div id="playersBox" class="row no-gutters d-flex flex-row flex-wrap justify-content-center mb-2 px-2">
       <div ng-repeat="player in bjg.gameState.seats | reverse | filter: { name: '!Dealer' }"
-            class="d-flex flex-column flex-fill" ng-class="{true: 'player player-active col-xs-2', false: 'player col-xs-2'}[bjg.isActivePlayer(player)]">
+            class="d-flex flex-column flex-even" ng-class="{true: 'player player-active col-xs-2', false: 'player col-xs-2'}[bjg.isActivePlayer(player)]">
 
         <div ng-if="player.hands.length < 2" ng-repeat="hand in player.hands" class="hand">
             <div ng-repeat="card in hand.cards track by $index" >

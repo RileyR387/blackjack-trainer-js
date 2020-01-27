@@ -17,6 +17,10 @@
   --playerBgColor: #156215;
 }
 
+.flex-even {
+  flex: 1;
+}
+
 /*.modal a:not(.btn){*/
 .genericLink {
   color: white;
@@ -113,12 +117,11 @@ button {
   width: 100%;
 }
 .player {
-  display: inline-block;
   position: relative;
   margin-top: 0.2em;
   margin-right: 0.1em;
   margin-left: 0.1em;
-  min-width: 9em;
+  min-width: 9.8em;
   max-width: 14em;
   border-radius: .3em;
   box-sizing: border-box;
@@ -141,14 +144,6 @@ button {
   margin: 0;
 }
 .player-active {
-  display: inline-block;
-  position: relative;
-  margin-top: 0.2em;
-  margin-right: 0.1em;
-  margin-left: 0.1em;
-  min-width: 9em;
-  border-radius: .3em;
-  box-sizing: border-box;
   border: 0.1em solid yellow;
   z-index: 9;
 }
