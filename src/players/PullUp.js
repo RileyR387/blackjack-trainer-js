@@ -79,7 +79,7 @@ class PullUp extends AgentModel {
        ||
           (myHand.value() == 18 && dealer.value() == 9 )
        ||
-          (myHand.value() == 20  && (dealer.value() == 3 || dealer.value() == 4) )
+          (myHands.length < 3 && myHand.value() == 20  && (dealer.value() == 3 || dealer.value() == 4) )
         )
     ){
       this.riskLevel *= 2
