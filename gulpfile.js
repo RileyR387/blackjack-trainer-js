@@ -9,12 +9,14 @@ const gulp = require('gulp'),
     gulpif = require('gulp-if'),
     terser = require('gulp-terser'),
     minifyCss = require('gulp-clean-css'),
+    npmDist = require('gulp-npm-dist'),
+    del = require('del'),
     livereload = require('gulp-livereload');
 
 /**
  * Config
  */
-const dest = './dest';
+const rootDest = './dist';
 const watchAllSrc = './src/**/*.{html,php,css,pl,cgi,js}';
 const paths = {
   htdocs: {
@@ -37,6 +39,9 @@ const paths = {
 /**
  * Task Streams
  */
+gulp.task('clean', function(){
+  return del(rootDest);
+});
 gulp.task('build', function(){
   return gulp.src(paths.htdocs.src)
     .pipe(useref({}, lazypipe().pipe(sourcemaps.init, { loadMaps: true })))
@@ -44,7 +49,7 @@ gulp.task('build', function(){
     .pipe(gulpif('*.js', terser()))
     .pipe(gulpif('*.css', minifyCss()))
     .pipe(sourcemaps.write('maps'))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest(rootDest));
 });
 // Excludes sourcemaps
 gulp.task('build-prod', function(){
@@ -53,7 +58,17 @@ gulp.task('build-prod', function(){
     .pipe(gulpif('*.js', embedTemplates()))
     .pipe(gulpif('*.js', terser()))
     .pipe(gulpif('*.css', minifyCss()))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest(rootDest));
+});
+
+// Copy dependencies to ./dest/resources
+gulp.task('copy:libs', function() {
+  return gulp.src(npmDist(), {base:'./node_modules'})
+    .pipe(gulp.dest(rootDest + '/resources'));
+});
+gulp.task('copy:devlibs', function() {
+  return gulp.src(npmDist(), {base:'./node_modules'})
+    .pipe(gulp.dest( './src' + '/resources'));
 });
 
 gulp.task('start-livereload', function(){
@@ -126,5 +141,5 @@ gulp.task('watch', gulp.series('build',
 /**
  * Default task
  */
-gulp.task('default', gulp.series('build'));
+gulp.task('default', gulp.series('clean','build','copy:libs'));
 

@@ -1,0 +1,32 @@
+  <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="helpModalLabel">Share</h5>
+          <button type="button" class="close" data-dismiss="modal" data-toggle="collapse" data-target=".navbar-collapse.show" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="lead">Copy the link</p>
+          <div class="input-group mb-3">
+            <input id="share_url" type="text" class="form-control text-dark" value="https://rrappsdev.com/blackjack/" readonly="">
+            <div class="input-group-append">
+              <button class="btn clipboard-btn btn-secondary input-group-text"
+                  data-toggle="popover" data-placement="bottom" data-content="Link Copied!" data-clipboard-target="#share_url">
+                <i class="material-icons">file_copy</i>
+              </button>
+            </div>
+          </div>
+          <p class="lead">... or have your friend scan this!</p>
+          <div class="text-center">
+          <img src="https://chart.googleapis.com/chart?chs=200x200&amp;cht=qr&amp;chl=https%3A%2F%2Frrappsdev.com%2Fblackjack%2F&amp;choe=UTF-8"
+               alt="QR-Code for In person sharing"></img>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="collapse" data-target=".navbar-collapse.show">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

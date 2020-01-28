@@ -87,6 +87,12 @@ app.directive('helpDialog', [function() {
   };
 }]);
 
+app.directive('shareDialog', [function() {
+  return {
+    templateUrl: 'views/share-dialog.html',
+  };
+}]);
+
 app.directive('gameNavbar', [function() {
   return {
     restrict: 'E',

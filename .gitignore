@@ -1,5 +1,6 @@
 *.swp
 dist/*
+src/resources/*
 .deploy.sh
 # Logs
 logs

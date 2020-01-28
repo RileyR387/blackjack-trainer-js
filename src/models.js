@@ -1,12 +1,19 @@
 
 const sleep = (ms) => { return new Promise(resolve => setTimeout(resolve, ms)); }
 
-var global;
-try {
-  global = Function('return this')() || (42, eval)('this');
-} catch(e) {
-  global = window;
-}
+jQuery(function () {
+  jQuery('[data-toggle="popover"]').popover()
+})
+
+jQuery(function () {
+  jQuery('[data-toggle="tooltip"]').tooltip()
+})
+
+var copyBtns = new ClipboardJS('.clipboard-btn');
+
+copyBtns.on('success', function(e) {
+  jQuery(e.trigger).popover('show');
+});
 
 const CardModel = function(rank, suit){
   this.rank = rank;
