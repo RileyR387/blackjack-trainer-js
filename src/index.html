@@ -154,13 +154,13 @@
         <div class="btn-group  btn-group-justified" role="group" aria-label="Bet Actions">
           <button ng-if="bjg.gameState.getNextHuman().lastBet > 0 || bjg.gameState.getNextHuman().hands[0].bet > 0"
                    type="button" class="btn btn-secondary" ng-click="bjg.clearBet()" aria-label="Clear Current Bet">Clear</button>
-          <button ng-if="!bjg.canHalfBet(bjg.gameState.getNextHuman().lastBet)"
+          <button ng-if="bjg.gameState.getNextHuman().lastBet > bjg.game.opts.minBet && !bjg.canHalfBet(bjg.gameState.getNextHuman().lastBet)"
                    type="button" class="btn btn-warning" ng-click="bjg.minBet()" aria-label="Bet minimum and deal">Min</button>
           <button ng-if="bjg.gameState.getNextHuman().lastBet > 0 && bjg.canHalfBet(bjg.gameState.getNextHuman().lastBet)"
                    type="button" class="btn btn-light" ng-click="bjg.halfBet()" aria-label="Half Last Bet">Half</button>
           <button ng-if="bjg.gameState.getNextHuman().lastBet > 0"
                    type="button" class="btn btn-dark" ng-click="bjg.doubleBet()" aria-label="Double Last Bet">Double</button>
-          <button ng-if="bjg.gameState.getNextHuman().lastBet != 0 || bjg.gameState.getNextHuman().hands[0].bet >= bjg.game.opts.minBet" type="button" class="btn btn-success" ng-click="bjg.deal()" aria-label="Deal Hand">Deal</button>
+          <button type="button" class="btn btn-success" ng-click="bjg.deal()" aria-label="Deal Hand">Deal</button>
         </div><!-- .btn-group -->
       </div><!-- #betActions -->
       <div id="betControls" class="col-sm-6 col-lg-12 d-flex justify-content-center mb-2">

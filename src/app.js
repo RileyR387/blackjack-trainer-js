@@ -115,6 +115,10 @@ function( $scope,   HumanActionService ) {
       currPlayer.bankRoll -= currPlayer.lastBet;
       currPlayer.hands[0].bet = currPlayer.lastBet;
       HumanActionService.bet = currPlayer.lastBet;
+    } else if( finalBet == 0 && currPlayer.lastBet == 0 ) {
+      currPlayer.bankRoll -= this.game.opts.minBet;
+      currPlayer.hands[0].bet = this.game.opts.minBet;
+      HumanActionService.bet = this.game.opts.minBet;
     }
   }
 
