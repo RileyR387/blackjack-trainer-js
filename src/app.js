@@ -107,7 +107,7 @@ function( $scope,   HumanActionService ) {
       currPlayer = this.gameState.getCurrentPlayer();
     }
     var finalBet = HumanActionService.tempBet;
-    if( finalBet != 0 ){
+    if( finalBet != 0  && finalBet >= this.game.opts.minBet){
       HumanActionService.tempBet = 0;
       HumanActionService.bet = finalBet;
     }
@@ -133,7 +133,17 @@ function( $scope,   HumanActionService ) {
       });
     }
   }
-
+  this.halfBetRoundDown = function(betAmt){
+    return this.roundBetDown(betAmt/2);
+  }
+  this.roundBetDown = function(betAmt){
+    var tmpBet = betAmt;
+    tmpBet -= betAmt%5;
+    return tmpBet;
+  }
+  this.canHalfBet = function(betAmt){
+    return (this.halfBetRoundDown(betAmt) > this.game.opts.minBet);
+  }
   this.addBet = async function(betAmt){
     this.endRound();
     var currPlayer = this.gameState.getCurrentPlayer();
@@ -158,6 +168,24 @@ function( $scope,   HumanActionService ) {
     currPlayer.lastBet = 0;
     HumanActionService.tempBet = 0;
     currPlayer.hands[0].bet = HumanActionService.tempBet;
+    await $scope.$applyAsync();
+  }
+  this.minBet = async function(){
+    this.endRound();
+    var currPlayer = this.gameState.getCurrentPlayer();
+    while( ! currPlayer.isHuman ){
+      await sleep( this.game.opts.dealRate * 1001 );
+      currPlayer = this.gameState.getCurrentPlayer();
+    }
+    if( HumanActionService.tempBet > 0 ){
+      currPlayer.bankRoll += HumanActionService.tempBet;
+    }
+    HumanActionService.tempBet = this.game.opts.minBet;
+    currPlayer.bankRoll -= this.game.opts.minBet;
+    currPlayer.hands[0].bet = HumanActionService.tempBet;
+    currPlayer.lastBet = 0;
+    this.deal();
+    return;
   }
   this.halfBet = async function(){
     this.endRound();
@@ -193,10 +221,6 @@ function( $scope,   HumanActionService ) {
       HumanActionService.tempBet = currPlayer.lastBet;
       currPlayer.bankRoll -= currPlayer.lastBet
       currPlayer.lastBet = 0;
-    }
-
-    if( HumanActionService.tempBet == 0 && currPlayer.lastBet != 0){
-      HumanActionService.tempBet = currPlayer.lastBet;
     }
     currPlayer.bankRoll -= HumanActionService.tempBet;
     HumanActionService.tempBet *= 2;
