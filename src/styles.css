@@ -151,7 +151,7 @@ button {
   margin: 0;
 }
 .player-active {
-  box-shadow: 0 0 3rem rgba(0, 0, 0, .3);
+  /*box-shadow: 0 0 3rem rgba(0, 0, 0, .3);*/
   border: 0.1em solid yellow;
   z-index: 9;
 }
