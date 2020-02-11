@@ -4,16 +4,15 @@ I couldn't find a free game that offered multiple seats or AI player personaliti
 
 Primary goal is to mimic a real blackjack game 100% with additional training tools enabled optionally.
 
-Still a work in progress. 
 Porting from my terminal based blackjack game [blackjack-ai-py](https://github.com/RileyR387/blackjack-ai-py).
 
-## Dev Environment
+### Dev Environment
 ```shell
 npm i
 npm run dev
 ```
 
-## Build
+### Build
 ```shell
 npm i
 # runs live server locally using minified sources

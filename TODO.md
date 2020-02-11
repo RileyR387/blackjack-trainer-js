@@ -1,12 +1,7 @@
 
-## Dealing
-  * Let aces re-split
-
 ## User Expierence
+  * Allow seat selection/change
 
 ## AI Players
   * AI players are all using same bet progression and basic stragegy.
-
-## Testing
-  * How to test scorting... hmmm.. Should be okay if we don't break it again
 
