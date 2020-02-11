@@ -26,8 +26,8 @@ function( $scope,   HumanActionService ) {
     dealer: new PlayerModel('Dealer', null, 100000),
   };
   this.game.players = [
-    new PlayerModel('HighLow', new PullUp(this.game.opts), 200),
     new PlayerModel('You', HumanActionService, 200, true),
+    new PlayerModel('HighLow', new PullUp(this.game.opts), 200),
     new PlayerModel('PullUp', new PullUp(this.game.opts), 200),
     new PlayerModel('KayOh', new PullUp(this.game.opts), 200),
     //new PlayerModel('You', HumanActionService, 200, true),

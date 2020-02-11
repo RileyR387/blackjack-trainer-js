@@ -165,13 +165,13 @@ button {
 .hand {
   position: sticky;
   display: block;
-  margin: 0.5em;
+  margin: 0.25em;
   height: 4.2em;
 }
 .hand-active {
   position: sticky;
   display: block;
-  margin: 0.5em;
+  margin-right: 0.5em;
   height: 4.2em;
   box-sizing: border-box;
   border-left: 0.15em solid var(--playerOutlineColor);
@@ -185,6 +185,8 @@ button {
   display: block;
   position: relative;
   min-width: 4em;
+  margin-left: 0.1em;
+  margin-top: 0.1em;
   margin-right: 1em;
 }
 .player-data {

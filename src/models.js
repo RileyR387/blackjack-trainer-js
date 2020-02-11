@@ -219,6 +219,19 @@ const ShoeModel = function(decks){
     this._swap( 8, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
     this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(6, 50) );
   }
+  this.rigMultiSplit = function(){
+    console.log( "Rigging Player 10's");
+    this._swap( 0, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 5, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    console.log( "Split as much as ya want!");
+    this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 11, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 12, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 13, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 14, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 15, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._swap( 16, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
+  }
   this.shuffle();
 }
 
