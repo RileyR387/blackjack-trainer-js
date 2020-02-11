@@ -90,7 +90,7 @@ class PullUp extends AgentModel {
       return 'DOUBLE'
     }
     if( myHand.value() >=17
-     || (myHand.value() > 11 && ! myHand.isSoft && (dealer.value() < 7 && dealer.value() > 2)
+     || (myHand.value() > 11 && ! myHand.isSoft && (dealer.value() < 7 && dealer.value() > 2))
      || myHand.cards.length > 4
     ){
       return 'STAND'
