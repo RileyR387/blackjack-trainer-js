@@ -73,7 +73,7 @@ class PullUp extends AgentModel {
     //console.log("Dealer has: " + dealer.value());
     //console.log(this.name + " has: " + myHand.value());
     if( this.riskLevel < this.maxRisk && this.splitEnabled &&
-        myHand.canSplit() &&
+        myHand.canSplit() && myHand.value() != 10 &&
         (
           myHand.value() < 18
        ||
@@ -90,7 +90,7 @@ class PullUp extends AgentModel {
       return 'DOUBLE'
     }
     if( myHand.value() >=17
-     || (myHand.value() > 11 && ! myHand.isSoft && dealer.value() < 7)
+     || (myHand.value() > 11 && ! myHand.isSoft && (dealer.value() < 7 && dealer.value() > 2)
      || myHand.cards.length > 4
     ){
       return 'STAND'
