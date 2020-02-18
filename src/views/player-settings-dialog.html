@@ -1,5 +1,5 @@
 <div class="modal fade" id="pSettingsModal" tabindex="-1" role="dialog" aria-labelledby="pSettingsModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="pSettingsModalLabel">Player Settings</h5>
@@ -8,10 +8,16 @@
         </button>
       </div>
       <div class="modal-body">
-        <ul class="list-group">
-          <div ng-repeat="player in model.bjg.game.players">
-            <li class="list-group-item">{{player.name}} Balance: ${{player.bankRoll}}</li>
-          </div>
+        <p class="lead">
+          Drag to reorder seats.
+        </p>
+        <ul id="playerOrderList" class="list-group" >
+          <li ng-repeat="player in model.bjg.game.players" class="list-group-item">
+            {{player.name}} Balance: ${{player.bankRoll}}
+            <span class="float-right">
+              <i class="material-icons">drag_handle</i>
+            </span>
+          </li>
         </ul>
       </div>
       <div class="modal-footer">

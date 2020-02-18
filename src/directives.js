@@ -62,6 +62,24 @@ app.directive('playerSettingsDialog', [function() {
       element.on('shown.bs.modal', function() {
         scope.$apply(function() {
           scope.model.visible = true;
+
+          // TODO: Move to it's own directive?
+          var playerOrder = document.getElementById('playerOrderList');
+          var sortablePlayers = Sortable.create(playerOrder, {
+            onEnd: function( orderEvt ){
+              if( orderEvt.newIndex == orderEvt.oldIndex ){
+                return;
+              }
+              scope.model.bjg.needsReseat = true;
+
+              tmpSeat = scope.model.bjg.game.players[orderEvt.newIndex];
+              scope.model.bjg.game.players[orderEvt.newIndex] = scope.model.bjg.game.players[orderEvt.oldIndex];
+              scope.model.bjg.game.players[orderEvt.oldIndex] = tmpSeat;
+
+              scope.model.bjg.reseat();
+            }
+          });
+
         });
       });
       element.on('hidden.bs.modal', function() {

@@ -39,6 +39,7 @@ function( $scope,   HumanActionService ) {
 
   this.card = null;
   this.cardConsumed = true;
+  this.needsReseat = false;
 
   $scope.navbar               = new NavbarModel();
   $scope.gameSettingsDialog   = new GameSettingsDialogModel(this, $scope.navbar);
@@ -53,6 +54,17 @@ function( $scope,   HumanActionService ) {
       this.shoe = new ShoeModel( this.game.opts.deckCount );
       this.gameState = new GameState( this.game, this.applyScope );
       $scope.$applyAsync();
+    }
+  }
+
+  this.reseat = async function() {
+    if( this.CanReseat() && this.needsReseat){
+      this.gameState.seats = [];
+      for( var p = 0; p < this.game.players.length; ++p){
+        this.gameState.seats.push(this.game.players[p]);
+      }
+      this.gameState.seats.push( this.game.dealer );
+      this.needsReseat = false;
     }
   }
 
@@ -93,6 +105,7 @@ function( $scope,   HumanActionService ) {
     if( this.gameState.status == 'Game Over' ){
       await this.shuffleShoe();
     } else if( this.gameState.status == 'Score' || this.gameState.status == 'New Game'){
+      await this.reseat();
       await this.gameState.clearRound();
       await this.dealRound();
     }
@@ -262,6 +275,9 @@ function( $scope,   HumanActionService ) {
   this.CanShuffle = function(){
     return (/^((Taking Bets)|(Score)|(New Game)|(Game Over))$/).test(this.gameState.status);
   }
+  this.CanReseat = function(){
+    return (/^((Score)|(New Game)|(Game Over))$/).test(this.gameState.status);
+  }
 
   this.ShoeLength = function(){
     if( this.gameState.status == 'New Game'){
@@ -283,6 +299,7 @@ function( $scope,   HumanActionService ) {
   //this.dealRound(); // Doesn't play nice with dk count changes.. maybe..
   //$scope.gameSettingsDialog.open();
   //$scope.navbar.expand();
+  //$scope.playerSettingsDialog.open();
 }]);
 
 app.factory('HumanActionService', [ '$q', function( $q ){
