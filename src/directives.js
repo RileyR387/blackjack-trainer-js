@@ -60,27 +60,32 @@ app.directive('playerSettingsDialog', [function() {
         $(modalElement).modal(newValue ? 'show' : 'hide');
       });
       element.on('shown.bs.modal', function() {
+
         scope.$apply(function() {
           scope.model.visible = true;
-
-          // TODO: Move to it's own directive?
-          var playerOrder = document.getElementById('playerOrderList');
-          var sortablePlayers = Sortable.create(playerOrder, {
-            onEnd: function( orderEvt ){
-              if( orderEvt.newIndex == orderEvt.oldIndex ){
-                return;
-              }
-              scope.model.bjg.needsReseat = true;
-
-              tmpSeat = scope.model.bjg.game.players[orderEvt.newIndex];
-              scope.model.bjg.game.players[orderEvt.newIndex] = scope.model.bjg.game.players[orderEvt.oldIndex];
-              scope.model.bjg.game.players[orderEvt.oldIndex] = tmpSeat;
-
-              scope.model.bjg.reseat();
-            }
-          });
-
         });
+
+        // TODO: Move to it's own directive?
+        // NOTE: iOS broken per: https://github.com/SortableJS/Sortable/issues/1571
+        //       workaround `forceFallback: true,` didn't work either... but did break firefox too..
+        var playerOrder = document.getElementById('playerOrderList');
+        var sortablePlayers = Sortable.create(playerOrder, {
+        //var sortablePlayers = new Sortable(playerOrder, {
+          //forceFallback: true,
+          onEnd: function( orderEvt ){
+            if( orderEvt.newIndex == orderEvt.oldIndex ){
+              return;
+            }
+            scope.model.bjg.needsReseat = true;
+
+            tmpSeat = scope.model.bjg.game.players[orderEvt.newIndex];
+            scope.model.bjg.game.players[orderEvt.newIndex] = scope.model.bjg.game.players[orderEvt.oldIndex];
+            scope.model.bjg.game.players[orderEvt.oldIndex] = tmpSeat;
+
+            scope.model.bjg.reseat();
+          }
+        });
+
       });
       element.on('hidden.bs.modal', function() {
         scope.$apply(function() {
