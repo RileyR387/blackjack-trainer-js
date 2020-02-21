@@ -1,23 +1,51 @@
 
-app.directive('playingCard', [function() {
+app.directive('gameTable', [function() {
+  return {
+    templateUrl: 'views/game-table.html',
+  };
+}]);
+
+app.directive('aboutDialog', [function() {
+  return {
+    templateUrl: 'views/about-dialog.html',
+  };
+}]);
+
+app.directive('helpDialog', [function() {
+  return {
+    templateUrl: 'views/help-dialog.html',
+  };
+}]);
+
+app.directive('shareDialog', [function() {
+  return {
+    templateUrl: 'views/share-dialog.html',
+  };
+}]);
+
+app.directive('gameNavbar', [function() {
   return {
     restrict: 'E',
     scope: {
-      card: '=cardvalue',
-      displayDepth: '=displaydepth',
-      doubleDown: '=doubledown',
-      faceDown: '=facedown'
+      model: '=',
     },
-    link: function( scope, element, attr ) {
-      if( scope.doubleDown ){ element.addClass('doubledDownCard'); }
-      if( scope.faceDown ){ element.addClass('Card-FaceDown'); }
-      if( scope.card.suit == '♥' ) { element.addClass('Card-Red'); }
-      if( scope.card.suit == '♦' ) { element.addClass('Card-Red'); }
-      element.on('$destroy', function() {
-        scope = null;
+    link: function(scope, element, attr) {
+      scope.$watch('model.collapsed', function(newValue) {
+        var modalElement = element.find('#navbarlinks');
+        $(modalElement).collapse(newValue ? 'hide' : 'show');
+      });
+      element.on('shown.bs.collapse', function() {
+        scope.$apply(function() {
+          scope.model.collapsed = false;
+        });
+      });
+      element.on('hidden.bs.collapse', function() {
+        scope.$apply(function() {
+          scope.model.collapsed = true;
+        });
       });
     },
-    templateUrl: 'views/playing-card.html',
+    templateUrl: 'views/game-navbar.html',
   };
 }]);
 
@@ -98,47 +126,25 @@ app.directive('playerSettingsDialog', [function() {
   };
 }]);
 
-app.directive('aboutDialog', [function() {
-  return {
-    templateUrl: 'views/about-dialog.html',
-  };
-}]);
-
-app.directive('helpDialog', [function() {
-  return {
-    templateUrl: 'views/help-dialog.html',
-  };
-}]);
-
-app.directive('shareDialog', [function() {
-  return {
-    templateUrl: 'views/share-dialog.html',
-  };
-}]);
-
-app.directive('gameNavbar', [function() {
+app.directive('playingCard', [function() {
   return {
     restrict: 'E',
     scope: {
-      model: '=',
+      card: '=cardvalue',
+      displayDepth: '=displaydepth',
+      doubleDown: '=doubledown',
+      faceDown: '=facedown'
     },
-    link: function(scope, element, attr) {
-      scope.$watch('model.collapsed', function(newValue) {
-        var modalElement = element.find('#navbarlinks');
-        $(modalElement).collapse(newValue ? 'hide' : 'show');
-      });
-      element.on('shown.bs.collapse', function() {
-        scope.$apply(function() {
-          scope.model.collapsed = false;
-        });
-      });
-      element.on('hidden.bs.collapse', function() {
-        scope.$apply(function() {
-          scope.model.collapsed = true;
-        });
+    link: function( scope, element, attr ) {
+      if( scope.doubleDown ){ element.addClass('doubledDownCard'); }
+      if( scope.faceDown ){ element.addClass('Card-FaceDown'); }
+      if( scope.card.suit == '♥' ) { element.addClass('Card-Red'); }
+      if( scope.card.suit == '♦' ) { element.addClass('Card-Red'); }
+      element.on('$destroy', function() {
+        scope = null;
       });
     },
-    templateUrl: 'views/game-navbar.html',
+    templateUrl: 'views/playing-card.html',
   };
 }]);
 

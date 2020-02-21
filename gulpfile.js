@@ -42,10 +42,13 @@ const paths = {
 gulp.task('clean', function(){
   return del(rootDest);
 });
+gulp.task('clean:postbuild', function(){
+  return del(rootDest + '/views');
+});
 gulp.task('build', function(){
   return gulp.src(paths.htdocs.src)
     .pipe(useref({}, lazypipe().pipe(sourcemaps.init, { loadMaps: true })))
-    .pipe(gulpif('*.js', embedTemplates()))
+    .pipe(gulpif('blackjack.min.js', embedTemplates()))
     .pipe(gulpif('*.js', terser()))
     .pipe(gulpif('*.css', minifyCss()))
     .pipe(sourcemaps.write('maps'))
@@ -141,5 +144,5 @@ gulp.task('watch', gulp.series('build',
 /**
  * Default task
  */
-gulp.task('default', gulp.series('clean','copy:devlibs','build','copy:libs'));
+gulp.task('default', gulp.series('clean','copy:devlibs','build','clean:postbuild'));
 

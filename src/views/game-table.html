@@ -1,0 +1,154 @@
+  <div id="gameContainer">
+    <div id="dealerRow" class="mt-2 mb-2" >
+      <div id="dealerBox" class="row no-gutters text-sm-center text-xs-left">
+        <div class="mx-5 text-center dealer">
+          <ul class="list-group dealer-data">
+              <div ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'">
+                <div ng-repeat="hand in player.hands" >
+                  {{hand.result}} ({{hand.value()}})
+                </div>
+              </div>
+            <li class="list-group-item">
+              Dealer
+              <span ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'" >({{bjg.game.dealer.hands[0].value()}})</span>
+            </li>
+          </ul>
+          <div class="dealer-hand" >
+            <div class="dealer-cards">
+              <div ng-repeat="card in bjg.game.dealer.hands[0].cards track by $index" >
+                <div ng-if="bjg.gameState.showDealerCards()">
+                  <playing-card data-cardvalue="card" data-displayDepth="0" ></playing-card>
+                </div>
+                <div ng-if=" $index == 0 && !bjg.gameState.showDealerCards()">
+                  <playing-card data-cardvalue="card" data-displayDepth="0" ></playing-card>
+                </div>
+                <div ng-if=" $index == 1 && !bjg.gameState.showDealerCards()">
+                  <playing-card data-cardvalue="card" data-displayDepth="0" data-facedown="true" ></playing-card>
+                </div>
+              </div>
+            </div>
+          </div><!-- .dealer-hand -->
+        </div><!-- .player -->
+        <div class="shoe">
+          <ul class="list-group shoe-data">
+            <li class="list-group-item"><span ng-bind="bjg.shoe.decks"></span> Deck Shoe</li>
+            <li class="list-group-item"><span ng-bind="bjg.ShoeLength()"></span> Cards Left</li>
+            <li class="list-group-item"><span ng-bind="bjg.gameState.status"></span></li>
+          </ul>
+        </div>
+      </div><!-- #dealerBox -->
+    </div>
+
+    <div id="playersBox" class="row no-gutters d-flex flex-row flex-wrap justify-content-center mb-2 px-2">
+      <div ng-repeat="player in bjg.gameState.seats | reverse | filter: { name: '!Dealer' }"
+            class="d-flex flex-column flex-even" ng-class="{true: 'player player-active col-xs-2', false: 'player col-xs-2'}[bjg.isActivePlayer(player)]">
+
+        <div ng-if="player.hands.length < 2" ng-repeat="hand in player.hands" class="hand">
+            <div ng-repeat="card in hand.cards track by $index" >
+              <playing-card data-cardvalue="card" data-displayDepth="$index+1" data-doubleDown="hand._didDouble"></playing-card>
+            </div>
+        </div><!-- ng-repeat .hand -->
+
+        <div ng-if="player.hands.length > 1" class="flex-wrap splitHand">
+          <div ng-repeat="hand in player.hands" ng-class="{true: 'hand hand-active', false: 'hand'}[hand === bjg.gameState.getCurrentHand()]">
+            <div ng-repeat="card in hand.cards track by $index" >
+              <playing-card data-cardvalue="card" data-displayDepth="$index+1" ></playing-card>
+            </div>
+          </div><!-- ng-repeat .hand -->
+        </div>
+
+        <ul class="list-group player-data">
+          <li class="list-group-item">
+            <div ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'">
+              <div ng-repeat="hand in player.hands" >
+                {{hand.result}} ({{hand.value()}})
+              </div>
+            </div>
+            <div ng-if="bjg.gameState.status != 'Score' && bjg.gameState.status != 'Game Over'">
+              Bet: ${{player.hands[0].bet || 0}} <span ng-if="player.hands.length > 1">X {{player.hands.length}}</span>
+            </div>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <div class="w-25 text-left">
+              <span ng-if="player.winStreak  > 0" class="bg-success">&nbsp;W{{player.winStreak}}&nbsp;</span>
+              <span ng-if="player.lossStreak > 0" class="bg-danger">&nbsp;L{{player.lossStreak}}&nbsp;</span>
+              <span ng-if="player.lossStreak == player.winStreak">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </div>
+            <div class="w-auto"><span>{{player.name}}</span></div>
+            <div class="w-25 text-right">
+              <span ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'"
+                    ng-class="{true: 'bg-success', false: 'bg-danger'}[player.change >= 0]">
+                <span ng-if="player.change >= 0">+</span>{{player.change | currency:"$":0}}&nbsp;
+              </span>
+              <span ng-if="bjg.gameState.status != 'Score' && bjg.gameState.status != 'Game Over'">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </span>
+            </div>
+          </li>
+          <li class="list-group-item">Bank: ${{player.bankRoll}}</li>
+        </ul>
+      </div><!-- ng-repeat .player -->
+    </div> <!-- #playersBox -->
+
+    <div ng-if="bjg.gameState.status == 'Game Over'" >
+      <div id="dealerActionsInput" class="d-flex justify-content-center justify-content-sm-end justify-content-md-center mb-1 mx-5">
+        <div class="btn-group btn-group-justified" role="group" aria-label="Dealer Actions">
+          <button type="button" class="btn btn-success" ng-click="bjg.shuffleShoe()" >Shuffle Shoe</button>
+        </div>
+      </div><!-- #actionInput -->
+    </div>
+
+    <div ng-if="bjg.gameState.status == 'Insurance?' && bjg.gameState._getDealerHand().offerInsurance() && bjg.gameState.getCurrentPlayer().isHuman" >
+      <div id="actionInput" class="d-flex justify-content-center justify-content-sm-end justify-content-md-center mb-1 mx-5">
+        <div class="input-group-prepend border-0">
+          <div class="input-group-text border-0 bg-dark text-white ">Buy Insurance?</div>
+        </div>
+        <div class="btn-group btn-group-justified" role="group" aria-labeledby="actionLabel">
+          <button type="button" class="btn btn-success" ng-click="bjg.declineInsurance()" >No</button>
+          <button type="button" class="btn btn-warning" ng-click="bjg.takeInsurance()" >Yes</button>
+        </div>
+      </div><!-- #actionInput -->
+    </div>
+
+    <div ng-if=" bjg.gameState.status == 'Delt' && bjg.gameState.getCurrentPlayer().isHuman && bjg.gameState.getCurrentHand().value() < 21" >
+      <div id="actionInput" class="d-flex justify-content-center justify-content-sm-end justify-content-md-center mb-1 mx-5">
+        <div class="btn-group btn-group-justified" role="group" aria-label="Hand Actions">
+          <button ng-if="bjg.gameState.getCurrentHand().canSplit()"
+                   type="button" class="btn btn-warning" ng-click="bjg.actionSplit()" >Split</button>
+          <button ng-if="bjg.gameState.getCurrentHand().canDouble()"
+                   type="button" class="btn btn-danger" ng-click="bjg.actionDouble()" >Double</button>
+          <button ng-if="bjg.gameState.getCurrentHand().canHit()"
+                   type="button" class="btn btn-secondary" ng-click="bjg.actionHit()" >Hit</button>
+          <button type="button" class="btn btn-success" ng-click="bjg.actionStand()" >Stand</button>
+        </div>
+      </div><!-- #actionInput -->
+    </div>
+
+    <!--<div ng-if="bjg.gameState.status == 'Taking Bets' || bjg.gameState.status == 'Score'" class="bet-manips">-->
+    <div ng-if="bjg.showBetActions()" class="row mx-0 bet-manips d-flex flex-row-reverse">
+      <div id="betActions" class="col-sm-6 col-lg-12 d-flex justify-content-center mb-2">
+        <div class="btn-group  btn-group-justified" role="group" aria-label="Bet Actions">
+          <button ng-if="bjg.gameState.getNextHuman().lastBet > 0 || bjg.gameState.getNextHuman().hands[0].bet > 0"
+                   type="button" class="btn btn-secondary" ng-click="bjg.clearBet()" aria-label="Clear Current Bet">Clear</button>
+          <button ng-if="bjg.gameState.getNextHuman().lastBet > bjg.game.opts.minBet && !bjg.canHalfBet(bjg.gameState.getNextHuman().lastBet)"
+                   type="button" class="btn btn-warning" ng-click="bjg.minBet()" aria-label="Bet minimum and deal">Min</button>
+          <button ng-if="bjg.gameState.getNextHuman().lastBet > 0 && bjg.canHalfBet(bjg.gameState.getNextHuman().lastBet)"
+                   type="button" class="btn btn-light" ng-click="bjg.halfBet()" aria-label="Half Last Bet">Half</button>
+          <button ng-if="bjg.gameState.getNextHuman().lastBet > 0"
+                   type="button" class="btn btn-dark" ng-click="bjg.doubleBet()" aria-label="Double Last Bet">Double</button>
+          <button type="button" class="btn btn-success" ng-click="bjg.deal()" aria-label="Deal Hand">Deal</button>
+        </div><!-- .btn-group -->
+      </div><!-- #betActions -->
+      <div id="betControls" class="col-sm-6 col-lg-12 d-flex justify-content-center mb-2">
+        <div class="btn-group  btn-group-justified" role="group" aria-label="Bet Inputs">
+          <button type="button" class="btn btn-danger" ng-click="bjg.addBet(5)" aria-label="Bet Five">5</button>
+          <button type="button" class="btn btn-dark" ng-click="bjg.addBet(10)" aria-label="Bet Ten">10</button>
+          <button ng-if="bjg.gameState.getNextHuman().bankRoll >= 25" type="button" class="btn btn-success" ng-click="bjg.addBet(25)" aria-label="Bet Twenty-Five">25</button>
+          <button ng-if="bjg.gameState.getNextHuman().bankRoll >= 100" type="button" class="btn btn-primary" ng-click="bjg.addBet(100)" aria-label="Bet One Hundred">100</button>
+          <button ng-if="bjg.gameState.getNextHuman().bankRoll >= 500" type="button" class="btn btn-info" ng-click="bjg.addBet(500)" aria-label="Bet Five Hundred">500</button>
+          <button ng-if="bjg.gameState.getNextHuman().bankRoll >= 1000" type="button" class="btn btn-danger" ng-click="bjg.addBet(1000)" aria-label="Bet One Thousand">1000</button>
+        </div><!-- .btn-group -->
+      </div><!-- #betControls -->
+
+    </div><!-- .bet-manips -->
+  </div><!-- #gameContainer -->
