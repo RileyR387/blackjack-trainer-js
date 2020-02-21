@@ -34,7 +34,7 @@
               </div>
             <li class="list-group-item">
               Dealer
-              <span ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'" >({{bjg.game.dealer.hands[0].value()}})<span>
+              <span ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'" >({{bjg.game.dealer.hands[0].value()}})</span>
             </li>
           </ul>
           <div class="dealer-hand" >
@@ -98,7 +98,7 @@
               <span ng-if="player.lossStreak > 0" class="bg-danger">&nbsp;L{{player.lossStreak}}&nbsp;</span>
               <span ng-if="player.lossStreak == player.winStreak">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </div>
-            <div class="w-auto"><span>{{player.name}}<span></div>
+            <div class="w-auto"><span>{{player.name}}</span></div>
             <div class="w-25 text-right">
               <span ng-if="bjg.gameState.status == 'Score' || bjg.gameState.status == 'Game Over'"
                     ng-class="{true: 'bg-success', false: 'bg-danger'}[player.change >= 0]">
@@ -106,7 +106,7 @@
               </span>
               <span ng-if="bjg.gameState.status != 'Score' && bjg.gameState.status != 'Game Over'">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <span>
+              </span>
             </div>
           </li>
           <li class="list-group-item">Bank: ${{player.bankRoll}}</li>
@@ -187,11 +187,11 @@
           integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
           integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
-  <script src="resources/clipboard/dist/clipboard.min.js"></script>
-  <script src="resources/sortablejs/Sortable.min.js"></script>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js" 
+          integrity="sha384-HlxBLYVP7Yf7mvmXr2/lj8pQw1fe9SZR2f6GUMKZcH7HR2rWIzY0FB4g0Jg+E5Xn" crossorigin="anonymous"></script>
   <!-- build:js blackjack.min.js -->
+  <script src="resources/clipboard/dist/clipboard.js"></script>
+  <script src="resources/sortablejs/Sortable.js"></script>
   <script src="models.js"></script>
   <script src="players/PullUp.js"></script>
   <script src="gamestate.js"></script>
@@ -201,6 +201,5 @@
   <!-- build:remove -->
   <script src="tests.js"></script>
   <!-- endbuild -->
-
 </body>
 </html>

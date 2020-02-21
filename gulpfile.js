@@ -67,7 +67,7 @@ gulp.task('copy:libs', function() {
     .pipe(gulp.dest(rootDest + '/resources'));
 });
 gulp.task('copy:devlibs', function() {
-  return gulp.src(npmDist(), {base:'./node_modules'})
+  return gulp.src(npmDist({copyUnminified: true}), {base:'./node_modules'})
     .pipe(gulp.dest( './src' + '/resources'));
 });
 
@@ -141,5 +141,5 @@ gulp.task('watch', gulp.series('build',
 /**
  * Default task
  */
-gulp.task('default', gulp.series('clean','build','copy:libs'));
+gulp.task('default', gulp.series('clean','copy:devlibs','build','copy:libs'));
 

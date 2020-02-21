@@ -1,3 +1,9 @@
+/**!
+ * https://github.com/RileyR387/blackjack-trainer-js
+ * Author: Riley Raschke <rileyATrrappsdevDOTcom>
+ * © 2020 rrappsdev.com
+ * License OSL-3.0
+ */
 
 const sleep = (ms) => { return new Promise(resolve => setTimeout(resolve, ms)); }
 
