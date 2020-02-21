@@ -102,10 +102,10 @@ function( $scope,   HumanActionService ) {
   }
 
   this.endRound = async function(){
+    this.reseat();
     if( this.gameState.status == 'Game Over' ){
       await this.shuffleShoe();
     } else if( this.gameState.status == 'Score' || this.gameState.status == 'New Game'){
-      await this.reseat();
       await this.gameState.clearRound();
       await this.dealRound();
     }
