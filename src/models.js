@@ -27,6 +27,8 @@ const HiLoCounter = function(deckCount){
   this.count = 0;
   this.cardsSeen = 0;
 
+  this.cachedDealercard = null;
+
   this.countCard = function(card){
     var cardVal = card.value();
     this.cardsSeen++;
@@ -38,6 +40,15 @@ const HiLoCounter = function(deckCount){
       this.count -= 1;
     }
   };
+
+  this.cacheCard = function(card){
+    this.cachedDealercard = card;
+  }
+
+  this.countScoredCard = function(){
+    this.countCard( this.cachedDealercard );
+    this.cachedDealercard = null;
+  }
 
   this.trueCount = function(){
     if( this.cardsSeen == 0 ){ return 0; }

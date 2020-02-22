@@ -85,8 +85,17 @@ function( $scope,   HumanActionService ) {
       try{
         await this.gameState.consumeCard( card );
         this.cardConsumed = true;
-        this.hlCounter.countCard( card );
+        if( this.gameState._currPlayerIndex+1 == this.gameState.seats.length && this.gameState._getDealerHand().cards.length == 2 ){
+          console.log( "Cached dealer card for counting" );
+          this.hlCounter.cacheCard( card );
+        } else {
+          console.log( (this.gameState._currPlayerIndex+1) + ' !=  ' +  this.gameState.seats.length );
+          console.log( "DealerHand len: " + this.gameState._getDealerHand().cards.length );
+          console.log( "Counted Card " + this.hlCounter.cardsSeen );
+          this.hlCounter.countCard( card );
+        }
       } catch( e ){
+        console.log( e.toString() );
         this.cardConsumed = false;
       }
       //console.log( "Delt: " + card.toString() + " used: " + this.cardConsumed + " Status: " + this.gameState.status);
@@ -96,6 +105,7 @@ function( $scope,   HumanActionService ) {
         await sleep( Math.round(this.game.opts.dealRate * 1000) );
       }
     }
+    this.hlCounter.countScoredCard();
     if( this.gameState.status == 'Score' && this.gameState.newShoeFlag ){
       this.gameState.status = 'Game Over';
     }
