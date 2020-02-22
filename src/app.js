@@ -36,6 +36,7 @@ function( $scope,   HumanActionService ) {
 
   this.gameState = new GameState( this.game, this.applyScope );
   this.shoe      = new ShoeModel( this.game.opts.deckCount );
+  this.hlCounter = new HiLoCounter( this.game.opts.deckCount );
 
   this.card = null;
   this.cardConsumed = true;
@@ -52,6 +53,7 @@ function( $scope,   HumanActionService ) {
       this.card = null;
       this.cardConsumed = true;
       this.shoe = new ShoeModel( this.game.opts.deckCount );
+      this.hlCounter = new HiLoCounter( this.game.opts.deckCount );
       this.gameState = new GameState( this.game, this.applyScope );
       $scope.$applyAsync();
     }
@@ -83,6 +85,7 @@ function( $scope,   HumanActionService ) {
       try{
         await this.gameState.consumeCard( card );
         this.cardConsumed = true;
+        this.hlCounter.countCard( card );
       } catch( e ){
         this.cardConsumed = false;
       }

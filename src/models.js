@@ -21,6 +21,33 @@ copyBtns.on('success', function(e) {
   jQuery(e.trigger).popover('show');
 });
 
+const HiLoCounter = function(deckCount){
+  this.deckCount = deckCount;
+
+  this.count = 0;
+  this.cardsSeen = 0;
+
+  this.countCard = function(card){
+    var cardVal = card.value();
+    this.cardsSeen++;
+    if( [2,3,4,5,6].indexOf( cardVal ) >= 0 ){
+      this.count += 1;
+      return;
+    }
+    if( [10,11].indexOf( cardVal ) >= 0 ){
+      this.count -= 1;
+    }
+  };
+
+  this.trueCount = function(){
+    if( this.cardsSeen == 0 ){ return 0; }
+    if( this.deckCount == 1 ){
+      return this.count / (((this.deckCount * 52) - this.cardsSeen )/52);
+    }
+    return this.count / Math.round(((this.deckCount * 52) - this.cardsSeen )/52);
+  };
+}
+
 const CardModel = function(rank, suit){
   this.rank = rank;
   this.suit = suit;

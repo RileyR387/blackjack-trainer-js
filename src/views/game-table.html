@@ -31,9 +31,11 @@
         </div><!-- .player -->
         <div class="shoe">
           <ul class="list-group shoe-data">
+            <li class="list-group-item"><span ng-bind="bjg.gameState.status"></span></li>
             <li class="list-group-item"><span ng-bind="bjg.shoe.decks"></span> Deck Shoe</li>
             <li class="list-group-item"><span ng-bind="bjg.ShoeLength()"></span> Cards Left</li>
-            <li class="list-group-item"><span ng-bind="bjg.gameState.status"></span></li>
+            <li ng-if="bjg.game.opts.showDeckStats" class="list-group-item">HiLo: <span ng-bind="bjg.hlCounter.count"></span></li>
+            <li ng-if="bjg.game.opts.showDeckStats" class="list-group-item">TrueCount: <span ng-bind="bjg.hlCounter.trueCount() | number : 1"></span></li>
           </ul>
         </div>
       </div><!-- #dealerBox -->
