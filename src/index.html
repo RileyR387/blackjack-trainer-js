@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="BlackjackAI">
+<html lang="en" data-ng-app="BlackjackAI">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Blackjack Game">
   <meta name="author" content="Riley Raschke">
   <!-- build:remove -->
@@ -20,7 +20,7 @@
   <!-- endbuild -->
   <title>Blackjack</title>
 </head>
-<body ng-controller="BlackjackGameController as bjg">
+<body data-ng-controller="BlackjackGameController as bjg">
   <game-navbar model="navbar"></game-navbar>
   <game-table model="bjg"></game-table>
   <game-settings-dialog model="gameSettingsDialog"></game-settings-dialog>

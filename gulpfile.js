@@ -2,6 +2,8 @@
 'use strict';
 
 const gulp = require('gulp'),
+    del = require('del'),
+    htmlValidator = require('gulp-w3c-html-validator'),
     embedTemplates = require('gulp-angular-embed-templates'),
     sourcemaps = require('gulp-sourcemaps'),
     useref = require('gulp-useref'),
@@ -10,7 +12,6 @@ const gulp = require('gulp'),
     terser = require('gulp-terser'),
     minifyCss = require('gulp-clean-css'),
     npmDist = require('gulp-npm-dist'),
-    del = require('del'),
     livereload = require('gulp-livereload');
 
 /**
@@ -64,6 +65,14 @@ gulp.task('build-prod', function(){
     .pipe(gulp.dest(rootDest));
 });
 
+gulp.task('validate-html', function() {
+  //return gulp.src(paths.htdocs.src)
+  // views fail... and won't ever pass..
+  return gulp.src('src/index.html')
+    .pipe(htmlValidator())
+    .pipe(htmlValidator.reporter());
+});
+
 // Copy dependencies to ./dest/resources
 gulp.task('copy:libs', function() {
   return gulp.src(npmDist(), {base:'./node_modules'})
@@ -74,75 +83,8 @@ gulp.task('copy:devlibs', function() {
     .pipe(gulp.dest( './src' + '/resources'));
 });
 
-gulp.task('start-livereload', function(){
-  console.log('Starting LiveReload server');
-  livereload.listen();
-  return 1;
-});
-gulp.task('reload-all', function(){
-  console.log('Reloading ' + watchAllSrc);
-  return gulp.src(watchAllSrc).pipe(livereload());
-});
-gulp.task('reload-htdocs', function(){
-  console.log('Reloading ' + paths.htdocs.src);
-  return gulp.src(paths.htdocs.dest).pipe(livereload());
-});
-gulp.task('reload-js', function(){
-  console.log('Reloading ' + paths.js.src);
-  return gulp.src(paths.js.dest).pipe(livereload());
-});
-gulp.task('reload-css', function(){
-  console.log('Reloading ' + paths.css.src);
-  return gulp.src(paths.css.dest).pipe(livereload());
-});
-
-/**
- * Watchers
- */
-gulp.task('watch-all', function(){
-  livereload.listen();
-  gulp.watch(watchAllSrc,
-    gulp.series(
-      gulp.series('build','reload-all'),
-      gulp.parallel('watch-all')
-    )
-  );
-});
-gulp.task('watch-htdocs', function(){
-  gulp.watch(paths.htdocs.src,
-    gulp.series('build', 'reload-htdocs',
-      gulp.parallel('watch-htdocs')
-    )
-  );
-});
-gulp.task('watch-js', function(){
-  gulp.watch(paths.js.src,
-    gulp.series('build', 'reload-js',
-      gulp.parallel('watch-js')
-    )
-  );
-});
-gulp.task('watch-css', function(){
-  gulp.watch(paths.css.src,
-    gulp.series('build', 'reload-css',
-      gulp.parallel('watch-css')
-    )
-  );
-});
-
-/**
- * Watch Launchers
- */
-gulp.task('watch-any', gulp.series('build',
-  gulp.parallel('watch-all')
-));
-
-gulp.task('watch', gulp.series('build',
-  gulp.parallel('start-livereload', 'watch-htdocs', 'watch-js', 'watch-css')
-));
-
 /**
  * Default task
  */
-gulp.task('default', gulp.series('clean','copy:devlibs','build','clean:postbuild'));
+gulp.task('default', gulp.series('clean','validate-html','copy:devlibs','build','clean:postbuild'));
 

@@ -4,12 +4,11 @@
   "description": "Blackjack trainer with optional AI seating placement",
   "main": "index.html",
   "scripts": {
-    "dev": "live-server ./src/",
+    "dev": "gulp copy:devlibs && live-server ./src/",
     "deploy": "test -f .deploy.sh && bash .deploy.sh || (echo \"No .deploy.sh was found.\"; exit 1)",
     "build": "gulp",
-    "build-livereload": "gulp watch",
     "start": "npm run build && live-server ./dist/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"No test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -38,6 +37,7 @@
     "gulp-terser": "^1.2.0",
     "gulp-uglify": "^3.0.2",
     "gulp-useref": "^4.0.0",
+    "gulp-w3c-html-validator": "^2.0.0",
     "lazypipe": "^1.0.2",
     "live-server": "^1.2.0",
     "material-design-icons": "^3.0.1"
