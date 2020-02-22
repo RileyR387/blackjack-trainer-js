@@ -86,12 +86,8 @@ function( $scope,   HumanActionService ) {
         await this.gameState.consumeCard( card );
         this.cardConsumed = true;
         if( this.gameState._currPlayerIndex+1 == this.gameState.seats.length && this.gameState._getDealerHand().cards.length == 2 ){
-          console.log( "Cached dealer card for counting" );
           this.hlCounter.cacheCard( card );
         } else {
-          console.log( (this.gameState._currPlayerIndex+1) + ' !=  ' +  this.gameState.seats.length );
-          console.log( "DealerHand len: " + this.gameState._getDealerHand().cards.length );
-          console.log( "Counted Card " + this.hlCounter.cardsSeen );
           this.hlCounter.countCard( card );
         }
       } catch( e ){
