@@ -77,16 +77,24 @@ class HiLo extends AgentModel {
 
     var counterStrat = testCountingStratTable( myHand.value(), dealer.value(), this.counter.trueCount() );
     if( counterStrat != null ){
-      if( counterStrat == 'STAND' ){
-        return 'STAND';
-      } else {
-        if( myHand.canSplit() ){
-          return 'SPLIT';
-        } else if( myHand.canDouble() ){
-          return 'DOUBLE';
-        } else {
-          return 'HIT'
-        }
+      switch( counterStrat ){
+        case "DOUBLE":
+          if( myHand.canDouble() ){
+            return 'DOUBLE';
+          } else {
+            return 'HIT';
+          }
+          break;
+        case "SPLIT":
+          if( myHand.canSplit() ){
+            return 'SPLIT';
+          } else {
+            return 'STAND';
+          }
+          break;
+        default:
+          return counterStrat;
+          break;
       }
     }
 

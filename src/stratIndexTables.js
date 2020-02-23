@@ -157,33 +157,33 @@ const stratIndexTable = {
 };
 
 const countingStratTable = [
-  { player: '*', dealer: 11, truCount:  3 },
-  { player:  16, dealer: 10, truCount:  0 },
-  { player:  15, dealer: 10, truCount:  4 },
-  { player:  20, dealer: 5,  truCount:  5 },
-  { player:  20, dealer: 6,  truCount:  4 },
-  { player:  10, dealer: 10, truCount:  4 },
-  { player:  12, dealer: 3,  truCount:  2 },
-  { player:  12, dealer: 2,  truCount:  3 },
-  { player:  11, dealer: 11, truCount:  1 },
-  { player:   9, dealer: 2,  truCount:  1 },
-  { player:  10, dealer: 11, truCount:  4 },
-  { player:   9, dealer: 7,  truCount:  3 },
-  { player:  16, dealer: 9,  truCount:  5 },
-  { player:  13, dealer: 2,  truCount: -1 },
-  { player:  12, dealer: 4,  truCount:  0 },
-  { player:  12, dealer: 5,  truCount: -2 },
-  { player:  12, dealer: 6,  truCount: -1 },
-  { player:  13, dealer: 3,  truCount: -2 },
+//{ player: '*', dealer: 11, truCount:  3, lt: '', gte: '' },
+  { player:  16, dealer: 10, truCount:  0, lt: 'HIT', gte: 'STAND' },
+  { player:  15, dealer: 10, truCount:  4, lt: 'HIT', gte: 'STAND' },
+  { player:  20, dealer: 5,  truCount:  5, lt: 'STAND', gte: 'SPLIT' },
+  { player:  20, dealer: 6,  truCount:  4, lt: 'STAND', gte: 'SPLIT' },
+  { player:  10, dealer: 10, truCount:  4, lt: 'HIT', gte: 'DOUBLE' },
+  { player:  12, dealer: 3,  truCount:  2, lt: 'HIT', gte: 'STAND' },
+  { player:  12, dealer: 2,  truCount:  3, lt: 'HIT', gte: 'STAND' },
+  { player:  11, dealer: 11, truCount:  1, lt: 'HIT', gte: 'DOUBLE' },
+  { player:   9, dealer: 2,  truCount:  1, lt: 'HIT', gte: 'DOUBLE' },
+  { player:  10, dealer: 11, truCount:  4, lt: 'HIT', gte: 'DOUBLE' },
+  { player:   9, dealer: 7,  truCount:  3, lt: 'HIT', gte: 'DOUBLE' },
+  { player:  16, dealer: 9,  truCount:  5, lt: 'HIT', gte: 'STAND' },
+  { player:  13, dealer: 2,  truCount: -1, lt: 'HIT', gte: 'STAND' },
+  { player:  12, dealer: 4,  truCount:  0, lt: 'HIT', gte: 'STAND' },
+  { player:  12, dealer: 5,  truCount: -2, lt: 'HIT', gte: 'STAND' },
+  { player:  12, dealer: 6,  truCount: -1, lt: 'HIT', gte: 'STAND' },
+  { player:  13, dealer: 3,  truCount: -2, lt: 'HIT', gte: 'STAND' },
 ];
 
 function testCountingStratTable( playerValue, dealerValue, trueCount ){
   for( i = 0; i < countingStratTable.length; ++i ){
     if( countingStratTable[i].player == playerValue && countingStratTable[i].dealer == dealerValue){
       if( trueCount >= countingStratTable[i] ){
-        return 'STAND';
+        return countingStratTable[i].gte;
       } else {
-        return 'SDP';
+        return countingStratTable[i].lt;
       }
     }
   }
