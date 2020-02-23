@@ -137,22 +137,20 @@ const ShoeModel = function(decks){
     this._shoe[i] = this._shoe[j];
     this._shoe[j] = t;
   }
+  this._rig = function( cardPos, targetCard ){
+    this._swap( cardPos, this._shoe.map(function(e){ return e.value(); }).indexOf(targetCard, 50) );
+  }
   this.rigInsuranceShoe = function(){
     console.log( "Rigging shoe for insurance");
-    var aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
-    console.log( this._shoe[aceIndex] );
-    this._swap( 4, aceIndex );
+    this._rig( 4, 11 );
     console.log( this._shoe[4] );
     console.log( this._shoe[9] );
   }
   this.rigSoftSevenTeen = function(){
     console.log( "Rigging shoe for deal soft 17");
-    var aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
     console.log( this._shoe[aceIndex] );
-    this._swap( 4, aceIndex );
-    var sixIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(6, 50);
-    console.log( this._shoe[aceIndex] );
-    this._swap( 9, sixIndex );
+    this._rig( 4, 11 );
+    this._rig( 9, 6 );
     console.log( this._shoe[4] );
     console.log( this._shoe[9] );
   }
@@ -160,121 +158,121 @@ const ShoeModel = function(decks){
     console.log( "Rigging Blackjack shoe");
     var aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
     var faceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50);
-    this._swap( 0, faceIndex );
-    this._swap( 5, aceIndex );
+    this._rig( 0, 10 );
+    this._rig( 5, 11 );
     aceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50);
     faceIndex = this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50);
-    this._swap( 1, faceIndex );
-    this._swap( 6, aceIndex );
+    this._rig( 1, 10 );
+    this._rig( 6, 11 );
     console.log( this._shoe[1] );
     console.log( this._shoe[6] );
   }
   this.rigLowDealer = function(){
     console.log( "Rigging Dealer 2's");
-    this._swap( 4, this._shoe.map(function(e){ return e.value(); }).indexOf(2, 50) );
-    this._swap( 9, this._shoe.map(function(e){ return e.value(); }).indexOf(2, 50) );
+    this._rig( 4, 2);
+    this._rig( 9, 2);
     console.log( "Rigging Player 10's");
-    this._swap( 0, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 1, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 2, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 3, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 5, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 6, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 7, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 8, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(2, 50) );
+    this._rig( 0, 10);
+    this._rig( 1, 10);
+    this._rig( 2, 10);
+    this._rig( 3, 10);
+    this._rig( 5, 10);
+    this._rig( 6, 10);
+    this._rig( 7, 10);
+    this._rig( 8, 10);
+    this._rig( 10, 2);
   }
   this.rigDoubleSplitAces = function(){
     console.log( "Rigging Dealer 2's");
-    this._swap( 4, this._shoe.map(function(e){ return e.value(); }).indexOf(2, 50) );
-    this._swap( 9, this._shoe.map(function(e){ return e.value(); }).indexOf(2, 50) );
+    this._rig( 4, 2);
+    this._rig( 9, 2);
     console.log( "Rigging Player 10's");
-    this._swap( 0, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
-    this._swap( 1, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 2, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 3, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 5, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
-    this._swap( 6, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 7, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 8, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
-    this._swap( 11, this._shoe.map(function(e){ return e.value(); }).indexOf(9, 50) );
-    this._swap( 12, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._rig( 0, 11);
+    this._rig( 1, 10);
+    this._rig( 2, 10);
+    this._rig( 3, 10);
+    this._rig( 5, 11);
+    this._rig( 6, 10);
+    this._rig( 7, 10);
+    this._rig( 8, 10);
+    this._rig( 10, 11);
+    this._rig( 11, 9);
+    this._rig( 12, 10);
   }
   this.rigDealer21PlayerBj = function(){
     console.log( "Rigging Dealer 10 5 5");
-    this._swap( 4, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 9, this._shoe.map(function(e){ return e.value(); }).indexOf(5, 50) );
-    this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(6, 50) );
+    this._rig( 4, 10);
+    this._rig( 9, 5);
+    this._rig( 10, 6);
     console.log( "Rigging Player 10's");
-    this._swap( 0, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
-    this._swap( 1, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 2, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 3, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 5, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 6, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 7, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 8, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._rig( 0, 11);
+    this._rig( 1, 10);
+    this._rig( 2, 10);
+    this._rig( 3, 10);
+    this._rig( 5, 10);
+    this._rig( 6, 10);
+    this._rig( 7, 10);
+    this._rig( 8, 10);
   }
   this.rigDealerBjPlayer21 = function(){
     console.log( "Rigging Dealer 10 5 5");
-    this._swap( 4, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 9, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
+    this._rig( 4, 10);
+    this._rig( 9, 11);
     console.log( "Rigging Player 10's");
-    this._swap( 0, this._shoe.map(function(e){ return e.value(); }).indexOf(5, 50) );
-    this._swap( 1, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 2, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 3, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 5, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 6, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 7, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 8, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(6, 50) );
+    this._rig( 0, 5);
+    this._rig( 1, 10);
+    this._rig( 2, 10);
+    this._rig( 3, 10);
+    this._rig( 5, 10);
+    this._rig( 6, 10);
+    this._rig( 7, 10);
+    this._rig( 8, 10);
+    this._rig( 10, 6);
   }
   this.rigDealerBjPlayerBjNoInsur = function(){
     console.log( "Rigging Dealer 10 A");
-    this._swap( 4, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 9, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
+    this._rig( 4, 10);
+    this._rig( 9, 11);
     console.log( "Rigging Seat1 BJ");
-    this._swap( 0, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
-    this._swap( 5, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._rig( 0, 11);
+    this._rig( 5, 10);
     console.log( "Other seats 20");
-    this._swap( 1, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 2, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 3, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 6, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 7, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 8, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(6, 50) );
+    this._rig( 1, 10);
+    this._rig( 2, 10);
+    this._rig( 3, 10);
+    this._rig( 6, 10);
+    this._rig( 7, 10);
+    this._rig( 8, 10);
+    this._rig( 10, 6);
   }
   this.rigDealerBjPlayerBjInsur = function(){
     console.log( "Rigging Dealer 10 A");
-    this._swap( 4, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
-    this._swap( 9, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._rig( 4, 11);
+    this._rig( 9, 10);
     console.log( "Rigging Player 10's");
-    this._swap( 0, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
-    this._swap( 5, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._rig( 0, 11);
+    this._rig( 5, 10);
     console.log( "Other seats 20");
-    this._swap( 1, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 2, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 3, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 6, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 7, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 8, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(6, 50) );
+    this._rig( 1, 10);
+    this._rig( 2, 10);
+    this._rig( 3, 10);
+    this._rig( 6, 10);
+    this._rig( 7, 10);
+    this._rig( 8, 10);
+    this._rig( 10, 6);
   }
   this.rigMultiSplit = function(){
     console.log( "Rigging Player 10's");
-    this._swap( 0, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 5, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
+    this._rig( 0, 10);
+    this._rig( 5, 10);
     console.log( "Split as much as ya want!");
-    this._swap( 10, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 11, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 12, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 13, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 14, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 15, this._shoe.map(function(e){ return e.value(); }).indexOf(10, 50) );
-    this._swap( 16, this._shoe.map(function(e){ return e.value(); }).indexOf(11, 50) );
+    this._rig( 10, 10);
+    this._rig( 11, 10);
+    this._rig( 12, 10);
+    this._rig( 13, 10);
+    this._rig( 14, 10);
+    this._rig( 15, 10);
+    this._rig( 16, 11);
   }
   this.shuffle();
 }
