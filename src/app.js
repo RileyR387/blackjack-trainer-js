@@ -55,6 +55,9 @@ function( $scope,   HumanActionService ) {
       this.shoe = new ShoeModel( this.game.opts.deckCount );
       this.hlCounter = new HiLoCounter( this.game.opts.deckCount );
       this.gameState = new GameState( this.game, this.applyScope );
+      for( i = 0; i < this.game.players.length; ++i ){
+        this.game.players[i].agent.deckCount = this.game.opts.deckCount;
+      }
       $scope.$applyAsync();
     }
   }
