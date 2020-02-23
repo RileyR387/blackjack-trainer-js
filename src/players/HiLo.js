@@ -1,10 +1,9 @@
 
-class PullUp extends AgentModel {
+class HiLo extends AgentModel {
 
-  constructor( gameOpts ){
+  constructor( gameOpts, hiloCounter ){
     super(gameOpts)
     this.name = this.constructor.name;
-
     console.log(this.name + " - Loaded");
     this.maxRisk = 10;
     this.winStreak = 0;
@@ -12,6 +11,7 @@ class PullUp extends AgentModel {
     this.riskLevel = 1;
     this.splitEnabled = true;
     this.lastBet = 0;
+    this.counter = hiloCounter;
     this.betProgression = [2,1,2,3,4,5,6,7,8,9,10,5,7,10,15,10,15,20,15,20,25,20,25,30,25,30];
   }
 
@@ -91,3 +91,4 @@ class PullUp extends AgentModel {
   }
 
 }
+

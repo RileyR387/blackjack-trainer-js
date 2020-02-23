@@ -1,5 +1,5 @@
 
-class PullUp extends AgentModel {
+class KayOh extends AgentModel {
 
   constructor( gameOpts ){
     super(gameOpts)

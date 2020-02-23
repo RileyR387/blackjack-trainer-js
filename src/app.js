@@ -10,6 +10,10 @@ app.controller( 'BlackjackGameController', [
          '$scope', 'HumanActionService',
 function( $scope,   HumanActionService ) {
 
+  $scope.navbar               = new NavbarModel();
+  $scope.gameSettingsDialog   = new GameSettingsDialogModel(this, $scope.navbar);
+  $scope.playerSettingsDialog = new PlayerSettingsDialogModel(this, $scope.navbar);
+
   this.applyScope = async function(){
     await $scope.$applyAsync();
   }
@@ -25,26 +29,22 @@ function( $scope,   HumanActionService ) {
     },
     dealer: new PlayerModel('Dealer', null, 100000),
   };
+
+  this.shoe      = new ShoeModel( this.game.opts.deckCount );
+  this.hlCounter = new HiLoCounter( this.game.opts.deckCount );
+
   this.game.players = [
     new PlayerModel('You', HumanActionService, 200, true),
-    new PlayerModel('HighLow', new PullUp(this.game.opts), 200),
+    new PlayerModel('HiLo', new HiLo(this.game.opts, this.hlCounter), 200),
     new PlayerModel('PullUp', new PullUp(this.game.opts), 200),
-    new PlayerModel('KayOh', new PullUp(this.game.opts), 200),
-    //new PlayerModel('You', HumanActionService, 200, true),
-    //new PlayerModel('You', HumanActionService, 300, true),
+    new PlayerModel('KayOh', new KayOh(this.game.opts), 200),
   ];
 
   this.gameState = new GameState( this.game, this.applyScope );
-  this.shoe      = new ShoeModel( this.game.opts.deckCount );
-  this.hlCounter = new HiLoCounter( this.game.opts.deckCount );
 
   this.card = null;
   this.cardConsumed = true;
   this.needsReseat = false;
-
-  $scope.navbar               = new NavbarModel();
-  $scope.gameSettingsDialog   = new GameSettingsDialogModel(this, $scope.navbar);
-  $scope.playerSettingsDialog = new PlayerSettingsDialogModel(this, $scope.navbar);
 
   this.shuffleShoe = async function() {
     if( this.CanShuffle() ){
@@ -91,7 +91,7 @@ function( $scope,   HumanActionService ) {
           this.hlCounter.countCard( card );
         }
       } catch( e ){
-        console.log( e.toString() );
+        //console.log( e.toString() );
         this.cardConsumed = false;
       }
       //console.log( "Delt: " + card.toString() + " used: " + this.cardConsumed + " Status: " + this.gameState.status);
@@ -305,7 +305,7 @@ function( $scope,   HumanActionService ) {
     return false;
   }
 
-  //this.dealRound(); // Doesn't play nice with dk count changes.. maybe..
+  //this.dealRound(); // Doesn't play nice with deck count changes.. maybe..
   //$scope.gameSettingsDialog.open();
   //$scope.navbar.expand();
   //$scope.playerSettingsDialog.open();
