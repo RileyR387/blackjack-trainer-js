@@ -156,6 +156,40 @@ const stratIndexTable = {
   }
 };
 
+const countingStratTable = [
+  { player: '*', dealer: 11, truCount:  3 },
+  { player:  16, dealer: 10, truCount:  0 },
+  { player:  15, dealer: 10, truCount:  4 },
+  { player:  20, dealer: 5,  truCount:  5 },
+  { player:  20, dealer: 6,  truCount:  4 },
+  { player:  10, dealer: 10, truCount:  4 },
+  { player:  12, dealer: 3,  truCount:  2 },
+  { player:  12, dealer: 2,  truCount:  3 },
+  { player:  11, dealer: 11, truCount:  1 },
+  { player:   9, dealer: 2,  truCount:  1 },
+  { player:  10, dealer: 11, truCount:  4 },
+  { player:   9, dealer: 7,  truCount:  3 },
+  { player:  16, dealer: 9,  truCount:  5 },
+  { player:  13, dealer: 2,  truCount: -1 },
+  { player:  12, dealer: 4,  truCount:  0 },
+  { player:  12, dealer: 5,  truCount: -2 },
+  { player:  12, dealer: 6,  truCount: -1 },
+  { player:  13, dealer: 3,  truCount: -2 },
+];
+
+function testCountingStratTable( playerValue, dealerValue, trueCount ){
+  for( i = 0; i < countingStratTable.length; ++i ){
+    if( countingStratTable[i].player == playerValue && countingStratTable[i].dealer == dealerValue){
+      if( trueCount >= countingStratTable[i] ){
+        return 'STAND';
+      } else {
+        return 'SDP';
+      }
+    }
+  }
+  return null;
+}
+
 function stratDecodeAction(tableAction, hand){
   switch( tableAction ) {
     case  'H': return 'HIT'; break;

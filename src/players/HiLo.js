@@ -75,6 +75,21 @@ class HiLo extends AgentModel {
     //console.log("Dealer has: " + dealer.value());
     //console.log(this.name + " has: " + myHand.value());
 
+    var counterStrat = testCountingStratTable( myHand.value(), dealer.value(), this.counter.trueCount() );
+    if( counterStrat != null ){
+      if( counterStrat == 'STAND' ){
+        return 'STAND';
+      } else {
+        if( myHand.canSplit() ){
+          return 'SPLIT';
+        } else if( myHand.canDouble() ){
+          return 'DOUBLE';
+        } else {
+          return 'HIT'
+        }
+      }
+    }
+
     if( myHand.canSplit() ){
       return stratDecodeAction( stratIndexTable[stratLabel]['splitTable'][ myHand.cards[0].value() ][ dealer.value() ], myHand);
     }
@@ -87,6 +102,9 @@ class HiLo extends AgentModel {
   }
 
   async takeInsurance( gameSnapshot ){
+    if( this.counter.trueCount() >= 3.0 ){
+      return true;
+    }
     return false;
   }
 
