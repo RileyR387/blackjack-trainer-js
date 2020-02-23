@@ -2,6 +2,7 @@
 dist/*
 src/resources/*
 .deploy.sh
+.ga-snip.html
 # Logs
 logs
 *.log
