@@ -6,7 +6,8 @@
     and (device-width : 414px)
     and (device-height : 896px)
     and (-webkit-device-pixel-ratio : 3)
-    and (orientation : landscape) {
+    and (orientation : landscape)
+{
   .navbar {
     display: none;
   }
@@ -22,7 +23,8 @@
     and (device-width : 414px)
     and (device-height : 896px)
     and (-webkit-device-pixel-ratio : 2)
-    and (orientation : landscape) {
+    and (orientation : landscape)
+{
   .navbar {
     display: none;
   }
@@ -38,9 +40,10 @@
     and (device-width : 375px)
     and (device-height : 812px)
     and (-webkit-device-pixel-ratio : 3)
-    and (orientation : landscape) {
+    and (orientation : landscape)
+{
   .navbar {
-    display: none;
+    display: none !important;
   }
   .navgear {
     display: inline;
@@ -54,7 +57,8 @@
     and (device-width : 375px)
     and (device-height : 667px)
     and (-webkit-device-pixel-ratio : 2)
-    and (orientation : landscape) {
+    and (orientation : landscape)
+{
   .navbar {
     display: none;
   }
