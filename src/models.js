@@ -53,7 +53,11 @@ const HiLoCounter = function(deckCount){
   this.trueCount = function(){
     if( this.cardsSeen == 0 ){ return 0; }
     if( this.deckCount == 1 ){
-      return this.count / (((this.deckCount * 52) - this.cardsSeen )/52);
+      var decksRemain = (((this.deckCount * 52) - this.cardsSeen )/52);
+      if( decksRemain <= 1 ){
+        return this.count;
+      }
+      return this.count / decksRemain;
     }
     return this.count / Math.round(((this.deckCount * 52) - this.cardsSeen )/52);
   };

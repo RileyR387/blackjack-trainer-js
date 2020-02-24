@@ -54,10 +54,10 @@ class HiLo extends AgentModel {
       myBet = this.minBet*2;
     }
     if( this.counter.trueCount() > 1.0 ){
-      console.log( "Factoring bet due to count" );
+      //console.log( "Factoring bet due to count" );
       myBet *= Math.round(this.counter.trueCount());
     } else if( this.counter.trueCount() <= -1.0 ){
-      console.log( "Reducing bet due to count" );
+      //console.log( "Reducing bet due to count" );
       myBet *= (1/Math.round(Math.abs(this.counter.trueCount())));
     }
     if( myBet%5 != 0 ){
