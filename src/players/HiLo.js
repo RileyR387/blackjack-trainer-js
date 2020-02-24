@@ -45,21 +45,21 @@ class HiLo extends AgentModel {
       }
     });
 
-    //console.log('Loss Streak: ' + this.lossStreak );
-    //console.log('Win Streak: ' + this.winStreak );
-
     var myBet = 0;
 
     if( this.winStreak > 0 && this.lossStreak < 3 ){
-      //console.log('Betting progression');
       myBet = this.betProgression[this.winStreak] * this.minBet;
     }
     if( this.lossStreak > 0 && (this.lossStreak%2 == 0 || this.lastBet == this.minBet) ){
-      //console.log('Betting flip');
       myBet = this.minBet*2;
     }
-    if( myBet == 0 ){
-      //console.log("Betting default");
+    if( this.counter.trueCount() > 1 ){
+      myBet *= Math.round(this.counter.trueCount());
+    } else if( this.counter.trueCount() <= -1 ){
+      myBet *= (1/Math.round(Math.abs(this.counter.trueCount())));
+      myBet -= myBet%5;
+    }
+    if( myBet == 0 || myBet < this.minBet ){
       myBet = this.minBet;
     }
     this.lastBet = myBet;
