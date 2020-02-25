@@ -53,18 +53,21 @@ class HiLo extends AgentModel {
     if( this.lossStreak > 0 && (this.lossStreak%2 == 0 || this.lastBet == this.minBet) ){
       myBet = this.minBet*2;
     }
-    if( this.counter.trueCount() > 1.0 ){
+    var trueCount = this.counter.trueCount();
+    if( trueCount > 15.0 ){
+      trueCount = 15;
+    }
+    if( trueCount > 1.0 ){
       //console.log( "Factoring bet due to count" );
-      myBet *= Math.round(this.counter.trueCount());
-    } else if( this.counter.trueCount() <= -1.0 ){
+      myBet *= trueCount;
+    } else if( trueCount <= -1.0 ){
       //console.log( "Reducing bet due to count" );
-      myBet *= (1/Math.round(Math.abs(this.counter.trueCount())));
+      myBet *= (1/Math.round(Math.abs(trueCount)));
     }
     if( myBet%5 != 0 ){
       myBet -= myBet%5;
-      myBet = Math.rount(myBet);
+      myBet = Math.round(myBet);
     }
-
     if( myBet == 0 || myBet < this.minBet ){
       myBet = this.minBet;
     }
