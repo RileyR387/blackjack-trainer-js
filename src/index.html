@@ -24,7 +24,9 @@
 <body data-ng-controller="BlackjackGameController as bjg">
 
   <game-navbar model="navbar"></game-navbar>
-  <game-table model="bjg"></game-table>
+  <key-map-handler model="keyMapHandler">
+    <game-table model="bjg" keypress-events></game-table>
+  </key-map-handler>
   <game-settings-dialog model="gameSettingsDialog"></game-settings-dialog>
   <player-settings-dialog model="playerSettingsDialog"></player-settings-dialog>
   <about-dialog></about-dialog>

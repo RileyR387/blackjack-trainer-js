@@ -13,6 +13,7 @@ function( $scope,   HumanActionService ) {
   $scope.navbar               = new NavbarModel();
   $scope.gameSettingsDialog   = new GameSettingsDialogModel(this, $scope.navbar);
   $scope.playerSettingsDialog = new PlayerSettingsDialogModel(this, $scope.navbar);
+  $scope.keyMapHandler        = new KeyMapHandlerModel(this);
 
   this.applyScope = async function(){
     await $scope.$applyAsync();
@@ -280,8 +281,11 @@ function( $scope,   HumanActionService ) {
     }
   }
 
-  this.showBetActions = function(){
+  this.enableBetActions = function(){
     return (/^((Taking Bets)|(Score)|(New Game))$/).test(this.gameState.status);
+  }
+  this.enableRoundActions = function(){
+    return this.gameState.status == 'Delt' && this.gameState.getCurrentPlayer().isHuman && this.gameState.getCurrentHand().value() < 21;
   }
 
   this.CanShuffle = function(){

@@ -38,6 +38,7 @@ const GameState = function(game, updateGameCallback){
         return currPlayer.hands[i];
       }
     }
+    return new HandModel();
   }
 
   this.showDealerCards = function() {

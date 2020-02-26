@@ -49,6 +49,36 @@ app.directive('gameNavbar', [function() {
   };
 }]);
 
+app.directive('keypressEvents', ['$document', '$rootScope',
+  function($document, $rootScope){
+    return {
+      restrict: 'A',
+      link: function() {
+        $document.bind('keyup', function(e) {
+          $rootScope.$broadcast('keyup', e);
+        });
+      }
+    };
+  }
+]);
+
+app.directive('keyMapHandler', [function(){
+  return {
+    restrict: 'E',
+    scope: {
+      model: '=',
+    },
+    link: function(scope, element, attr){
+      scope.$on('keyup', function(onEvent, keypressEvent){
+        scope.model.handleKeyPress( keypressEvent );
+      });
+      element.on('$destroy', function() {
+        scope = null;
+      });
+    },
+  }
+}]);
+
 app.directive('gameSettingsDialog', [function() {
   return {
     restrict: 'E',
