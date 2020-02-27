@@ -23,9 +23,10 @@ function( $scope,   HumanActionService ) {
     opts: {
       deckCount: 8,
       dealRate: 0.25,
-      showDeckStats: true,
+      showDeckStats: false,
       payout: '1.5',
       minBet: 10,
+      minUnit: 5,
       enableInsurance: true,
     },
     dealer: new PlayerModel('Dealer', null, 100000),
@@ -54,7 +55,7 @@ function( $scope,   HumanActionService ) {
       this.card = null;
       this.cardConsumed = true;
       this.shoe = new ShoeModel( this.game.opts.deckCount );
-      this.hlCounter = new HiLoCounter( this.game.opts.deckCount );
+      this.hlCounter.reset();
       this.gameState = new GameState( this.game, this.applyScope );
       for( i = 0; i < this.game.players.length; ++i ){
         this.game.players[i].agent.deckCount = this.game.opts.deckCount;

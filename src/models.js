@@ -46,7 +46,15 @@ const HiLoCounter = function(deckCount){
   }
 
   this.countScoredCard = function(){
-    this.countCard( this.cachedDealercard );
+    if( this.cachedDealercard != null ){
+      this.countCard( this.cachedDealercard );
+    }
+    this.cachedDealercard = null;
+  }
+
+  this.reset = function(){
+    this.count = 0;
+    this.cardsSeen = 0;
     this.cachedDealercard = null;
   }
 
@@ -278,6 +286,13 @@ const ShoeModel = function(decks){
     this._rig( 15, 10);
     this._rig( 16, 11);
   }
+  this.rigHeavyDeck = function(){
+    console.log( "Rigging Heavy Deck");
+    var lightCards = [2,3,4,5,6];
+    for(i = 0; i <= 40; ++i){
+      this._rig( i, lightCards[Math.floor(Math.random() * Math.floor(lightCards.length))]);
+    }
+  }
   this.shuffle();
 }
 
@@ -447,6 +462,7 @@ const AgentModel = function(gameOpts) {
 
   this.deckCount = gameOpts.deckCount;
   this.minBet    = gameOpts.minBet;
+  this.minUnit   = gameOpts.minUnit;
   this.name = '';
 
   this.myHands = function( gameState ){

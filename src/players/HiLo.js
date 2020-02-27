@@ -5,23 +5,19 @@ class HiLo extends AgentModel {
     super(gameOpts)
     this.name = this.constructor.name;
     console.log(this.name + " - Loaded");
-    this.maxRisk = 10;
     this.winStreak = 0;
     this.lossStreak = 0;
-    this.riskLevel = 1;
     this.splitEnabled = true;
     this.lastBet = 0;
     this.counter = hiloCounter;
-    this.betProgression = [2,1,2,3,4,5,6,7,8,9,10,5,7,10,15,10,15,20,15,20,25,20,25,30,25,30];
+    this.betProgression = [3,2,3,4,5,6,7,8,9,10,5,7,10,15,10,15,20,15,20,25,20,25,30,25,30];
   }
 
   async placeBet(gameState){
-    //console.log(this.name + " bet start");
-    this.riskLevel = this.winStreak;
     if( gameState == null || gameState == '' ){
-      //console.log(this.name + " bet end");
-      this.lastBet = this.minBet * 2;
-      return this.minBet * 2;
+      //console.log(this.name + " No GameState - returning minBet + minUnit");
+      this.lastBet = this.minBet + this.minUnit;
+      return this.minBet + this.minUnit;
     }
 
     var lossFound = false;
@@ -36,7 +32,7 @@ class HiLo extends AgentModel {
       } else {
         lossFound = true;
         if( this.winStreak > 5 ){
-          this.winStreak -= 4;
+          this.winStreak -= 3;
         } else {
           this.winStreak = 0;
         }
@@ -46,29 +42,40 @@ class HiLo extends AgentModel {
     });
 
     var myBet = 0;
+    //console.log( "WinStreak: " + this.winStreak );
+    //console.log( "LossStreak: " + this.lossStreak );
 
     if( this.winStreak > 0 && this.lossStreak < 3 ){
-      myBet = this.betProgression[this.winStreak] * this.minBet;
+      if( this.lastBet == this.minBet ){
+        myBet = this.minBet + this.minUnit;
+      } else {
+        myBet = this.betProgression[this.winStreak] * this.minUnit;
+      }
     }
     if( this.lossStreak > 0 && (this.lossStreak%2 == 0 || this.lastBet == this.minBet) ){
-      myBet = this.minBet*2;
+      myBet = this.minBet + this.minUnit;
+    }
+    if( myBet == 0 || myBet < this.minBet ){
+      myBet = this.minBet;
     }
     var trueCount = this.counter.trueCount();
     if( trueCount > 15.0 ){
       trueCount = 15;
     }
     if( trueCount > 1.0 ){
-      //console.log( "Factoring bet due to count" );
+      //console.log( "Factoring Bet: " + myBet + " * " + trueCount);
       myBet *= trueCount;
+      //console.log( "Factored bet due to count: " + myBet );
     } else if( trueCount <= -1.0 ){
-      //console.log( "Reducing bet due to count" );
       myBet *= (1/Math.round(Math.abs(trueCount)));
+      //console.log( "Reduced bet due to count: " + myBet );
     }
     if( myBet%5 != 0 ){
+      //console.log( "Reducing Bet: " + myBet + " * " + trueCount);
       myBet -= myBet%5;
       myBet = Math.round(myBet);
     }
-    if( myBet == 0 || myBet < this.minBet ){
+    if( myBet < this.minBet ){
       myBet = this.minBet;
     }
     this.lastBet = myBet;
