@@ -286,7 +286,10 @@ function( $scope,   HumanActionService ) {
     return (/^((Taking Bets)|(Score)|(New Game))$/).test(this.gameState.status);
   }
   this.enableRoundActions = function(){
-    return this.gameState.status == 'Delt' && this.gameState.getCurrentPlayer().isHuman && this.gameState.getCurrentHand().value() < 21;
+    return this.gameState.status == 'Delt' && this.gameState.getCurrentPlayer().isHuman && this.gameState.getCurrentHand() != null &&  this.gameState.getCurrentHand().value() < 21;
+  }
+  this.enableInsuranceActions = function(){
+    return this.gameState.status == 'Insurance?' && this.gameState._getDealerHand().offerInsurance() && this.gameState.getCurrentPlayer().isHuman;
   }
 
   this.CanShuffle = function(){

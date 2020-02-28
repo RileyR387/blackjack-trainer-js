@@ -100,7 +100,7 @@
       </div><!-- #actionInput -->
     </div>
 
-    <div ng-if="bjg.gameState.status == 'Insurance?' && bjg.gameState._getDealerHand().offerInsurance() && bjg.gameState.getCurrentPlayer().isHuman" >
+    <div ng-if="bjg.enableInsuranceActions()" >
       <div id="actionInput" class="d-flex justify-content-center justify-content-sm-end justify-content-md-center mb-1 mx-5">
         <div class="input-group-prepend border-0">
           <div class="input-group-text border-0 bg-dark text-white ">Buy Insurance?</div>

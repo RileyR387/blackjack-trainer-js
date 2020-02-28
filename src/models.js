@@ -569,7 +569,12 @@ const KeyMapHandlerModel = function(bjg){
       keyCodes: [32],
       keys: ['Space'],
       context: 'Round',
-    }
+    },
+    'Shuffle': {
+      keyCodes: [88],
+      keys: ['X'],
+      context: 'Any',
+    },
   };
 
   this._validKeyCodes = function(){
@@ -588,6 +593,9 @@ const KeyMapHandlerModel = function(bjg){
         }
         if( value.context == 'Bet' ){
           kMap[keyCode][0] = key;
+        } else if ( value.context == 'Any' ){
+          kMap[keyCode][0] = key;
+          kMap[keyCode][1] = key;
         } else {
           kMap[keyCode][1] = key;
         }
@@ -603,7 +611,7 @@ const KeyMapHandlerModel = function(bjg){
   //console.log( this.keyMap );
 
   this.handleKeyPress = function(keyEvent){
-    //console.log( keyEvent.key + " " + keyEvent.keyCode );
+    console.log( keyEvent.key + " " + keyEvent.keyCode );
 
     if( this.validKeyCodes.indexOf( keyEvent.keyCode ) >= 0 ){
       var context = 1; // Round
@@ -613,6 +621,7 @@ const KeyMapHandlerModel = function(bjg){
       var action = this.keyMap[keyEvent.keyCode][context];
       if( action ){
         switch( action ){
+          case 'Shuffle': this.bjg.shuffleShoe(); break;
           case 'Stand': this.bjg.actionStand(); break;
           case 'Hit': this.bjg.actionHit(); break;
           case 'Split': this.bjg.actionSplit(); break;
