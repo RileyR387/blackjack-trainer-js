@@ -274,9 +274,9 @@ const ShoeModel = function(decks){
     this._rig( 10, 6);
   }
   this.rigMultiSplit = function(){
-    console.log( "Rigging Player 10's");
-    this._rig( 0, 10);
-    this._rig( 5, 10);
+    console.log( "Rigging Multiple Splits");
+    this._rig( 0, 9);
+    this._rig( 5, 9);
     console.log( "Split as much as ya want!");
     this._rig( 10, 10);
     this._rig( 11, 10);

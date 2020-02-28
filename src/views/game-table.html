@@ -54,7 +54,7 @@
         <div ng-if="player.hands.length > 1" class="flex-wrap splitHand">
           <div ng-repeat="hand in player.hands" ng-class="{true: 'hand hand-active', false: 'hand'}[hand === bjg.gameState.getCurrentHand()]">
             <div ng-repeat="card in hand.cards track by $index" >
-              <playing-card data-cardvalue="card" data-displayDepth="$index+1" ></playing-card>
+              <playing-card data-cardvalue="card" data-displayDepth="$index+1" data-doubleDown="hand._didDouble"></playing-card>
             </div>
           </div><!-- ng-repeat .hand -->
         </div>
