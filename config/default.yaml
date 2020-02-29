@@ -1,0 +1,19 @@
+---
+
+app:
+  name: 'Blackjack'
+  port: 3000
+  prefix: '/blackjack'
+
+session:
+  store_ttl: 3600 # in seconds
+  secret: 'Required, I should be static, long, and strong for production. Change to kill all active sessions.'
+  saveUninitialized: false
+  resave: false
+  rolling: false
+  cookie:
+    path: '/'
+    maxAge: 3600000 #milliseconds
+    httpOnly: true
+    secure: 'auto'
+

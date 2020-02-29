@@ -5,6 +5,7 @@
   "main": "index.html",
   "scripts": {
     "dev": "gulp copy:devlibs && live-server ./src/",
+    "dev-multiplayer": "gulp copy:devlibs && NODE_ENV=dev nodemon server.js",
     "deploy": "test -f .deploy.sh && bash .deploy.sh || (echo \"No .deploy.sh was found.\"; exit 1)",
     "build": "gulp",
     "start": "npm run build && live-server ./dist/",
@@ -41,14 +42,23 @@
     "gulp-w3c-html-validator": "^2.0.0",
     "lazypipe": "^1.0.2",
     "live-server": "^1.2.0",
-    "material-design-icons": "^3.0.1"
+    "material-design-icons": "^3.0.1",
+    "nodemon": "^2.0.2"
   },
   "dependencies": {
     "angular": "^1.7.9",
     "bootstrap": "^4.4.1",
     "clipboard": "^2.0.4",
+    "config": "^3.3.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
     "jquery": "^3.4.1",
+    "js-yaml": "^3.13.1",
     "popper.js": "^1.16.0",
+    "session-file-store": "^1.4.0",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
     "sortablejs": "^1.10.2"
   }
 }

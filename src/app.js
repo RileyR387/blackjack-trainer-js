@@ -15,6 +15,8 @@ function( $scope,   HumanActionService ) {
   $scope.playerSettingsDialog = new PlayerSettingsDialogModel(this, $scope.navbar);
   $scope.keyMapHandler        = new KeyMapHandlerModel(this);
 
+  this.socket = io( {'path': '/blackjack/io'} );
+
   this.applyScope = async function(){
     await $scope.$applyAsync();
   }
