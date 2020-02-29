@@ -35,7 +35,7 @@ require('./sockets')(io, config);
 
 app.set('views', __dirname + '/views');
 
-app.use(config.app.prefix, express.static(path.join(__dirname, 'src')))
+app.use(config.app.prefix, express.static(path.join(__dirname, '../client')))
 
 server.listen(port, () => {
   console.log('Server listening at port %d', port);

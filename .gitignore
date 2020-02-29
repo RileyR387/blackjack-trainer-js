@@ -1,6 +1,6 @@
 *.swp
 dist/*
-src/resources/*
+client/resources/*
 .deploy.sh
 .ga-snip.html
 # Logs

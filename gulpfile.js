@@ -21,20 +21,20 @@ const gulp = require('gulp'),
  */
 const googleAnalyticsSnippetFile = '.ga-snip.html';
 const rootDest = './dist';
-const watchAllSrc = './src/**/*.{html,php,css,pl,cgi,js}';
+const watchAllSrc = './client/**/*.{html,php,css,pl,cgi,js}';
 const paths = {
   htdocs: {
-    src:  './src/**/*.{html,php,pl,cgi}',
+    src:  './client/**/*.{html,php,pl,cgi}',
     dest: './dist/**/*.{html,php,pl,cgi}',
     opts: { }
   },
   js: {
-    src:  './src/**/*.js',
+    src:  './client/**/*.js',
     dest: './dist/**/*.js',
     opts: { }
   },
     css: {
-    src:  './src/**/*.{css}',
+    src:  './client/**/*.{css}',
     dest: './dist/**/*.{css}',
     opts: { }
   }
@@ -77,7 +77,7 @@ gulp.task('build-prod', function(){
 gulp.task('validate-html', function() {
   //return gulp.src(paths.htdocs.src)
   // views fail... and won't ever pass..
-  return gulp.src('src/index.html')
+  return gulp.src('client/index.html')
     .pipe(htmlValidator())
     .pipe(htmlValidator.reporter());
 });
@@ -89,7 +89,7 @@ gulp.task('copy:libs', function() {
 });
 gulp.task('copy:devlibs', function() {
   return gulp.src(npmDist({copyUnminified: true}), {base:'./node_modules'})
-    .pipe(gulp.dest( './src' + '/resources'));
+    .pipe(gulp.dest( './client' + '/resources'));
 });
 
 /**

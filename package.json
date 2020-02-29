@@ -4,8 +4,7 @@
   "description": "Blackjack trainer with optional AI seating placement",
   "main": "index.html",
   "scripts": {
-    "dev": "gulp copy:devlibs && live-server ./src/",
-    "dev-multiplayer": "gulp copy:devlibs && NODE_ENV=dev nodemon server.js",
+    "dev": "gulp copy:devlibs && NODE_ENV=dev nodemon server/app.js",
     "deploy": "test -f .deploy.sh && bash .deploy.sh || (echo \"No .deploy.sh was found.\"; exit 1)",
     "build": "gulp",
     "start": "npm run build && live-server ./dist/",
